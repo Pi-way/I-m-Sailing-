@@ -56,7 +56,9 @@ void advancedAdvancedSkills() {
   frontAir.set(false);
   Drive(-6);
   FrontLiftt(0);
-  TurnAndDrive(-36.4,-58,100,90,5);
+  TurnAndDrive(-36.4,-58,100,90,5,true,false);
+  FrontLiftt(0);
+  Drive(0);
   frontAir.set(true);
   TurnAndDrive(0,-.5,100,80,5,false,false);
   FrontLiftt(30);
@@ -69,12 +71,12 @@ void advancedAdvancedSkills() {
   BackLiftt(0);
   task::sleep(300);
   backAir.set(false);
-  TurnAndDrive(36,60,90,90,10,false);
+  TurnAndDrive(36,60,90,90,8,false);
   backAir.set(true);
   TurnAndDrive(40, 0,100,80,0,true,false);
   BackLiftt(100);
   FrontLiftt(90);
-  TurnTo(60,0, 100,true,180);
+  TurnTo(-60,0, 100,true,180);
   frontAir.set(false);
   Drive(-80);
   backAir.set(false);
