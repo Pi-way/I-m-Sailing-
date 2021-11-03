@@ -41,30 +41,63 @@ void Test( void ) { // A test auton. Drives in a square 3 times, while rotating.
 /***************** Skills Code  *****************/
 void advancedAdvancedSkills() {
   frontAir.set(false);
-  backAir.set(true);
-  BackLiftt(75);
-  TurnTo(0,-36,90);
-  DriveTo(0,-36,90,6,false);
-  BackLiftt(30);
   frontAir.set(true);
-  task::sleep(200);
-  FrontLiftt(90);
-  TurnAndDrive(-58,0,80,80,12, true, false);
   FrontLiftt(100);
-  BackLiftt(100);
-  frontAir.set(false);
-  Drive(-12,90);
-  TurnAndDrive(-58,0,80,80,12,false);
-  backAir.set(false);
-  Drive(6);
-  FrontLiftt(0);
-  BackLiftt(0);
-  TurnAndDrive(-30,-60,90,80,8);
-  frontAir.set(true);
-  TurnAndDrive(0,0,90,80,0,false,false);
-  FrontLiftt(30);
-  WaitUntil(FLMotor.velocity(percent) < 2);
+  TurnAndDrive(0, -37, 100, 90, 9,false);
   backAir.set(true);
+  TurnAndDrive(-40,2,90,90,3,false,false);
+  BackLiftt(100);
+  TurnAndDrive(-60,0,90,90,18,false,false);
+  BackLiftt(70);
+  backAir.set(false);
+  BackLiftt(100);
+  Drive(6);
+  TurnAndDrive(-60,7,100,90,20);
+  frontAir.set(false);
+  Drive(-6);
+  FrontLiftt(0);
+  TurnAndDrive(-36.4,-58,100,90,5);
+  frontAir.set(true);
+  TurnAndDrive(0,-.5,100,80,5,false,false);
+  FrontLiftt(30);
+  BackLiftt(0);
+  Drive(0);
+  backAir.set(true);
+  BackLiftt(30);
+  TurnAndDrive(52, 40, 90,80,8,false,false);
+  Drive(0);
+  BackLiftt(0);
+  task::sleep(300);
+  backAir.set(false);
+  TurnAndDrive(36,60,90,90,10,false);
+  backAir.set(true);
+  TurnAndDrive(40, 0,100,80,0,true,false);
+  BackLiftt(100);
+  FrontLiftt(90);
+  TurnTo(60,0, 100,true,180);
+  frontAir.set(false);
+  Drive(-80);
+  backAir.set(false);
+
+
+
+
+
+  // FrontLiftt(100);
+  // BackLiftt(100);
+  // frontAir.set(false);
+  // Drive(-12,90);
+  // TurnAndDrive(-58,0,80,80,12,false);
+  // backAir.set(false);
+  // Drive(6);
+  // FrontLiftt(0);
+  // BackLiftt(0);
+  // TurnAndDrive(-30,-60,90,80,8);
+  // frontAir.set(true);
+  // TurnAndDrive(0,0,90,80,0,false,false);
+  // FrontLiftt(30);
+  // WaitUntil(FLMotor.velocity(percent) < 2);
+  // backAir.set(true);
   
 
 }
