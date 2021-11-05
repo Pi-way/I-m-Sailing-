@@ -43,65 +43,64 @@ void advancedAdvancedSkills() {
   frontAir.set(false);
   frontAir.set(true);
   FrontLiftt(100);
-  TurnAndDrive(0, -37, 100, 90, 9,false);
+  TurnAndDrive(0, -37, 100, 80, 7,false,true,3.25);
   backAir.set(true);
   TurnAndDrive(-40,2,90,90,3,false,false);
   BackLiftt(100);
-  TurnAndDrive(-60,0,90,90,18,false,false);
+  TurnAndDrive(-60,0,90,90,16,false,false);
+  task::sleep(300);
   BackLiftt(70);
   backAir.set(false);
   BackLiftt(100);
   Drive(6);
-  TurnAndDrive(-60,7,100,90,20);
+  TurnAndDrive(-60,7,100,90,18);
   frontAir.set(false);
   Drive(-6);
   FrontLiftt(0);
-  TurnAndDrive(-36.4,-58,100,90,5,true,false);
+  TurnAndDrive(-36.4,-58,100,90,6,true,false);
   FrontLiftt(0);
   Drive(0);
   frontAir.set(true);
-  TurnAndDrive(0,-.5,100,80,5,false,false);
+  TurnAndDrive(-5,-5,90,90,6,false,false);
   FrontLiftt(30);
-  BackLiftt(0);
-  Drive(0);
+  BackLiftt(5);
+  TurnAndDrive(0,0,50,80,4,false);
   backAir.set(true);
-  BackLiftt(30);
-  TurnAndDrive(52, 40, 90,80,8,false,false);
-  Drive(0);
-  BackLiftt(0);
   task::sleep(300);
+  BackLiftt(85);
+  TurnAndDrive(-61,0,90,90,20,false);
+  BackLiftt(68);
+  task::sleep(400);
   backAir.set(false);
-  TurnAndDrive(36,60,90,90,8,false);
-  backAir.set(true);
-  TurnAndDrive(40, 0,100,80,0,true,false);
-  BackLiftt(100);
-  FrontLiftt(90);
-  TurnTo(-60,0, 100,true,180);
+  task::sleep(500);
+  Drive(6, 100, false);
+  BackLiftt(78);
+  TurnAndDrive(60,0,90,80,16,true,false);
+  FrontLiftt(90);  
+  Drive(0);
   frontAir.set(false);
-  Drive(-80);
-  backAir.set(false);
+  TurnAndDrive(0,36,100,80,0,false);
+  Drive(-40,100);
 
 
 
 
 
-  // FrontLiftt(100);
-  // BackLiftt(100);
-  // frontAir.set(false);
-  // Drive(-12,90);
-  // TurnAndDrive(-58,0,80,80,12,false);
-  // backAir.set(false);
-  // Drive(6);
-  // FrontLiftt(0);
+
+  // TurnAndDrive(52, 40, 90,80,8,false,false);
+  // Drive(0);
   // BackLiftt(0);
-  // TurnAndDrive(-30,-60,90,80,8);
-  // frontAir.set(true);
-  // TurnAndDrive(0,0,90,80,0,false,false);
-  // FrontLiftt(30);
-  // WaitUntil(FLMotor.velocity(percent) < 2);
+  // task::sleep(300);
+  // backAir.set(false);
+  // TurnAndDrive(36,60,90,90,8,false);
   // backAir.set(true);
-  
-
+  // TurnAndDrive(40, 0,100,80,0,true,false);
+  // BackLiftt(100);
+  // FrontLiftt(90);
+  // TurnTo(-60,0, 100,true,180);
+  // frontAir.set(false);
+  // Drive(-80);
+  // backAir.set(false);
 }
 void advancedSkills() {
 
@@ -356,10 +355,9 @@ void leftWinPoint() {
   task::sleep(600);
   Drive(-6, 100, true);
   Turn(-74, 100, true);
-  FrontLiftt(20, true, 90);
   frontAir.set(false);
   Drive(20, 100, true);
-  Turn(-103, 80);
+  Turn(-105, 80);
   Drive(-88, 100, false);
   BackLiftt(35);
   task::sleep(2100);
@@ -377,20 +375,20 @@ void leftWinPoint() {
 
 void autonomous(void) {
   Brain.resetTimer();
-advancedAdvancedSkills();
 // ///Determining the auton to run based on the one selected.
-//   if (alliance==SKILLS && mode == SIMPLE) {easySkills();}
-//   if (alliance==SKILLS && mode == WINPOINT) {advancedSkills();}
-//   if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
-//   else {
-//     if (side==LEFT) {
-//       if (mode==SIMPLE) {leftSimple();}
-//       else if (mode==COMPLEX) {leftComplex();}
-//       else if (mode==WINPOINT) {leftWinPoint();}
-//     } else if (side==RIGHT) {
-//       if (mode==SIMPLE) {rightSimple();}
-//       else if (mode==COMPLEX) {rightComplex();}
-//       else if (mode==WINPOINT) {rightWinPoint();}
-//     }
-//   }
+advancedAdvancedSkills();
+  // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}
+  // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+  // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
+  // else {
+  //   if (side==LEFT) {
+  //     if (mode==SIMPLE) {leftSimple();}
+  //     else if (mode==COMPLEX) {leftComplex();}
+  //     else if (mode==WINPOINT) {leftWinPoint();}
+  //   } else if (side==RIGHT) {
+  //     if (mode==SIMPLE) {rightSimple();}
+  //     else if (mode==COMPLEX) {rightComplex();}
+  //     else if (mode==WINPOINT) {rightWinPoint();}
+  //   }
+  // }
 }

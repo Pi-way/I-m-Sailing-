@@ -8,6 +8,8 @@ int Lift(){
       BackLift.setVelocity(100, percent);
     } else if (Controller1.ButtonL2.pressing() && BackLift.position(degrees) > 0){
       BackLift.setVelocity(-100, percent);
+    } else if(Controller1.ButtonRight.pressing()) {
+      BackLift.setVelocity(-100, percent);
     } else {
       BackLift.setVelocity(0,percent);
     }
@@ -15,6 +17,8 @@ int Lift(){
     if(Controller1.ButtonR1.pressing() && FrontLift.position(degrees) < 580){
       FrontLift.setVelocity(100, percent);
     } else if (Controller1.ButtonR2.pressing() && FrontLift.position(degrees) > 20){
+      FrontLift.setVelocity(-100, percent);
+    } else if(Controller1.ButtonY.pressing()) {
       FrontLift.setVelocity(-100, percent);
     } else {
       FrontLift.setVelocity(0,percent);
@@ -61,7 +65,7 @@ void usercontrol(void) {
     BLMotor.setVelocity((Lefty - AvgStrafe),percent);
     BRMotor.setVelocity((Righty + AvgStrafe),percent);
 
-    if (Controller1.ButtonDown.pressing()){
+    if (Controller1.ButtonB.pressing()){
       BRMotor.setStopping(hold);
       BLMotor.setStopping(hold);
       FRMotor.setStopping(hold);
