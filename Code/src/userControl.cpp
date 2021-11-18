@@ -1,5 +1,12 @@
 #include "vex.h"
 
+#define Drivetrain( MotorMember )            \
+  BRMotor.MotorMember;                   \
+  BLMotor.MotorMember;                   \
+  FRMotor.MotorMember;                   \
+  FLMotor.MotorMember;
+
+
 int Lift(){
 
   while(true){
@@ -92,10 +99,6 @@ void usercontrol(void) {
       backAir.set(false);
     }
 
-    if(Controller1.ButtonDown.pressing()) {
-      TurnTo(0,0);
-    }
-
     // //////////////////////////////////////////////////////////////
 
     BP2Past = BP2Present;
@@ -109,6 +112,14 @@ void usercontrol(void) {
       frontAir.set(true);
     }else{
       frontAir.set(false);
+    }
+
+    if(Controller1.ButtonDown.pressing() && Controller1.ButtonB.pressing()){
+      Drive(-6);
+      BackLiftt(66);
+      Air1 = true;
+      Drivetrain(spin(forward));
+      BackLift.spin(forward);
     }
 
     //////////////////////////////////////////////////////////////

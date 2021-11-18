@@ -14,6 +14,7 @@ extern inertial Inertial;
 extern motor BackLift;
 extern digital_out frontAir;
 extern digital_out backAir;
+extern limit LimSwitchA;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

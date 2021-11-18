@@ -34,16 +34,16 @@ float GetClosestToZero(float First, float Second){
 bool Calibrated = false;
 int PIDsRunning = 0;
 float Drive_balance = -0.017;
-float TKp = 0.4;
-float TKi = 0.45;
+float TKp = 0.5;
+float TKi = 0.025;
 float TKd = 0.001;
 
-float Kp = 0.045;
-float Ki = 0.045;
+float Kp = 0.05;
+float Ki = 0.01;
 float Kd = 0.05;
 
-float DKp = 0.7;
-float DKi = 0.1;
+float DKp = 0.6;
+float DKi = 0.2;
 float DKd = 0.1;
 
 float Distance;
@@ -120,7 +120,7 @@ int _Drive_() {
   PIDsRunning ++;
 
   while(PIDsRunning > 1){
-    task::sleep(20);
+    task::yield();
   }
 
   Brain.Timer.reset();
@@ -197,7 +197,7 @@ int _Drive_() {
     if (SessionWait) {
       wait(20, msec);
     } else {
-      task::sleep(20);
+      task::yield();
     }
 
   }
@@ -242,7 +242,17 @@ int _DriveTo_ (){
   float SessionDriveX = DriveX;
   float SessionDriveY = DriveY;
   float SessionMaxSpeed = Speed_V;
-  float SessionDriveRadius = DriveRadius;
+  float SessionDriveRadius;
+  bool LimitSwitch;
+
+  if (DriveRadius >= 90.0){
+    SessionDriveRadius = 0;
+    LimitSwitch = true;
+  }else{
+    SessionDriveRadius = DriveRadius;
+    LimitSwitch = false;
+  }
+  
 
   //Wait untill other PIDs are done to prevent conflicting motor commands:
   PIDsRunning ++;
@@ -299,12 +309,18 @@ int _DriveTo_ (){
     SessionTurn = SessionTurn * ((RotatedY)/std::abs(RotatedY));                             //make SessionTurn the proper value
 
     Error = sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2)) - SessionDriveRadius;
+    if(LimitSwitch){
+      if(Error < 3.5){
+        Error = 3.5;//this keeps the pid moving for longer than usual when trying to grab a goal.
+      }
+    }
 
     SmartVoltage = GetClosestToZero(Error, Ramp * (Error/std::abs(Error)));                   //this is to keep wheels from slipping, ultimately resulting in a faster turn.
 
     Integral = Integral + Error;
     Derivative = Error - PreviousError;
     if (Error == 0) {Integral = 0;} //these are to prevent the integral from getting too large
+    if (Error > 1) {Integral = 0;}
     if (std::abs(Error) > std::abs(SessionMaxSpeed/12)) {Integral = 0;}
 
     Ramp += 0.125;
@@ -327,19 +343,19 @@ int _DriveTo_ (){
     BLMotor.spin(forward, PositiveDiagonalVoltage, voltageUnits::volt);
 
 
-    if (std::abs(Error)-4 <= 0.0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout) {
+    if (std::abs(Error)-4 <= 0.0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout || (LimitSwitch && LimSwitchA.pressing())) {
       if(!(ReachedTarget)){
         ReachedTargetTime = Brain.Timer.systemHighResolution();
       }
 
       ReachedTarget = true;
 
-      if(Brain.Timer.systemHighResolution() - ReachedTargetTime > 500000 || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout ){
+      if(Brain.Timer.systemHighResolution() - ReachedTargetTime > 250000 || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout){
         break;
       }
     }
 
-    task::sleep(10);
+    task::yield();
 
   }  
 
@@ -401,7 +417,7 @@ int _Turn_To_() {
     if (SessionWait) {
       wait(20, msec);
     } else {
-      task::sleep(20);
+      task::yield();
     }
   }
 
@@ -418,7 +434,7 @@ int _Turn_To_() {
     AverageY += GpsY;
     AverageH += GpsH + SessionTurnDegree;
     SampleSize += 1;
-    task::sleep(10);
+    task::yield();
   }
 
   float x1 = AverageX / SampleSize;
@@ -456,13 +472,15 @@ int _Turn_To_() {
 
   float ReachedTargetTime = 0;
 
-  float Error;
-  //float Integral = 0;
+  float Error = 0;
+  float Integral = 0;
   float PreviousError = 0;
-  //float Derivative;
+  float Derivative;
   float Voltage;
   float SmartError;
   int Ramp = 0;
+  float ActualVoltage = 0;
+
 
   while (Condition) {
 
@@ -479,31 +497,35 @@ int _Turn_To_() {
     RotatedY = -MTX*sin(Rads(h1))+MTY*cos(Rads(h1));
     SessionTurn = SessionTurn * -((RotatedY)/std::abs(RotatedY));
 
-    Brain.Screen.clearLine(2);
-    Brain.Screen.print((SessionTurn));
+    Error = SessionTurn;
+    // Error = (1/(1+ powf(2.718, -(SessionTurn)/9.5))) * (SessionMaxSpeed*2) - SessionMaxSpeed;
 
-    Error = (1/(1+ powf(2.718, -(SessionTurn)/9.5))) * (SessionMaxSpeed*2) - SessionMaxSpeed;
-    SmartError = GetClosestToZero(Error, Ramp * (Error/std::abs(Error))); //this is to keep wheels from slipping, ultimately resulting in a faster turn.
-
-    //Integral = Integral + Error;
-    //Derivative = Error - PreviousError;
-    //if (Error == 0) {Integral = 0;} //these are to prevent the integral from getting too large
-    //if (std::abs(Error) > std::abs(SessionMaxSpeed/12)) {Integral = 0;}
+    Integral = std::abs(Integral + Error) * std::abs(Error)/Error;
+    if(Integral > 40)(Integral = Error);
+    Derivative = Error - PreviousError;
+    if (Error == 0) {Integral = 0;} //these are to prevent the integral from getting too large
+    if (std::abs(Error) > 1.5) {Integral = 0;}
+    if (std::abs(Error) > std::abs(SessionMaxSpeed/12)) {Integral = 0;}
 
     Ramp += 1;
     PreviousError = Error;
 
-    Voltage = SmartError; //* TKp + Integral * TKi + Derivative * TKd;
+    SmartError = GetClosestToZero(Error, Ramp * (Error/std::abs(Error)));
+
+    Voltage = SmartError * TKp + Integral * TKi + Derivative * TKd;
     Voltage = GetClosestToZero(Voltage, SessionMaxSpeed * (Error/std::abs(Error)));
 
     if(std::abs(Voltage)<MinVoltage){
       Voltage = MinVoltage * (std::abs(Voltage)/Voltage);
     }
 
-    FLMotor.spin(forward, Voltage, voltageUnits::volt);
-    FRMotor.spin(reverse, Voltage, voltageUnits::volt);
-    BRMotor.spin(reverse, Voltage, voltageUnits::volt);
-    BLMotor.spin(forward, Voltage, voltageUnits::volt);
+    if (ActualVoltage < Voltage){ActualVoltage = ActualVoltage + 1;}
+    if (ActualVoltage > Voltage){ActualVoltage = ActualVoltage - 1;}
+
+    FLMotor.spin(forward, ActualVoltage, voltageUnits::volt);
+    FRMotor.spin(reverse, ActualVoltage, voltageUnits::volt);
+    BRMotor.spin(reverse, ActualVoltage, voltageUnits::volt);
+    BLMotor.spin(forward, ActualVoltage, voltageUnits::volt);
 
     if (std::abs(SessionTurn)-.5 <= 0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout) {
       if(!(ReachedTarget)){
@@ -512,7 +534,7 @@ int _Turn_To_() {
 
       ReachedTarget = true;
 
-      if(Brain.Timer.systemHighResolution() - ReachedTargetTime > 1000000 ){
+      if(Brain.Timer.systemHighResolution() - ReachedTargetTime > 500000){
         break;
       }
     }
@@ -520,7 +542,7 @@ int _Turn_To_() {
     if (SessionWait) {
       wait(20, msec);
     } else {
-      task::sleep(20);
+      task::yield();
     }
 
   }
@@ -565,25 +587,25 @@ void TurnTo(float Turn_x, float Turn_y, float speed, bool Wait_, float Turn_Degr
 }
 int GPS_X(){
   while(true){
-    GpsX = GPS5.xPosition(inches);
-    task::sleep(10);
+    GpsX = (GPS5.xPosition(inches) + GPS5.xPosition(inches) + GPS5.xPosition(inches) + GPS5.xPosition(inches))/4;
+    task::yield();
   }
   return 0;
 }
 
 int GPS_Y(){
   while(true){
-    GpsY = GPS5.yPosition(inches);
-    task::sleep(10);
+    GpsY = (GPS5.yPosition(inches) + GPS5.yPosition(inches) + GPS5.yPosition(inches) + GPS5.yPosition(inches))/4;
+    task::yield();
   }
   return 0;
 }
 
 int GPS_H(){
   while(true){
-    GpsH = -GPS5.heading();
-    RotationG = GPS5.rotation();
-    task::sleep(10);
+    GpsH = (-GPS5.heading() -GPS5.heading() -GPS5.heading() -GPS5.heading())/4;
+    RotationG = (GPS5.rotation() + GPS5.rotation() + GPS5.rotation() + GPS5.rotation())/4;
+    task::yield();
   }
   return 0;
 }
@@ -598,7 +620,7 @@ int ControllerGps(){
     Controller1.Screen.print(", ");
     Controller1.Screen.print(std::round(GpsH));
     Controller1.Screen.print(")        ");
-    task::sleep(10);
+    task::yield();
   }
   return 0;
 }
@@ -629,7 +651,7 @@ int _Turn_() {
     if (SessionWait) {
       wait(20, msec);
     } else {
-      task::sleep(20);
+      task::yield();
     }
   }
 
@@ -708,7 +730,7 @@ int _Turn_() {
     if (SessionWait) {
       wait(20, msec);
     } else {
-      task::sleep(20);
+      task::yield();
     }
 
   }

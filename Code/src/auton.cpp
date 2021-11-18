@@ -43,43 +43,63 @@ void advancedAdvancedSkills() {
   frontAir.set(false);
   frontAir.set(true);
   FrontLiftt(100);
-  Turn(88,90);
-  Drive(-10,100);
-  TurnTo(0,-36,90,true,180, 5);
-  DriveTo(0,-36,90,3,true);
-  backAir.set(true);
+  Turn(83,90);
+  Drive(-75,60,false);
+  wait(1.75,seconds);
+  backAir.set(true);//grab first yellow goal
   TurnAndDrive(-40,2,90,90,3,false,false);
   BackLiftt(100);
   TurnAndDrive(-60,-2,90,90,16,false,false);
   task::sleep(300);
   BackLiftt(70);
-  backAir.set(false);
+  backAir.set(false);//drop yellow goal on platform
   BackLiftt(100);
   Drive(6);
   TurnAndDrive(-60,5,100,90,22);
-  frontAir.set(false);
+  frontAir.set(false);//drop red goal on platform
   Drive(-6);
+  TurnTo(-37,-58,90,true,0,3);
+  DriveTo(-37,-59,100,6,false);
   FrontLiftt(0);
-  TurnAndDrive(-37,-58,100,90,6,true,false,3);
+  Drive(0);
+  frontAir.set(true);//grab blue goal
+  TurnAndDrive(-10,-10,90,90,6,false,false);
+  FrontLiftt(30);
+  BackLiftt(0);
+  TurnAndDrive(0,0,50,80,94,false);
+  backAir.set(true);//grab middle goal
+  task::sleep(300);
+  BackLiftt(95);
+  FrontLiftt(90);
+  TurnAndDrive(60,0,100,90,18,false);
+
+  BackLiftt(73);
+  backAir.set(false);
+  task::sleep(800);
+  BackLiftt(75);
+
+  TurnAndDrive(60,-3,90,80,17);
+  frontAir.set(false);
+  Drive(-10);
+  TurnAndDrive(37,58,90,90,7,true,false);
   FrontLiftt(0);
   Drive(0);
   frontAir.set(true);
-  TurnAndDrive(-5,-5,90,90,6,false,false);
-  FrontLiftt(30);
+  task::sleep(500);
+  TurnAndDrive(0,38,70,80,94,false,false);
   BackLiftt(0);
-  TurnAndDrive(0,0,50,80,4,false);
+  FrontLiftt(30);
+  Drive(0);
   backAir.set(true);
-  task::sleep(300);
-  BackLiftt(95);//tag
-  FrontLiftt(90);
-  TurnAndDrive(60,0,100,90,18,true);
-  frontAir.set(false);
-  TurnAndDrive(60,-3,90,80,17,false);
-  BackLiftt(75);
-  backAir.set(false);
+  task::sleep(200);
+  TurnAndDrive(-50,10,100,100,20,false,false);
   BackLiftt(80);
-  Drive(10);
+  Drive(0);
+  
 
+
+
+  // ####################################################################
   // TurnAndDrive(52, 40, 90,80,8,false,false);
   // Drive(0);
   // BackLiftt(0);
@@ -430,19 +450,20 @@ void leftWinPoint() {
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
+  advancedAdvancedSkills();
 
-  if (alliance==SKILLS && mode == SIMPLE) {easySkills();}
-  if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-  if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
-  else {
-    if (side==LEFT) {
-      if (mode==SIMPLE) {leftSimple();}
-      else if (mode==COMPLEX) {leftComplex();}
-      else if (mode==WINPOINT) {leftWinPoint();}
-    } else if (side==RIGHT) {
-      if (mode==SIMPLE) {rightSimple();}
-      else if (mode==COMPLEX) {rightComplex();}
-      else if (mode==WINPOINT) {rightExtra();}
-    }
-  }
+  // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}
+  // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+  // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
+  // else {
+  //   if (side==LEFT) {
+  //     if (mode==SIMPLE) {leftSimple();}
+  //     else if (mode==COMPLEX) {leftComplex();}
+  //     else if (mode==WINPOINT) {leftWinPoint();}
+  //   } else if (side==RIGHT) {
+  //     if (mode==SIMPLE) {rightSimple();}
+  //     else if (mode==COMPLEX) {rightComplex();}
+  //     else if (mode==WINPOINT) {rightExtra();}
+  //   }
+  // }
 }

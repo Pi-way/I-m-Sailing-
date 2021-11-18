@@ -14,11 +14,12 @@ motor BRMotor = motor(PORT9, ratio6_1, false);
 motor BLMotor = motor(PORT11, ratio6_1, true);
 controller Controller1 = controller(primary);
 motor FrontLift = motor(PORT6, ratio36_1, true);
-gps GPS5 = gps(PORT5, 2.49, 5.49, inches, -3);
+gps GPS5 = gps(PORT5, 2.4, 4.70, inches, -3);
 inertial Inertial = inertial(PORT4);
 motor BackLift = motor(PORT1, ratio36_1, false);
 digital_out frontAir = digital_out(Brain.ThreeWirePort.A);
 digital_out backAir = digital_out(Brain.ThreeWirePort.G);
+limit LimSwitchA = limit(Brain.ThreeWirePort.B);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable
