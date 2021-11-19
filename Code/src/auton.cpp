@@ -32,7 +32,7 @@ void Test( void ) { // A test auton. Drives in a square 3 times, while rotating.
 \*********************/
 //TurnAndDrive(float x_point, float y_point,
 //             float driveSpeed = 80, float turnSpeed = 80,
-//             float radius = 0,
+//             float radius = 0, >If -1 waits for button on side opposite of sail, if -2 waits for button on sail side.
 //             bool faceDirection = true,
 //             bool driveWait = true,
 //             float TurnTimeout = 2.5,
@@ -41,63 +41,68 @@ void Test( void ) { // A test auton. Drives in a square 3 times, while rotating.
 /***************** Skills Code  *****************/
 void advancedAdvancedSkills() {
   frontAir.set(false);
-  frontAir.set(true);
+  frontAir.set(true);//grab red goal
   FrontLiftt(100);
   Turn(83,90);
-  Drive(-75,60,false);
-  wait(1.75,seconds);
+  Drive(-75,60,true,false,true);
   backAir.set(true);//grab first yellow goal
+
   TurnAndDrive(-40,2,90,90,3,false,false);
   BackLiftt(100);
   TurnAndDrive(-60,-2,90,90,16,false,false);
   task::sleep(300);
   BackLiftt(70);
   backAir.set(false);//drop yellow goal on platform
+
   BackLiftt(100);
   Drive(6);
   TurnAndDrive(-60,5,100,90,22);
   frontAir.set(false);//drop red goal on platform
+
   Drive(-6);
   TurnTo(-37,-58,90,true,0,3);
-  DriveTo(-37,-59,100,6,false);
-  FrontLiftt(0);
-  Drive(0);
-  frontAir.set(true);//grab blue goal
+  FrontLiftt(0,false);
+  DriveTo(-37,-59,100,-1,true,4);
+  frontAir.set(true);//grab blue goal using front button (non-sail side)
+
   TurnAndDrive(-10,-10,90,90,6,false,false);
   FrontLiftt(30);
   BackLiftt(0);
-  TurnAndDrive(0,0,50,80,94,false);
+  Drive(0);
+  TurnAndDrive(0,0,50,80,-2,false);
   backAir.set(true);//grab middle goal
-  task::sleep(300);
-  BackLiftt(95);
-  FrontLiftt(90);
-  TurnAndDrive(60,0,100,90,18,false);
 
+  task::sleep(300);
+  BackLiftt(95, false);
+  FrontLiftt(90, false);
+  TurnAndDrive(60,0,100,90,18,false);
   BackLiftt(73);
-  backAir.set(false);
+  backAir.set(false);//dropping middle goal
   task::sleep(800);
   BackLiftt(75);
-
+  Drive(5);
   TurnAndDrive(60,-3,90,80,17);
-  frontAir.set(false);
-  Drive(-10);
-  TurnAndDrive(37,58,90,90,7,true,false);
-  FrontLiftt(0);
-  Drive(0);
-  frontAir.set(true);
-  task::sleep(500);
-  TurnAndDrive(0,38,70,80,94,false,false);
-  BackLiftt(0);
-  FrontLiftt(30);
-  Drive(0);
-  backAir.set(true);
+  frontAir.set(false);//dropping blue goal
+
+  //Drive(-10);
+  TurnAndDrive(30,38,100,90,0,true,false);
   task::sleep(200);
-  TurnAndDrive(-50,10,100,100,20,false,false);
-  BackLiftt(80);
-  Drive(0);
+  FrontLiftt(10,false);
+  TurnAndDrive(37,58,100,90,-1,true);
+  frontAir.set(true);//grabbing red
+
+  task::sleep(500);
+  BackLiftt(0,false);
+  FrontLiftt(30,false,70);
+  TurnAndDrive(0,38,100,100,-2,false);
+  backAir.set(true);//grabbing yellow
+
+  task::sleep(200);
+  BackLiftt(90,false);
+  TurnAndDrive(-50,10,100,100,18,false);
+  backAir.set(false);
+  Turn(30);
   
-
-
 
   // ####################################################################
   // TurnAndDrive(52, 40, 90,80,8,false,false);

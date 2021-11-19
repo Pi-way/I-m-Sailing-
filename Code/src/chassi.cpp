@@ -50,6 +50,8 @@ float Distance;
 float TurnDegree;
 float TurnDistance;
 float CoustomTimeout;
+bool fb;
+bool bb;
 
 float DriveRadius;
 
@@ -117,6 +119,9 @@ int _Drive_() {
   bool SessionWait = Wait;
   float SessionSpeed_V = Speed_V;
 
+  bool FrontButton = fb;
+  bool BackButton = bb;
+
   PIDsRunning ++;
 
   while(PIDsRunning > 1){
@@ -143,11 +148,18 @@ int _Drive_() {
   int x = 0;
   float avgm;
 
+  float StartEndTime = 0.0;
+
   while (Condition) {
 
     avgm = std::abs((FLMotor.position(degrees) + FRMotor.position(degrees) + BLMotor.position(degrees) + BRMotor.position(degrees)) / 4);
 
     Error = std::abs(SessionDistance) - avgm;
+
+    if(Error < ((5/12.566)*2.25)*360 && (FrontButton || BackButton)){
+      Error = ((5/12.566)*2.25)*360;
+    }
+
     Integral = Integral + Error;
 
     if (Error <= x) {
@@ -188,10 +200,19 @@ int _Drive_() {
       BLMotor.spin(reverse, Speed + Speed * Drive_balance, voltageUnits::volt);
     }
 
-    if (avgm > std::abs(SessionDistance)|| Brain.Timer.value() > 3) {    //Was: avgm > std::abs(SessionDistance) - 40 || Brain.Timer.value() > 4
+    if ((avgm > std::abs(SessionDistance) && !(FrontButton || BackButton))|| Brain.Timer.value() > 3 || ((FrontButton && LimSwitchFront.pressing())||(BackButton && LimSwitchBack.pressing()))) {    //Was: avgm > std::abs(SessionDistance) - 40 || Brain.Timer.value() > 4
 
-      Condition = false;
+      if (StartEndTime == 0.0){
+        StartEndTime = Brain.Timer.systemHighResolution();
+      }
 
+      if (FrontButton || BackButton) {
+        if(Brain.Timer.systemHighResolution() - StartEndTime > 250000 || Brain.Timer.value() > 3){
+          Condition = false;
+        }
+      } else {
+        Condition = false;
+      }
     }
 
     if (SessionWait) {
@@ -202,10 +223,7 @@ int _Drive_() {
 
   }
 
-  FLMotor.stop();
-  FRMotor.stop();
-  BLMotor.stop();
-  BRMotor.stop();
+  Drivetrain(stop(coast););
 
   PIDsRunning --;
 
@@ -213,11 +231,13 @@ int _Drive_() {
 
 }
 
-void Drive(float Distance_, float Speed_V_, bool Wait_) {
+void Drive(float Distance_, float Speed_V_, bool Wait_, bool f_b, bool b_b) {
 
   Distance = Distance_;
   Wait = Wait_;
   Speed_V = (Speed_V_/100)*12;
+  fb= f_b;
+  bb = b_b;
 
   wait(20, msec);
 
@@ -243,16 +263,24 @@ int _DriveTo_ (){
   float SessionDriveY = DriveY;
   float SessionMaxSpeed = Speed_V;
   float SessionDriveRadius;
-  bool LimitSwitch;
+  bool LimitSwitchFront;
+  bool LimitSwitchBack;
 
-  if (DriveRadius >= 90.0){
+  if (DriveRadius == -1.0){
     SessionDriveRadius = 0;
-    LimitSwitch = true;
+    LimitSwitchFront = true;
   }else{
     SessionDriveRadius = DriveRadius;
-    LimitSwitch = false;
+    LimitSwitchFront = false;
   }
-  
+
+  if (DriveRadius == -2.0){
+    SessionDriveRadius = 0;
+    LimitSwitchBack = true;
+  }else{
+    SessionDriveRadius = DriveRadius;
+    LimitSwitchBack = false;
+  }
 
   //Wait untill other PIDs are done to prevent conflicting motor commands:
   PIDsRunning ++;
@@ -309,11 +337,32 @@ int _DriveTo_ (){
     SessionTurn = SessionTurn * ((RotatedY)/std::abs(RotatedY));                             //make SessionTurn the proper value
 
     Error = sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2)) - SessionDriveRadius;
-    if(LimitSwitch){
-      if(Error < 3.5){
-        Error = 3.5;//this keeps the pid moving for longer than usual when trying to grab a goal.
+
+    if(LimitSwitchFront || LimitSwitchBack){
+      if(Error < 5){
+        Error = 5;//this keeps the pid moving for longer than usual when trying to grab a goal.
       }
     }
+
+    // if(LimitSwitchBack && LimSwitchBack.pressing()){
+    //   Controller1.Screen.clearLine(2);
+    //   Controller1.Screen.setCursor(1,2);
+    //   Controller1.Screen.print("Pressing");
+    // }else{
+    //   Controller1.Screen.clearLine(2);
+    //   Controller1.Screen.setCursor(1,2);
+    //   Controller1.Screen.print("Nope");
+    // }
+
+    // if(LimitSwitchFront && LimSwitchFront.pressing()){
+    //   Controller1.Screen.clearLine(2);
+    //   Controller1.Screen.setCursor(1,2);
+    //   Controller1.Screen.print("Pressing");
+    // }else{
+    //   Controller1.Screen.clearLine(2);
+    //   Controller1.Screen.setCursor(1,2);
+    //   Controller1.Screen.print("Nope");
+    // }
 
     SmartVoltage = GetClosestToZero(Error, Ramp * (Error/std::abs(Error)));                   //this is to keep wheels from slipping, ultimately resulting in a faster turn.
 
@@ -343,7 +392,7 @@ int _DriveTo_ (){
     BLMotor.spin(forward, PositiveDiagonalVoltage, voltageUnits::volt);
 
 
-    if (std::abs(Error)-4 <= 0.0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout || (LimitSwitch && LimSwitchA.pressing())) {
+    if (std::abs(Error)-4 <= 0.0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout || ((LimitSwitchFront && LimSwitchFront.pressing()) || (LimitSwitchBack && LimSwitchBack.pressing()))) {
       if(!(ReachedTarget)){
         ReachedTargetTime = Brain.Timer.systemHighResolution();
       }
@@ -359,7 +408,7 @@ int _DriveTo_ (){
 
   }  
 
-  Drivetrain(stop();)
+  Drivetrain(stop(coast);)
 
   PIDsRunning --;
 

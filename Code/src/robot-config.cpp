@@ -19,7 +19,8 @@ inertial Inertial = inertial(PORT4);
 motor BackLift = motor(PORT1, ratio36_1, false);
 digital_out frontAir = digital_out(Brain.ThreeWirePort.A);
 digital_out backAir = digital_out(Brain.ThreeWirePort.G);
-limit LimSwitchA = limit(Brain.ThreeWirePort.B);
+limit LimSwitchFront = limit(Brain.ThreeWirePort.C);
+limit LimSwitchBack = limit(Brain.ThreeWirePort.B);
 
 // VEXcode generated functions
 // define variable for remote controller enable/disable
