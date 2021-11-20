@@ -44,7 +44,7 @@ void advancedAdvancedSkills() {
   frontAir.set(true);//grab red goal
   FrontLiftt(100);
   Turn(83,90);
-  Drive(-75,60,true,false,true);
+  Drive(-75,60,true,false,true,true);
   backAir.set(true);//grab first yellow goal
 
   TurnAndDrive(-40,2,90,90,3,false,false);
@@ -401,14 +401,14 @@ void leftComplex() {
   Turn(-74, 90, true);
   FrontLiftt(0, true, 90);
   frontAir.set(false);
-  Drive(51, 40, true);
+  Drive(40, 70, true, true, false, true, 60);
   // task::sleep(2000);
   frontAir.set(true);
   task::sleep(200);
   FrontLiftt(40, true, 90);
-  Drive(-38, 90, true);
+  Drive(-42, 90, true);
   Turn(-55, 90, false);
-  BackLiftt(66, false, 90);
+  BackLiftt(33, false, 90);
   Drive(-6.25, 90, true);
   backAir.set(true);
   task::sleep(200);
@@ -435,8 +435,8 @@ void leftWinPoint() {
   Turn(-74, 100, true);
   frontAir.set(false);
   Drive(20, 100, true);
-  Turn(-103.5, 75);
-  Drive(-88, 100, false);
+  Turn(-100, 75);
+  Drive(-91, 75, false);
   BackLiftt(35);
   task::sleep(2100);
   backAir.set(true);
@@ -455,20 +455,19 @@ void leftWinPoint() {
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
-  advancedAdvancedSkills();
 
-  // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}
-  // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-  // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
-  // else {
-  //   if (side==LEFT) {
-  //     if (mode==SIMPLE) {leftSimple();}
-  //     else if (mode==COMPLEX) {leftComplex();}
-  //     else if (mode==WINPOINT) {leftWinPoint();}
-  //   } else if (side==RIGHT) {
-  //     if (mode==SIMPLE) {rightSimple();}
-  //     else if (mode==COMPLEX) {rightComplex();}
-  //     else if (mode==WINPOINT) {rightExtra();}
-  //   }
-  // }
+  if (alliance==SKILLS && mode == SIMPLE) {easySkills();}
+  if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+  if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
+  else {
+    if (side==LEFT) {
+      if (mode==SIMPLE) {leftSimple();}
+      else if (mode==COMPLEX) {leftComplex();}
+      else if (mode==WINPOINT) {leftWinPoint();}
+    } else if (side==RIGHT) {
+      if (mode==SIMPLE) {rightSimple();}
+      else if (mode==COMPLEX) {rightComplex();}
+      else if (mode==WINPOINT) {rightExtra();}
+    }
+  }
 }

@@ -52,6 +52,8 @@ float TurnDistance;
 float CoustomTimeout;
 bool fb;
 bool bb;
+bool Coast;
+float MaxDistance;
 
 float DriveRadius;
 
@@ -118,6 +120,8 @@ int _Drive_() {
   float SessionDistance = ((Distance/12.566)*2.25)*360;
   bool SessionWait = Wait;
   float SessionSpeed_V = Speed_V;
+  bool SessionCoast = Coast;
+  float SessionMaxDistance = MaxDistance;
 
   bool FrontButton = fb;
   bool BackButton = bb;
@@ -150,14 +154,20 @@ int _Drive_() {
 
   float StartEndTime = 0.0;
 
+  bool STAHP = false;
+
   while (Condition) {
 
     avgm = std::abs((FLMotor.position(degrees) + FRMotor.position(degrees) + BLMotor.position(degrees) + BRMotor.position(degrees)) / 4);
 
     Error = std::abs(SessionDistance) - avgm;
 
-    if(Error < ((5/12.566)*2.25)*360 && (FrontButton || BackButton)){
-      Error = ((5/12.566)*2.25)*360;
+    if(Error < ((1/12.566)*2.25)*360 && (FrontButton || BackButton)){
+      if (avgm > ((SessionMaxDistance/12.566)*2.25)*360){
+        STAHP = true;
+      }else{
+        Error = ((1/12.566)*2.25)*360;
+      }
     }
 
     Integral = Integral + Error;
@@ -200,14 +210,17 @@ int _Drive_() {
       BLMotor.spin(reverse, Speed + Speed * Drive_balance, voltageUnits::volt);
     }
 
-    if ((avgm > std::abs(SessionDistance) && !(FrontButton || BackButton))|| Brain.Timer.value() > 3 || ((FrontButton && LimSwitchFront.pressing())||(BackButton && LimSwitchBack.pressing()))) {    //Was: avgm > std::abs(SessionDistance) - 40 || Brain.Timer.value() > 4
+    if ((avgm > std::abs(SessionDistance) && !(FrontButton || BackButton)) || Brain.Timer.value() > 3 || ((FrontButton && LimSwitchFront.pressing())||(BackButton && LimSwitchBack.pressing())) || STAHP) {    //Was: avgm > std::abs(SessionDistance) - 40 || Brain.Timer.value() > 4
 
       if (StartEndTime == 0.0){
         StartEndTime = Brain.Timer.systemHighResolution();
       }
 
-      if (FrontButton || BackButton) {
+      if (FrontButton || BackButton || STAHP) {
         if(Brain.Timer.systemHighResolution() - StartEndTime > 250000 || Brain.Timer.value() > 3){
+          Condition = false;
+        }
+        if (STAHP){
           Condition = false;
         }
       } else {
@@ -223,7 +236,11 @@ int _Drive_() {
 
   }
 
-  Drivetrain(stop(coast););
+  if(SessionCoast){
+    Drivetrain(stop(coast););
+  }else{
+    Drivetrain(stop(););
+  }
 
   PIDsRunning --;
 
@@ -231,13 +248,15 @@ int _Drive_() {
 
 }
 
-void Drive(float Distance_, float Speed_V_, bool Wait_, bool f_b, bool b_b) {
+void Drive(float Distance_, float Speed_V_, bool Wait_, bool f_b, bool b_b, bool coast, float maxDistance) {
 
   Distance = Distance_;
   Wait = Wait_;
   Speed_V = (Speed_V_/100)*12;
   fb= f_b;
   bb = b_b;
+  Coast = coast;
+  MaxDistance = maxDistance;
 
   wait(20, msec);
 
