@@ -43,7 +43,7 @@ void advancedAdvancedSkills() {
   frontAir.set(false);
   frontAir.set(true);//grab red goal
   FrontLiftt(100);
-  Turn(83,90);
+  Turn(85,90);
   Drive(-75,60,true,false,true,true);
   backAir.set(true);//grab first yellow goal
 
@@ -84,24 +84,27 @@ void advancedAdvancedSkills() {
   TurnAndDrive(60,-3,90,80,17);
   frontAir.set(false);//dropping blue goal
 
-  //Drive(-10);
-  TurnAndDrive(30,38,100,90,0,true,false);
+  Drive(-10);
+  //TurnAndDrive(30,38,100,90,0,true,false);
   task::sleep(200);
   FrontLiftt(10,false);
-  TurnAndDrive(37,58,100,90,-1,true);
+  TurnAndDrive(41,58,100,90,-1,true);
   frontAir.set(true);//grabbing red
 
   task::sleep(500);
   BackLiftt(0,false);
   FrontLiftt(30,false,70);
-  TurnAndDrive(0,38,100,100,-2,false);
+  //TurnAndDrive(0,38,100,100,-2,false);
+  TurnTo(0,38,100,true,180);
+  Drive(-50,100,false);
+  wait(2,seconds);
   backAir.set(true);//grabbing yellow
 
-  task::sleep(200);
-  BackLiftt(90,false);
-  TurnAndDrive(-50,10,100,100,18,false);
-  backAir.set(false);
-  Turn(30);
+  // task::sleep(200);
+  // BackLiftt(90,false);
+  // TurnAndDrive(-50,10,100,100,18,false);
+  // backAir.set(false);
+  // Turn(30);
   
 
   // ####################################################################
@@ -317,20 +320,21 @@ void rightSimple() {
   Drive(21, 100);                //Drive straight to line up with right red alliance goal
   Turn(88, 75, false);
   FrontLiftt(65,false);
-  Drive(9.7, 100);
+  Drive(9.2, 100);
   frontAir.set(true);
   wait(.5, sec);
   frontAir.set(false);
   Drive(-4.5, 100);
-  FrontLiftt(0);
-  Drive(8, 100);
-  frontAir.set(true);
-  Drive(-15, 100, false);
+  FrontLiftt(0, true);
+  Drive(8, 100, true,true,false);
+  frontAir.set(true);//grab
+  wait(0.25,seconds);
+  Drive(-17, 100, false);
   FrontLiftt(20, true, 60);
   Turn(84.2);
-  Drive(-17, 100);
-  Drive(-6, 60);
+  Drive(-17, 100,true,false,true,false,36);
   backAir.set(true);
+  wait(0.25,seconds);
   Drive(34, 100, false);
   BackLiftt(30);
   Drive(0);
@@ -341,28 +345,29 @@ void rightSimple() {
 }
 
 void rightExtra() {
-  Drive(42);
-  Drive(7,50);
+  Drive(42,100,true,true,false,false,60);
   frontAir.set(true);
-  task::sleep(50);
+  task::sleep(200);
   FrontLiftt(20,false);
   backAir.set(false);
-  Turn(95,75,false);
-  BackLiftt(20);
+  Turn(95,75,false, 1);
+  wait(1, msec);
+  BackLiftt(15);
   Drive(0,0); //just to make the program reset
-  Drive(-17.75,50);
-  BackLiftt(0,false);
-  Drive(-7.5,50);
+  Drive(-20,50,false,false,true,false,35);
+  wait(0.65,seconds);
+  BackLiftt(0);
+  Drive(0,0);
   backAir.set(true);
   task::sleep(30);
-  BackLiftt(20);
+  BackLiftt(30);
   Turn(47);
   Drive(50);
   BackLiftt(0,false);
   FrontLiftt(0);
 
 }
-
+void none(){}
 void rightWinPoint() {
   Drive(21, 100);                //Drive straight to line up with right red alliance goal
   Turn(88, 75, false);
@@ -436,14 +441,14 @@ void leftWinPoint() {
   frontAir.set(false);
   Drive(20, 100, true);
   Turn(-100, 75);
-  Drive(-91, 75, false);
-  BackLiftt(35);
+  Drive(-92.5, 75, false);
+  BackLiftt(66);
   task::sleep(2100);
   backAir.set(true);
   Drive(2);
   BackLiftt(0);
   backAir.set(false);
-  Drive(-10);
+  Drive(-10,50,true,false,true);
   backAir.set(true);
   task::sleep(100);
   Drive(20,100,false);
@@ -455,19 +460,19 @@ void leftWinPoint() {
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
-
-  if (alliance==SKILLS && mode == SIMPLE) {easySkills();}
-  if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-  if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
-  else {
-    if (side==LEFT) {
-      if (mode==SIMPLE) {leftSimple();}
-      else if (mode==COMPLEX) {leftComplex();}
-      else if (mode==WINPOINT) {leftWinPoint();}
-    } else if (side==RIGHT) {
-      if (mode==SIMPLE) {rightSimple();}
-      else if (mode==COMPLEX) {rightComplex();}
-      else if (mode==WINPOINT) {rightExtra();}
-    }
-  }
+  rightExtra();
+  // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}
+  // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+  // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
+  // else {
+  //   if (side==LEFT) {
+  //     if (mode==SIMPLE) {leftSimple();}
+  //     else if (mode==COMPLEX) {leftComplex();}
+  //     else if (mode==WINPOINT) {leftWinPoint();}
+  //   } else if (side==RIGHT) {
+  //     if (mode==SIMPLE) {rightSimple();}
+  //     else if (mode==COMPLEX) {rightComplex();}
+  //     else if (mode==WINPOINT) {rightExtra();}
+  //   }
+  // }
 }

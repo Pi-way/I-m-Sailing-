@@ -14,7 +14,7 @@ motor BRMotor = motor(PORT9, ratio6_1, false);
 motor BLMotor = motor(PORT11, ratio6_1, true);
 controller Controller1 = controller(primary);
 motor FrontLift = motor(PORT6, ratio36_1, true);
-gps GPS5 = gps(PORT5, 2.4, 4.70, inches, -3);
+gps GPS5 = gps(PORT5, 2.8, 5.30, inches, -3); //vALUES FOR LEFT FIELD: gps GPS5 = gps(PORT5, 2.7, 5.60, inches, -3); (SLOT 8)
 inertial Inertial = inertial(PORT4);
 motor BackLift = motor(PORT1, ratio36_1, false);
 digital_out frontAir = digital_out(Brain.ThreeWirePort.A);

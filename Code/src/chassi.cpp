@@ -706,7 +706,7 @@ int _Turn_() {
   /*
   turns the robot in degrees
   */
-  
+  float SessionTimeout = CoustomTimeout;
   float SessionTurn = TurnDistance;
   float SessionSpeed = Speed_V;
 
@@ -789,7 +789,7 @@ int _Turn_() {
       BLMotor.spin(reverse, Speed, voltageUnits::volt);
     }
 
-    if (std::abs(avgm) > std::abs(SessionTurn) + 3.5 || Brain.Timer.value() > 2) { //was 40
+    if (std::abs(avgm) > std::abs(SessionTurn) + 3.5 || Brain.Timer.value() > SessionTimeout) { //was 40
 
       Condition = false;
 
@@ -816,11 +816,11 @@ int _Turn_() {
 
 }
 
-void Turn(float Turn_, float speed, bool Wait_) {
+void Turn(float Turn_, float speed, bool Wait_, float CoustomTimeout_) {
 
   Speed_V = (speed/100)*12;
 
-
+  CoustomTimeout = CoustomTimeout_;
   TurnDistance = Turn_;
   Wait = Wait_;
 
