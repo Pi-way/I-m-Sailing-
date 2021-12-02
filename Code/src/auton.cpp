@@ -42,30 +42,31 @@ void Test( void ) { // A test auton. Drives in a square 3 times, while rotating.
 void advancedAdvancedSkills() {
   frontAir.set(false);
   frontAir.set(true);//grab red goal
-  FrontLiftt(100);
+  FrontLiftt(100,false);
+  wait(0.75,seconds);
   Turn(85,90);
   Drive(-75,60,true,false,true,true);
   backAir.set(true);//grab first yellow goal
 
-  TurnAndDrive(-40,2,90,90,3,false,false);
+  TurnAndDrive(-40,2,90,90,3,false,false,2.5,2);
   BackLiftt(100);
-  TurnAndDrive(-60,-2,90,90,16,false,false);
+  TurnAndDrive(-60,-2,90,90,16,false,false,2.5,1);
   task::sleep(300);
   BackLiftt(70);
   backAir.set(false);//drop yellow goal on platform
 
   BackLiftt(100);
   Drive(6);
-  TurnAndDrive(-60,5,100,90,22);
+  TurnAndDrive(-60,5,100,90,22,true,true,2.5,1.5);
   frontAir.set(false);//drop red goal on platform
 
   Drive(-6);
   TurnTo(-37,-58,90,true,0,3);
   FrontLiftt(0,false);
-  DriveTo(-37,-59,100,-1,true,4);
+  DriveTo(-37,-59,100,-1,true,2.5);
   frontAir.set(true);//grab blue goal using front button (non-sail side)
 
-  TurnAndDrive(-10,-10,90,90,6,false,false);
+  TurnAndDrive(-10,-10,90,90,6,false,false,2.5,1.25);
   FrontLiftt(30);
   BackLiftt(0);
   Drive(0);
@@ -84,21 +85,35 @@ void advancedAdvancedSkills() {
   TurnAndDrive(60,-3,90,80,17);
   frontAir.set(false);//dropping blue goal
 
-  Drive(-10);
-  //TurnAndDrive(30,38,100,90,0,true,false);
-  task::sleep(200);
-  FrontLiftt(10,false);
-  TurnAndDrive(41,58,100,90,-1,true);
-  frontAir.set(true);//grabbing red
+  // Drive(-10);
+  // //TurnAndDrive(30,38,100,90,0,true,false);
+  // task::sleep(200);
+  // FrontLiftt(10,false);
+  // TurnAndDrive(45,58,75,90,-1,true,false);
+  // wait(0.5,seconds);
+  // FrontLiftt(0);
+  // Drive(0); //makes the robot wait until it reaches the goal
+  // frontAir.set(true);//grabbing red
 
-  task::sleep(500);
-  BackLiftt(0,false);
-  FrontLiftt(30,false,70);
+  //task::sleep(500);
+  BackLiftt(10,false);
+  //FrontLiftt(30,false,70);
   //TurnAndDrive(0,38,100,100,-2,false);
   TurnTo(0,38,100,true,180);
-  Drive(-50,100,false);
-  wait(2,seconds);
+  Drive(-30,100,false,false,true);
+  wait(0.5,seconds);
+  BackLiftt(0);
+  Drive(0);
   backAir.set(true);//grabbing yellow
+  wait(0.5,seconds);
+  BackLiftt(100,false);
+
+  TurnAndDrive(-60,-2,90,90,16,false,false);
+  Drive(0);
+  BackLiftt(70);
+  backAir.set(false);
+  BackLiftt(100);
+  Turn(45);
 
   // task::sleep(200);
   // BackLiftt(90,false);
@@ -460,7 +475,7 @@ void leftWinPoint() {
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
-  rightExtra();
+  advancedAdvancedSkills();
   // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}
   // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
   // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
