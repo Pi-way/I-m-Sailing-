@@ -114,13 +114,13 @@ void usercontrol(void) {
       frontAir.set(false);
     }
 
-    if(Controller1.ButtonDown.pressing() && Controller1.ButtonB.pressing()){
-      Drive(-6);
-      BackLiftt(66);
-      Air1 = true;
-      Drivetrain(spin(forward));
-      BackLift.spin(forward);
-    }
+    // if(Controller1.ButtonDown.pressing() && Controller1.ButtonB.pressing()){
+    //   Drive(-6);
+    //   BackLiftt(66);
+    //   Air1 = true;
+    //   Drivetrain(spin(forward));
+    //   BackLift.spin(forward);
+    // }
 
     //////////////////////////////////////////////////////////////
 

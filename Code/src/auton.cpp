@@ -241,66 +241,67 @@ void advancedSkills() {
 }
 
 void easySkills() {
-  Drive(21,100);                //Drive straight to line up with right red alliance goal
-  Turn(87.5);                   //Turn towards the right red alliance goal
-  Drive(16.5,100);              //Drive to the right red alliance goal
-  frontAir.set(true);           //Grab the red alliance goal
+  DriveFast(50);
+  // Drive(21,100);                //Drive straight to line up with right red alliance goal
+  // Turn(87.5);                   //Turn towards the right red alliance goal
+  // Drive(16.5,100);              //Drive to the right red alliance goal
+  // frontAir.set(true);           //Grab the red alliance goal
 
-  Drive(-35,100,false);         //Drive backwards from the goal
+  // Drive(-35,100,false);         //Drive backwards from the goal
 
-  FrontLiftt(25);               //Lift up the red goal so it is not on the ground
+  // FrontLiftt(25);               //Lift up the red goal so it is not on the ground
 
-  Turn(106.5);                    //Turn to the right yellow goal
-  Drive(-84,75,false);         //Drive backwards to the right yellow goal
+  // Turn(106.5);                    //Turn to the right yellow goal
+  // Drive(-84,75,false);         //Drive backwards to the right yellow goal
 
-  wait(1.75,seconds);            //Sets the clamp to lift at a midpoint in the drive
-  backAir.set(true);            //Clamps the goal inpath
-  BackLiftt(100,false);         //Lifts the right yellow goal up all the way during the drive to the red side
+  // wait(1.75,seconds);            //Sets the clamp to lift at a midpoint in the drive
+  // backAir.set(true);            //Clamps the goal inpath
+  // BackLiftt(100,false);         //Lifts the right yellow goal up all the way during the drive to the red side
 
-  FrontLiftt(75,false);         //Lift red alliance goal up all the way
+  // FrontLiftt(75,false);         //Lift red alliance goal up all the way
 
-  Turn(180);                    //Turns around to 
+  // Turn(180);                    //Turns around to 
 
-  FrontLiftt(10);             //Drop red goal
+  // FrontLiftt(10);             //Drop red goal
 
-  Drive(11,100);
-  FrontLiftt(0);
-  frontAir.set(false);          //Open Front Claw
-  wait(0.25,seconds);
-  Drive(-5,100);
+  // Drive(11,100);
+  // FrontLiftt(0);
+  // frontAir.set(false);          //Open Front Claw
+  // wait(0.25,seconds);
+  // Drive(-5,100);
 
-  Turn(-79, 50);
+  // Turn(-79, 50);
 
-  Drive(18,100);              //Drive to platform blue goal
-  frontAir.set(true);
-  wait(.5, seconds);
-  FrontLiftt(100, false);
+  // Drive(18,100);              //Drive to platform blue goal
+  // frontAir.set(true);
+  // wait(.5, seconds);
+  // FrontLiftt(100, false);
 
-  Drive(-22, 100);
-  Turn(-40);
-  Drive(66, 75, false);         //Drive to put the yellow goal on platform: before turn
+  // Drive(-22, 100);
+  // Turn(-40);
+  // Drive(66, 75, false);         //Drive to put the yellow goal on platform: before turn
 
-  FrontLiftt(30, true, 50);
+  // FrontLiftt(30, true, 50);
 
-  Turn(-60);
-  Drive(-6, 100);
-  backAir.set(false);
-  Drive(6,100);
-  Turn(-115);                 //turn to the blue alliance goal
-  Drive(-38, 100, false);
-  BackLiftt(0);
-  Drive(0,0);                 //helps time it.
-  backAir.set(true);
-  BackLiftt(25);
+  // Turn(-60);
+  // Drive(-6, 100);
+  // backAir.set(false);
+  // Drive(6,100);
+  // Turn(-115);                 //turn to the blue alliance goal
+  // Drive(-38, 100, false);
+  // BackLiftt(0);
+  // Drive(0,0);                 //helps time it.
+  // backAir.set(true);
+  // BackLiftt(25);
 
-  Drive(12,75,false);
+  // Drive(12,75,false);
 
-  BackLiftt(30, false, 50);
+  // BackLiftt(30, false, 50);
 
-  Turn(95,50);
+  // Turn(95,50);
 
-  Drive(70,100, false);
-  FrontLiftt(10, true, 50);
+  // Drive(70,100, false);
+  // FrontLiftt(10, true, 50);
 }
 
 /****************** Right Code  *****************/
@@ -475,8 +476,11 @@ void leftWinPoint() {
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
-  advancedAdvancedSkills();
-  // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}
+  // advancedAdvancedSkills();
+
+  easySkills();
+
+  // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
   // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
   // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
   // else {
