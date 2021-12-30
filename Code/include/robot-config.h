@@ -7,6 +7,8 @@ extern motor FRMotor;
 extern motor FLMotor;
 extern motor BRMotor;
 extern motor BLMotor;
+extern motor RingLiftL;
+extern motor RingLiftR;
 extern controller Controller1;
 extern gps GPS5;
 extern motor FrontLift;
@@ -14,6 +16,7 @@ extern inertial Inertial;
 extern motor BackLift;
 extern digital_out frontAir;
 extern digital_out backAir;
+extern digital_out tilt;
 extern limit LimSwitchFront;
 extern limit LimSwitchBack;
 
