@@ -8,24 +8,50 @@
 
 
 int Lift(){
+  bool Roller = false;
+  bool BP3Present = false;
+  bool BP3Past = false;
 
   while(true){
   
-    if(Controller1.ButtonL1.pressing() && FrontLift.position(degrees) < 580){
-      FrontLift.setVelocity(100, percent);
+
+
+
+
+    if(Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing()){
+      FrontLift.setVelocity(-100, percent);
     } else if (Controller1.ButtonL2.pressing() && FrontLift.position(degrees) > 0){
       FrontLift.setVelocity(-100, percent);
-    } else if(Controller1.ButtonRight.pressing()) {
-      FrontLift.setVelocity(-100, percent);
+    } else if(Controller1.ButtonL1.pressing() && FrontLift.position(degrees) < 580) {
+      FrontLift.setVelocity(100, percent);
     } else {
       FrontLift.setVelocity(0,percent);
     }
 
-    if(Controller1.ButtonR1.pressing() && BackLift.position(degrees) < 580){
+
+
+    BP3Past = BP3Present;
+    BP3Present = Controller2.ButtonR1.pressing();
+
+    if(!BP3Past && BP3Present){
+      Roller = !Roller;
+    }
+    if(Controller2.ButtonR2.pressing()) {
+      RingLiftL.spin(reverse,400,rpm);
+      RingLiftR.spin(reverse,400,rpm);
+    } else if (Roller){
+      RingLiftL.spin(forward,400,rpm);
+      RingLiftR.spin(forward,400,rpm);
+    } else {
+      RingLiftL.stop(coast);
+      RingLiftR.stop(coast);
+    }
+
+    if(Controller1.ButtonR1.pressing() && BackLift.position(degrees) < 580) {
       BackLift.setVelocity(100, percent);
-    } else if (Controller1.ButtonR2.pressing() && BackLift.position(degrees) > 20){
+    } else if(Controller1.ButtonY.pressing()){
       BackLift.setVelocity(-100, percent);
-    } else if(Controller1.ButtonY.pressing()) {
+    } else if (Controller1.ButtonR2.pressing() && BackLift.position(degrees) > 20){
       BackLift.setVelocity(-100, percent);
     } else {
       BackLift.setVelocity(0,percent);
@@ -57,9 +83,6 @@ void usercontrol(void) {
   bool Air4 = false;
   bool BP4Present = false;
   bool BP4Past = false;
-  bool Roller = false;
-  bool BP3Present = false;
-  bool BP3Past = false;
 
   while(true){
 
@@ -123,7 +146,7 @@ void usercontrol(void) {
     //////////////////////////////////////////////////////////////
 
     BP4Past = BP4Present;
-    BP4Present = Controller1.ButtonDown.pressing();
+    BP4Present = Controller2.ButtonL1.pressing();
 
     if(!BP4Past && BP4Present){
       Air4 = !Air4;
@@ -134,23 +157,15 @@ void usercontrol(void) {
     }else{
       tilt.set(false);
     }
+Optical1.setLightPower(100,pct);
+Optical2.setLightPower(100,pct);
+    //////////////////////////////////////////////////////////////
+
+
 
     //////////////////////////////////////////////////////////////
 
-    BP3Past = BP3Present;
-    BP3Present = Controller1.ButtonDown.pressing();
 
-    if(!BP3Past && BP3Present){
-      Roller = !Roller;
-    }
-
-    if(Roller){
-      RingLiftL.spin(forward,250,pct);
-      RingLiftR.spin(forward,250,pct);
-    }else{
-      RingLiftL.stop(brake);
-      RingLiftR.stop(brake);
-    }
     
 
     // if(Controller1.ButtonDown.pressing() && Controller1.ButtonB.pressing()){

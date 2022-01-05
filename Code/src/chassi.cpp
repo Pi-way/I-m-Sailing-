@@ -33,7 +33,7 @@ float GetClosestToZero(float First, float Second){
 
 bool Calibrated = false;
 int PIDsRunning = 0;
-float Drive_balance = -0.017;
+float Drive_balance = -0.045;
 float TKp = 0.5;
 float TKi = 0.025;
 float TKd = 0.001;
@@ -95,6 +95,9 @@ void Calibrate(){
   BackLift.spin(forward);
   FrontLift.spin(forward);
 
+  RingLiftL.setStopping(coast);
+  RingLiftR.setStopping(coast);
+
   BRMotor.setVelocity(0,percent);
   BLMotor.setVelocity(0,percent);
   FRMotor.setVelocity(0,percent);
@@ -122,7 +125,7 @@ void Calibrate(){
 }
 
 int _Drive_Fast() {
-  float SessionDistance = ((Distance/12.566)*2.25)*360;
+  float SessionDistance = ((Distance/12.566))*360;
   bool SessionWait = Wait;
   float SessionSpeed_V = Speed_V;
   bool SessionCoast = Coast;
@@ -167,11 +170,11 @@ int _Drive_Fast() {
 
     Error = std::abs(SessionDistance) - avgm;
 
-    if(Error < ((1/12.566)*2.25)*360 && (FrontButton || BackButton)){
-      if (avgm > ((SessionMaxDistance/12.566)*2.25)*360){
+    if(Error < ((1/12.566))*360 && (FrontButton || BackButton)){
+      if (avgm > ((SessionMaxDistance/12.566))*360){
         STAHP = true;
       }else{
-        Error = ((1/12.566)*2.25)*360;
+        Error = ((1/12.566))*360;
       }
     }
 
@@ -280,7 +283,7 @@ void DriveFast(float Distance_, float Speed_V_, bool Wait_, bool f_b, bool b_b, 
 }
 
 int _Drive_() {
-  float SessionDistance = ((Distance/12.566)*2.25)*360;
+  float SessionDistance = ((Distance/12.566))*360;
   bool SessionWait = Wait;
   float SessionSpeed_V = Speed_V;
   bool SessionCoast = Coast;
@@ -325,11 +328,11 @@ int _Drive_() {
 
     Error = std::abs(SessionDistance) - avgm;
 
-    if(Error < ((1/12.566)*2.25)*360 && (FrontButton || BackButton)){
-      if (avgm > ((SessionMaxDistance/12.566)*2.25)*360){
+    if(Error < ((1/12.566))*360 && (FrontButton || BackButton)){
+      if (avgm > ((SessionMaxDistance/12.566))*360){
         STAHP = true;
       }else{
-        Error = ((1/12.566)*2.25)*360;
+        Error = ((1/12.566))*360;
       }
     }
 
@@ -845,11 +848,11 @@ int ControllerGps(){
   while(true){
     Controller1.Screen.setCursor(3,1);
     Controller1.Screen.print("(");
-    Controller1.Screen.print(GpsX);
+    Controller1.Screen.print(Optical1.hue());
     Controller1.Screen.print(", ");
-    Controller1.Screen.print(GpsY);
+    Controller1.Screen.print(Optical2.hue());
     Controller1.Screen.print(", ");
-    Controller1.Screen.print(std::round(GpsH));
+    Controller1.Screen.print((Optical2.hue()+Optical1.hue()));
     Controller1.Screen.print(")        ");
     task::yield();
   }

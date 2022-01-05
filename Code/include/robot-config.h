@@ -10,6 +10,7 @@ extern motor BLMotor;
 extern motor RingLiftL;
 extern motor RingLiftR;
 extern controller Controller1;
+extern controller Controller2;
 extern gps GPS5;
 extern motor FrontLift;
 extern inertial Inertial;
@@ -19,6 +20,8 @@ extern digital_out backAir;
 extern digital_out tilt;
 extern limit LimSwitchFront;
 extern limit LimSwitchBack;
+extern optical Optical1;
+extern optical Optical2;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

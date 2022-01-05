@@ -473,12 +473,16 @@ void leftWinPoint() {
 
 }
 
+void test(){
+  Drive(48);
+}
+
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
   // advancedAdvancedSkills();
 
-  easySkills();
+  test();
 
   // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
   // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
