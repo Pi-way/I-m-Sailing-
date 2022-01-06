@@ -23,10 +23,9 @@ motor BackLift = motor(PORT10, ratio36_1, false);
 digital_out frontAir = digital_out(Brain.ThreeWirePort.G);
 digital_out backAir = digital_out(Brain.ThreeWirePort.E);
 digital_out tilt = digital_out(Brain.ThreeWirePort.H);
-limit LimSwitchFront = limit(Brain.ThreeWirePort.C);
 limit LimSwitchBack = limit(Brain.ThreeWirePort.F);
-optical Optical1 = optical(PORT6);
-optical Optical2 = optical(PORT17);
+distance DistanceRight = distance(PORT6);
+distance DistanceLeft = distance(PORT17);
 
 
 // VEXcode generated functions

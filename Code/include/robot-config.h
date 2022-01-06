@@ -18,10 +18,9 @@ extern motor BackLift;
 extern digital_out frontAir;
 extern digital_out backAir;
 extern digital_out tilt;
-extern limit LimSwitchFront;
 extern limit LimSwitchBack;
-extern optical Optical1;
-extern optical Optical2;
+extern distance DistanceRight;
+extern distance DistanceLeft;
 
 /**
  * Used to initialize code/tasks/devices added using tools in VEXcode Pro.

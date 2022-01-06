@@ -18,9 +18,10 @@
   FLMotor.setStopping(brake_mode);
 
 void Test( void ) { // A test auton. Drives in a square 3 times, while rotating.
-  TurnTo(-24,-24,true,0,50);
-  wait(1,seconds);
-  DriveTo(-24,-24, 50);
+  frontAir.set(false);
+  Drive(12,100,true,true);
+  frontAir.set(true);
+  Drive(-12,100);
 }
 
 
@@ -482,7 +483,7 @@ void autonomous(void) {
   // Determining the auton to run based on the one selected.
   // advancedAdvancedSkills();
 
-  test();
+  Test();
 
   // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
   // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
