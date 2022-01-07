@@ -177,53 +177,70 @@ void advancedAdvancedSkills() {
 }
 void advancedSkills() {
 
-  frontAir.set(false);
-  backAir.set(false);
+  backAir.set(true);
+  wait(.3,sec);
+  tilt.set(true);
+  FrontLiftt(90);
 
-  DriveTo(36,60,90,8);
 
-  frontAir.set(true);
-  wait(0.25,seconds);
-  FrontLiftt(100, false);
+  RingLiftL.spin(forward,400,rpm);
+  RingLiftR.spin(forward,400,rpm);
 
-  TurnAndDrive(32,21,90,80,0,false,false); // Turn and Drive to line up with yellow nutral goal
+  repeat(15){
+    Drive(5);
+    Drive(-5);
+  }
 
-  wait(0.7, seconds); //
+  RingLiftL.setVelocity(0,percent);
+  RingLiftR.setVelocity(0,percent);
+
+  // frontAir.set(false);
+  // backAir.set(false);
+
+  // DriveTo(36,60,90,8);
+
+  // frontAir.set(true);
+  // wait(0.25,seconds);
+  // FrontLiftt(100, false);
+
+  // TurnAndDrive(32,21,90,80,0,false,false); // Turn and Drive to line up with yellow nutral goal
+
+  // wait(0.7, seconds); //
   
-  FrontLiftt(20, false); // put red alliance goal back down
+  // FrontLiftt(20, false); // put red alliance goal back down
 
-  TurnAndDrive(0,34.5,90,80,5,false); // Turn and Drive to yellow nutral goal, grab it, and lift it up
-  backAir.set(true);
-  wait(0.25,seconds);
-  BackLiftt(20,false);
+  // TurnAndDrive(0,34.5,90,80,5,false); // Turn and Drive to yellow nutral goal, grab it, and lift it up
+  // backAir.set(true);
+  // wait(0.25,seconds);
+  // BackLiftt(20,false);
 
-  TurnAndDrive(-60,60,90,80,13,false,true,1);
-  BackLiftt(0,false);
-  backAir.set(false);
-  DriveTo(-34,50,90);
+  // TurnAndDrive(-60,60,90,80,13,false,true,1);
+  // BackLiftt(0,false);
+  // backAir.set(false);
+  // DriveTo(-34,50,90);
 
-  TurnAndDrive(-60,32,90,80,6,false,true,2.5); //Turn and Drive to blue goal on red platform, grab it, and lift it up
-  backAir.set(true);
-  wait(0.5,seconds);
-  BackLiftt(100,false,30);
-  FrontLiftt(100,false);
+  // TurnAndDrive(-60,32,90,80,6,false,true,2.5); //Turn and Drive to blue goal on red platform, grab it, and lift it up
+  // backAir.set(true);
+  // wait(0.5,seconds);
+  // BackLiftt(100,false,30);
+  // FrontLiftt(100,false);
 
-  TurnAndDrive(-38,50,90,80);
-
-
-  TurnAndDrive(-38,-14.45,70,80);
-  TurnAndDrive(-60,0,80,80,21);//drive to platform
-  frontAir.set(false);
-  Drive(-12,100);
-  BackLiftt(50,false);
-  FrontLiftt(0);
-  TurnTo(0,0);
-  Drive(100, 100, false);
-  task::sleep(1000);
-  frontAir.set(true);
-  FrontLiftt(30);
+  // TurnAndDrive(-38,50,90,80);
 
 
+  // TurnAndDrive(-38,-14.45,70,80);
+  // TurnAndDrive(-60,0,80,80,21);//drive to platform
+  // frontAir.set(false);
+  // Drive(-12,100);
+  // BackLiftt(50,false);
+  // FrontLiftt(0);
+  // TurnTo(0,0);
+  // Drive(100, 100, false);
+  // task::sleep(1000);
+  // frontAir.set(true);
+  // FrontLiftt(30);
+
+  //######
 
   // frontAir.set(true);
   // FrontLiftt(100);
@@ -242,7 +259,13 @@ void advancedSkills() {
 }
 
 void easySkills() {
-  DriveFast(50);
+  backAir.set(false);
+  Drive(35,100,true,false,true,false,50);
+  backAir.set(true);
+  wait(0.5,seconds);
+  BackLiftt(20,false);
+  Drive(-35);
+  //DriveFast(50);
   // Drive(21,100);                //Drive straight to line up with right red alliance goal
   // Turn(87.5);                   //Turn towards the right red alliance goal
   // Drive(16.5,100);              //Drive to the right red alliance goal
@@ -482,9 +505,7 @@ void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
   // advancedAdvancedSkills();
-
-  Test();
-
+advancedAdvancedSkills();
   // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
   // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
   // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}

@@ -989,31 +989,14 @@ int GPS_H(){
 
 int ControllerGps(){
   while(true){
-    // Controller1.Screen.setCursor(3,1);
-    // Controller1.Screen.print(FrontSensorsSenseATouch);
-    // // Controller1.Screen.print(DistanceRight.objectDistance(inches));
-    // // Controller1.Screen.print(", ");
-    // // Controller1.Screen.print(DistanceLeft.objectDistance(inches));
-    // // Controller1.Screen.print(", ");
-    // // Controller1.Screen.print((DistanceLeft.objectDistance(inches)+DistanceRight.objectDistance(inches))/2);
-    // Controller1.Screen.print(", ");
-    // Controller1.Screen.print("GO");
-    // Controller1.Screen.print("           ");
-
-    // if(FrontSensorsSenseATouch){
-
-    //   Controller1.Screen.setCursor(3,1);
-    //   Controller1.Screen.print(FrontSensorsSenseATouch);
-    //   Controller1.Screen.print(", ");
-    //   Controller1.Screen.print("STOP");
-    //   Controller1.Screen.print("           ");
-
-    //   frontAir.set(true);
-    //   wait(.1,seconds);
-    //   frontAir.set(false);
-    //   wait(.1,seconds);
-    // }
-
+    Controller1.Screen.setCursor(3,1);
+    Controller1.Screen.print("(");
+    Controller1.Screen.print(GpsX);
+    Controller1.Screen.print(", ");
+    Controller1.Screen.print(GpsY);
+    Controller1.Screen.print(", ");
+    Controller1.Screen.print(std::round(GpsH));
+    Controller1.Screen.print(")        ");
     task::yield();
   }
   return 0;
