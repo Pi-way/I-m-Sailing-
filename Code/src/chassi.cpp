@@ -331,7 +331,7 @@ int _Drive_() {
     Error = std::abs(SessionDistance) - avgm;
 
     if(Error < ((3/12.566))*360 && (FrontButton || BackButton)){ //If error is less than ~3 inch AND you are waiting for a goal to touch
-      if (avgm > ((SessionMaxDistance/12.566))*360){ //If you have gone too far
+      if (std::abs(avgm) > std::abs(((SessionMaxDistance/12.566))*360)){ //If you have gone too far
         STAHP = true;
       }else{ //you haven't reached the goal and haven't gone too far.
         Error = ((3/12.566))*360; 
@@ -371,7 +371,7 @@ int _Drive_() {
       }
 
       if (FrontButton || BackButton || STAHP) {
-        if(Brain.Timer.systemHighResolution() - StartEndTime > 250000 || Brain.Timer.value() > 3){
+        if(Brain.Timer.systemHighResolution() - StartEndTime >= 0 || Brain.Timer.value() > 4){
           Condition = false;
         }
         if (STAHP){
@@ -572,7 +572,7 @@ int _DriveTo_ (){
 
       ReachedTarget = true;
 
-      if(Brain.Timer.systemHighResolution() - ReachedTargetTime > 250000 || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout){
+      if(Brain.Timer.systemHighResolution() - ReachedTargetTime > 0 || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout){
         break;
       }
     }
@@ -756,7 +756,7 @@ int _Turn_To_() {
 
       ReachedTarget = true;
 
-      if(Brain.Timer.systemHighResolution() - ReachedTargetTime > 500000){
+      if(Brain.Timer.systemHighResolution() - ReachedTargetTime >= 0){
         break;
       }
     }
