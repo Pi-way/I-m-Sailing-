@@ -23,3 +23,11 @@ void BackLiftt(float target, bool waitt, float speed){
 
 }
 
+void RingThing(float speed, float amount, bool waitt){
+  RingLiftL.setVelocity(speed,percent);
+  RingLiftR.setVelocity(speed,percent);
+
+  RingLiftL.spinFor(forward,amount*360,degrees,false);
+  RingLiftR.spinFor(forward,amount*360,degrees,waitt);
+}
+

@@ -47,58 +47,96 @@ void advancedAdvancedSkills() {
   FrontLiftt(100,false);
   wait(0.75,seconds);
   Turn(85,90);
-  Drive(-40,100,true,false,true,true,-70);
+  Drive(-40,100,true,false,true,true);
   backAir.set(true);//grab first yellow goal
 
-  TurnAndDrive(-40,2,90,90,3,false,false,2.5,2);
+  TurnAndDrive(-35,5,100,100,3,false,false,2,2);
   BackLiftt(100);
-  TurnAndDrive(-60,-2,90,90,16,false,false,2.5,1);
+  TurnAndDrive(-60,0,100,100,16,false,false,1.75,1.75);
   task::sleep(300);
   BackLiftt(75);
+  wait(1,sec);
   backAir.set(false);//drop yellow goal on platform
 
-  // BackLiftt(100);
-  // Drive(6);
-  // TurnAndDrive(-60,5,100,90,22,true,true,2.5,1.5);
-  // frontAir.set(false);//drop red goal on platform
+  Drive(6);
+  TurnAndDrive(-60,7,100,100,22,true,true,2.5,1.5);
 
-  // Drive(-6);
-  // TurnTo(-37,-58,90,true,0,3);
-  // FrontLiftt(0,false);
-  // DriveTo(-37,-59,100,-1,true,2.5);
-  // frontAir.set(true);//grab blue goal using front button (non-sail side)
+  FrontLiftt(75);
+  frontAir.set(false);//drop red goal on platform
 
-  // TurnAndDrive(-10,-10,90,90,6,false,false,2.5,1.25);
-  // FrontLiftt(30);
-  // BackLiftt(0);
-  // Drive(0);
-  // TurnAndDrive(0,0,50,80,-2,false);
-  // backAir.set(true);//grab middle goal
+  Drive(-6);
+  TurnTo(-38,-58,90,true,180,3);
+  BackLiftt(0,false);
+  DriveTo(-38,-59,80,-2,true,2.5);
+  backAir.set(true);//grab blue goal using front button (non-sail side)
+  wait(.25,sec);
+  tilt.set(true);
 
-  // task::sleep(300);
-  // BackLiftt(95, false);
-  // FrontLiftt(90, false);
-  // TurnAndDrive(60,0,100,90,18,false);
-  // BackLiftt(73);
-  // backAir.set(false);//dropping middle goal
-  // task::sleep(800);
-  // BackLiftt(75);
-  // Drive(5);
-  // TurnAndDrive(60,-3,90,80,17);
-  // frontAir.set(false);//dropping blue goal
+  RingLiftL.setVelocity(400,rpm);
+  RingLiftR.setVelocity(400,rpm);
 
-  // BackLiftt(10,false);
+  RingLiftL.spin(forward);
+  RingLiftR.spin(forward);
 
-  // TurnTo(0,38,100,true,180);
-  // Drive(-30,100,false,false,true);
-  // wait(0.5,seconds);
-  // BackLiftt(0);
-  // Drive(0);
-  // backAir.set(true);//grabbing yellow
-  // wait(0.5,seconds);
-  // BackLiftt(100,false);
+  TurnAndDrive(-10,-10,90,90,6,true,false,2.5,1.25);
+  FrontLiftt(0);
+  Drive(0);
+  TurnAndDrive(0,0,50,80,-1,true);
+  frontAir.set(true);//grab middle goal
 
-  // TurnAndDrive(-60,-2,90,90,16,false,false);
+  wait(0.25,sec);
+
+  FrontLiftt(95, false);
+  TurnAndDrive(60,0,50,100,18,true);
+  FrontLiftt(65,false);
+  wait(1,sec);
+  frontAir.set(false);//dropping middle goal
+
+  RingLiftL.stop();
+  RingLiftR.stop();
+
+  tilt.set(false);
+  BackLiftt(80,false);
+
+  RingLiftL.setVelocity(600,rpm);
+  RingLiftR.setVelocity(600,rpm);
+
+  RingLiftL.spin(reverse);
+  RingLiftR.spin(reverse);
+
+  Drive(-10);
+
+  TurnAndDrive(60,12,100,100,17,false);
+  backAir.set(false);//dropping blue goal
+
+  RingLiftL.stop();
+  RingLiftR.stop();
+
+  //FrontLiftt(10,false);
+
+  Drive(10);
+  BackLiftt(10);
+  TurnTo(36,60,70,true,180);
+  Drive(-30,100);
+  TurnTo(36,60,80,true,180);
+  Drive(-10,100,false,false,true);
+  BackLiftt(0,false);
+  Drive(0);
+  backAir.set(true);//grabbing red and tilt
+  FrontLiftt(0);
+  wait(0.25,seconds);
+  tilt.set(true);
+
+  RingLiftL.setVelocity(400,rpm);
+  RingLiftR.setVelocity(400,rpm);
+
+  RingLiftL.spin(forward);
+  RingLiftR.spin(forward);
+
+  TurnAndDrive(0,36,100,100,-1,true,false);
+  frontAir.set(true);
+  
+  //TurnAndDrive(-60,-2,90,90,16,false,false);
   // Drive(0);
   // BackLiftt(70);
   // backAir.set(false);

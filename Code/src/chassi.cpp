@@ -122,7 +122,7 @@ void Calibrate(){
   }
 
   BackLift.setPosition(0, degrees);
-  FrontLift.setPosition(0, degrees);
+  FrontLift.setPosition(-35, degrees);
 
   Calibrated = true;
 }
@@ -572,7 +572,7 @@ int _DriveTo_ (){
 
       ReachedTarget = true;
 
-      if(Brain.Timer.systemHighResolution() - ReachedTargetTime > 0 || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout){
+      if(Brain.Timer.systemHighResolution() - ReachedTargetTime >= 0 || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout){
         break;
       }
     }
@@ -962,6 +962,8 @@ void TurnAndDrive(float x_point, float y_point, float driveSpeed, float turnSpee
   DriveTo(x_point, y_point, driveSpeed, radius, driveWait, Drive_Timeout);
 }
 
+
+
 int GPS_X(){
   while(true){
     GpsX = (GPS5.xPosition(inches) + GPS5.xPosition(inches) + GPS5.xPosition(inches) + GPS5.xPosition(inches))/4;
@@ -997,6 +999,10 @@ int ControllerGps(){
     Controller1.Screen.print(", ");
     Controller1.Screen.print(std::round(GpsH));
     Controller1.Screen.print(")        ");
+
+    Controller2.Screen.setCursor(1,1);
+    Controller2.Screen.print(FrontLift.temperature(celsius));
+    Controller2.Screen.print("             ");
     task::yield();
   }
   return 0;
@@ -1006,7 +1012,7 @@ int FrontLiftSensors(){
 
   float RSD; // Right Sensor Distance
   float LSD; // Left Sensor Distance
-  const int SAMPLESIZE = 500;
+  const int SAMPLESIZE = 10;
 
   while(true){
 
