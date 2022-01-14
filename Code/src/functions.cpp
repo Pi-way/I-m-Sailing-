@@ -2,7 +2,7 @@
 void FrontLiftt(float target, bool waitt, float speed){
 
   float FrontLiftPos = FrontLift.position(degrees);
-  target = target/100.0 * 580.0;
+  target = target/100.0 * 625.0;
   float amount = target - FrontLiftPos;
 
   FrontLift.setVelocity(speed,percent);
@@ -14,7 +14,7 @@ void FrontLiftt(float target, bool waitt, float speed){
 void BackLiftt(float target, bool waitt, float speed){
   
   float BackLiftPos = BackLift.position(degrees);
-  target = target/100.0 * 580.0;
+  target = target/100.0 * 590.0;
   float amount = target - BackLiftPos;
 
   BackLift.setVelocity(speed,percent);
