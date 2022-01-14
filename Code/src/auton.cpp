@@ -219,6 +219,26 @@ void easySkills() {
 /****************** Right Code  *****************/
 
 void rightComplex() {
+  Drive(43,100, true);
+  Drive(2,70,false);
+  frontAir.set(true);
+  FrontLiftt(15);
+  Drive(-28,100,true);
+  Turn(-90);
+  Drive(-16);
+  backAir.set(true);
+  wait(.15, sec),
+  tilt.set(true);
+  Drive(6);
+  RingLiftL.spin(forward,400,rpm);
+  RingLiftR.spin(forward,400,rpm);
+  wait(.5, sec);
+  Drive(24,80,false);
+  FrontLiftt(0);
+
+
+}
+void rightSimple() {
   Drive(-12);
   backAir.set(true);
   wait(.25,sec);
@@ -240,9 +260,22 @@ void rightComplex() {
   tilt.set(false);
 
 }
-void rightSimple() {
-}
 void rightWinPoint() {
+  Drive(44,100,true,true,false,true);
+  frontAir.set(true);
+  wait(.2, sec);
+  FrontLiftt(15);
+  Drive(-18);
+  Turn(100);
+  Drive(-28);
+  Drive(-4,70,true,false,true,true);
+  backAir.set(true);
+  BackLiftt(15);
+  Turn(20);
+  Drive(55);
+  BackLiftt(0);
+  FrontLiftt(0);
+
 
 }
 
@@ -259,7 +292,7 @@ void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
   // advancedAdvancedSkills();
-rightComplex();
+rightWinPoint();
   // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
   // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
   // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
