@@ -4,18 +4,18 @@ using namespace vex;
 extern brain Brain;
 
 // VEXcode devices
-extern SmartMotor FRMotor;
-extern SmartMotor FLMotor;
-extern SmartMotor BRMotor;
-extern SmartMotor BLMotor;
-extern SmartMotor RingLiftL;
-extern SmartMotor RingLiftR;
+extern motor FRMotor;
+extern motor FLMotor;
+extern motor BRMotor;
+extern motor BLMotor;
+extern motor RingLiftL;
+extern motor RingLiftR;
 extern controller Controller1;
 extern controller Controller2;
 extern gps GPS5;
-extern SmartMotor FrontLift;
+extern motor FrontLift;
 extern inertial Inertial;
-extern SmartMotor BackLift;
+extern motor BackLift;
 extern digital_out frontAir;
 extern digital_out backAir;
 extern digital_out tilt;
