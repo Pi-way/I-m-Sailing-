@@ -122,7 +122,7 @@ void Calibrate(){
   }
 
   BackLift.setPosition(0, degrees);
-  FrontLift.setPosition(-35, degrees);
+  FrontLift.setPosition(0, degrees);
 
   Calibrated = true;
 }

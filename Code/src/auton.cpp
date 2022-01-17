@@ -46,7 +46,7 @@ void advancedAdvancedSkills() {
 
   FrontLiftt(100,false);
   wait(0.75,seconds);
-  Turn(85,90);
+  Turn(80,90);
   Drive(-40,100,true,false,true,true);
   backAir.set(true);//grab first yellow goal
 
@@ -55,20 +55,21 @@ void advancedAdvancedSkills() {
   TurnAndDrive(-60,0,100,100,16,false,false,1.75,1.75);
   task::sleep(300);
   BackLiftt(75);
-  wait(1,sec);
+  wait(.25,sec);
   backAir.set(false);//drop yellow goal on platform
 
   Drive(6);
-  TurnAndDrive(-60,7,100,100,22,true,true,2.5,1.5);
+  TurnAndDrive(-60,7,100,100,10,true,true,2.5,2);
 
   FrontLiftt(75);
   frontAir.set(false);//drop red goal on platform
 
   Drive(-6);
-  TurnTo(-38,-58,90,true,180,3);
+  TurnTo(-36,-36,90,true,180,3);
   BackLiftt(0,false);
-  DriveTo(-36,-59,80,-2,true,2.5);
-  backAir.set(true);//grab blue goal using front button (non-sail side)
+  DriveTo(-36,-36,80,0,true,1.5);
+  TurnAndDrive(-36,-60,100,100,-2,false,true,3,3);
+  backAir.set(true);//grab blue goal
   wait(.25,sec);
   tilt.set(true);
 
@@ -79,7 +80,7 @@ void advancedAdvancedSkills() {
   RingLiftR.spin(forward);
 
   TurnAndDrive(-10,-10,90,90,6,true,false,2.5,1.25);
-  FrontLiftt(2.5);
+  FrontLiftt(2);
   Drive(0);
   TurnAndDrive(0,0,50,80,-1,true);
   frontAir.set(true);//grab middle goal
@@ -107,7 +108,7 @@ void advancedAdvancedSkills() {
 
   Drive(-10);
 
-  TurnAndDrive(60,12,100,100,17,false);
+  TurnAndDrive(60,16,100,100,17,false);
   backAir.set(false);//dropping blue goal
 
   RingLiftL.stop();
@@ -134,9 +135,9 @@ void advancedAdvancedSkills() {
   // RingLiftL.spin(forward);
   // RingLiftR.spin(forward);
 
-  TurnAndDrive(0,34,100,100,-1,true,true);
+  TurnAndDrive(0,36,100,100,-1,true,true);
   frontAir.set(true);
-  TurnAndDrive(-60,8,90,90,8,true,false);
+  TurnAndDrive(-60,8,90,90,12,true,false);
   FrontLiftt(75);
   Drive(0);
   frontAir.set(false);
@@ -281,30 +282,62 @@ void rightWinPoint() {
 
 /****************** Left Code  ******************/
 
-void leftComplex() {
+void leftComplex() {//untested
+  backAir.set(true);
+  wait(.25,sec);
+  BackLiftt(100,false);
+  wait(.75,sec);
+  Turn(90);
+  Drive(30,100,true,true,false,false,40);
+  frontAir.set(true);
+  wait(.25,sec);
+  FrontLiftt(50);
+  Drive(-15,false);
+  BackLiftt(0);
+  tilt.set(true);
+  Turn(90);
+  RingLiftL.spin(forward,400,rpm);
+  RingLiftR.spin(forward,400,rpm);
+  Drive(40,30);
+
 }
 void leftSimple() {
+  backAir.set(true);
+  FrontLiftt(90,false);
+  wait(1,sec);
+  RingLiftL.spin(forward,400,rpm);
+  RingLiftR.spin(forward,400,rpm);
+  Drive(20,50,false);
+  wait(.25, sec);
+  tilt.set(true);
+  repeat(3){
+    Drive(-15,50);
+    Drive(15,50);
+  }
+  tilt.set(false);
+  
 }
 void leftWinPoint() {
+
 }
 
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
-  // advancedAdvancedSkills();
-rightWinPoint();
-  // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
-  // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-  // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
-  // else {
-  //   if (side==LEFT) {
-  //     if (mode==SIMPLE) {leftSimple();}
-  //     else if (mode==COMPLEX) {leftComplex();}
-  //     else if (mode==WINPOINT) {leftWinPoint();}
-  //   } else if (side==RIGHT) {
-  //     if (mode==SIMPLE) {rightSimple();}
-  //     else if (mode==COMPLEX) {rightComplex();}
-  //     else if (mode==WINPOINT) {rightWinPoint();}
-  //   }
-  // }
+// advancedAdvancedSkills();
+  //advancedAdvancedSkills();
+  if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
+  if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+  if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
+  else {
+    if (side==LEFT) {
+      if (mode==SIMPLE) {leftSimple();}
+      else if (mode==COMPLEX) {leftComplex();}
+      else if (mode==WINPOINT) {leftWinPoint();}
+    } else if (side==RIGHT) {
+      if (mode==SIMPLE) {rightSimple();}
+      else if (mode==COMPLEX) {rightComplex();}
+      else if (mode==WINPOINT) {rightWinPoint();}
+    }
+  }
 }
