@@ -516,27 +516,6 @@ int _DriveTo_ (){
         Error = 5;//this keeps the pid moving for longer than usual when trying to grab a goal.
       }
     }
-
-    // if(LimitSwitchBack && LimSwitchBack.pressing()){
-    //   Controller1.Screen.clearLine(2);
-    //   Controller1.Screen.setCursor(1,2);
-    //   Controller1.Screen.print("Pressing");
-    // }else{
-    //   Controller1.Screen.clearLine(2);
-    //   Controller1.Screen.setCursor(1,2);
-    //   Controller1.Screen.print("Nope");
-    // }
-
-    // if(LimitSwitchFront && LimSwitchFront.pressing()){
-    //   Controller1.Screen.clearLine(2);
-    //   Controller1.Screen.setCursor(1,2);
-    //   Controller1.Screen.print("Pressing");
-    // }else{
-    //   Controller1.Screen.clearLine(2);
-    //   Controller1.Screen.setCursor(1,2);
-    //   Controller1.Screen.print("Nope");
-    // }
-
     SmartVoltage = GetClosestToZero(Error, Ramp * (Error/std::abs(Error)));                   //this is to keep wheels from slipping, ultimately resulting in a faster turn.
 
     Integral = Integral + Error;

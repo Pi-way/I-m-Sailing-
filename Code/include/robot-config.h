@@ -1,20 +1,21 @@
 using namespace vex;
+#include "CoustomMotorClass.h"
 
 extern brain Brain;
 
 // VEXcode devices
-extern motor FRMotor;
-extern motor FLMotor;
-extern motor BRMotor;
-extern motor BLMotor;
-extern motor RingLiftL;
-extern motor RingLiftR;
+extern SmartMotor FRMotor;
+extern SmartMotor FLMotor;
+extern SmartMotor BRMotor;
+extern SmartMotor BLMotor;
+extern SmartMotor RingLiftL;
+extern SmartMotor RingLiftR;
 extern controller Controller1;
 extern controller Controller2;
 extern gps GPS5;
-extern motor FrontLift;
+extern SmartMotor FrontLift;
 extern inertial Inertial;
-extern motor BackLift;
+extern SmartMotor BackLift;
 extern digital_out frontAir;
 extern digital_out backAir;
 extern digital_out tilt;
