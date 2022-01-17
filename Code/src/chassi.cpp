@@ -36,12 +36,12 @@ bool FrontSensorsSenseATouch = false;
 bool Calibrated = false;
 int PIDsRunning = 0;
 float Drive_balance = -0.045;
-float TKp = 0.5;
-float TKi = 0.025;
-float TKd = 0.001;
+float TKp = .5;
+float TKi = .25;
+float TKd = 0.01;
 
-float Kp = 0.05;
-float Ki = 0.01;
+float Kp = 0.1;
+float Ki = 0.1;
 float Kd = 0.05;
 
 
@@ -49,8 +49,8 @@ float fKp = 0.05;
 float fKi = 0.01;
 float fKd = 0.1;
 
-float DKp = 0.6;
-float DKi = 0.2;
+float DKp = 100;
+float DKi = 5;
 float DKd = 0.1;
 
 float Distance;
@@ -551,7 +551,7 @@ int _DriveTo_ (){
 
       ReachedTarget = true;
 
-      if(Brain.Timer.systemHighResolution() - ReachedTargetTime >= 0 || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout){
+      if(Brain.Timer.systemHighResolution() - ReachedTargetTime >= 250000 || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout){
         break;
       }
     }
@@ -560,7 +560,7 @@ int _DriveTo_ (){
 
   }  
 
-  Drivetrain(stop(coast);)
+  Drivetrain(stop(brake);)
 
   PIDsRunning --;
 
@@ -701,12 +701,12 @@ int _Turn_To_() {
     Error = SessionTurn;
     // Error = (1/(1+ powf(2.718, -(SessionTurn)/9.5))) * (SessionMaxSpeed*2) - SessionMaxSpeed;
 
-    Integral = std::abs(Integral + Error) * std::abs(Error)/Error;
+    Integral = Integral + Error;
     if(Integral > 40)(Integral = Error);
     Derivative = Error - PreviousError;
     if (Error == 0) {Integral = 0;} //these are to prevent the integral from getting too large
-    if (std::abs(Error) > 1.5) {Integral = 0;}
-    if (std::abs(Error) > std::abs(SessionMaxSpeed/12)) {Integral = 0;}
+    if (std::abs(Voltage) > 5) {Integral = 0;}
+    //if (std::abs(Error) > std::abs(SessionMaxSpeed/12)) {Integral = 0;}
 
     Ramp += 1;
     PreviousError = Error;
@@ -735,7 +735,7 @@ int _Turn_To_() {
 
       ReachedTarget = true;
 
-      if(Brain.Timer.systemHighResolution() - ReachedTargetTime >= 0){
+      if(Brain.Timer.systemHighResolution() - ReachedTargetTime >= 250000){
         break;
       }
     }
@@ -971,7 +971,7 @@ int GPS_H(){
 int ControllerGps(){
   while(true){
     Controller1.Screen.setCursor(3,1);
-    Controller1.Screen.print("(");
+    Controller1.Screen.print(FrontSensorsSenseATouch);
     Controller1.Screen.print(GpsX);
     Controller1.Screen.print(", ");
     Controller1.Screen.print(GpsY);
@@ -991,7 +991,7 @@ int FrontLiftSensors(){
 
   float RSD; // Right Sensor Distance
   float LSD; // Left Sensor Distance
-  const int SAMPLESIZE = 10;
+  const int SAMPLESIZE = 1;
 
   while(true){
 

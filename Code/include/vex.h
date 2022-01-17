@@ -16,7 +16,6 @@
 #include "v5.h"
 #include "v5_vcs.h"
 
-#include "CoustomMotorClass.h"
 #include "robot-config.h"
 #include "functions.h"
 #include "chassi.h"

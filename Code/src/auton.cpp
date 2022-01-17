@@ -18,10 +18,7 @@
   FLMotor.setStopping(brake_mode);
 
 void Test( void ) { // A test auton. Drives in a square 3 times, while rotating.
-  frontAir.set(false);
-  Drive(12,100,true,true);
-  frontAir.set(true);
-  Drive(-12,100);
+  RingThing(400,1000);
 }
 
 
@@ -52,14 +49,14 @@ void advancedAdvancedSkills() {
 
   TurnAndDrive(-35,5,100,100,3,false,false,2,2);
   BackLiftt(96);
-  TurnAndDrive(-60,0,100,100,16,false,false,1.75,1.75);
+  TurnAndDrive(-60,0,100,100,24,false,false,1.75,1.75);
   task::sleep(300);
   BackLiftt(75);
   wait(.25,sec);
   backAir.set(false);//drop yellow goal on platform
 
   Drive(6);
-  TurnAndDrive(-60,7,100,100,10,true,true,2.5,2);
+  TurnAndDrive(-60,7,100,100,24,true,true,2.5,2);
 
   FrontLiftt(75);
   frontAir.set(false);//drop red goal on platform
@@ -88,18 +85,18 @@ void advancedAdvancedSkills() {
   wait(0.25,sec);
 
   FrontLiftt(85, false);  
+
+
+  TurnAndDrive(60,0,50,100,24,true);
+  FrontLiftt(62,false);
+  wait(1,sec);
+  frontAir.set(false);//dropping middle goal
+
   RingLiftL.setVelocity(400,rpm);
   RingLiftR.setVelocity(400,rpm);
 
   RingLiftL.spin(reverse);
   RingLiftR.spin(reverse);
-  TurnAndDrive(60,0,50,100,18,true);
-  FrontLiftt(62,false);
-  wait(1,sec);
-  frontAir.set(false);//dropping middle goal
-
-  RingLiftL.stop();
-  RingLiftR.stop();
 
   tilt.set(false);
   BackLiftt(80,false);
@@ -108,7 +105,7 @@ void advancedAdvancedSkills() {
 
   Drive(-10);
 
-  TurnAndDrive(60,16,100,100,17,false);
+  TurnAndDrive(60,8,100,100,24,false);
   backAir.set(false);//dropping blue goal
 
   RingLiftL.stop();
@@ -137,7 +134,7 @@ void advancedAdvancedSkills() {
 
   TurnAndDrive(0,36,100,100,-1,true,true);
   frontAir.set(true);
-  TurnAndDrive(-60,8,90,90,12,true,false);
+  TurnAndDrive(-60,0,90,90,24,true,false);
   FrontLiftt(75);
   Drive(0);
   frontAir.set(false);
@@ -326,18 +323,19 @@ void autonomous(void) {
   // Determining the auton to run based on the one selected.
 // advancedAdvancedSkills();
   //advancedAdvancedSkills();
-  if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
-  if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-  if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
-  else {
-    if (side==LEFT) {
-      if (mode==SIMPLE) {leftSimple();}
-      else if (mode==COMPLEX) {leftComplex();}
-      else if (mode==WINPOINT) {leftWinPoint();}
-    } else if (side==RIGHT) {
-      if (mode==SIMPLE) {rightSimple();}
-      else if (mode==COMPLEX) {rightComplex();}
-      else if (mode==WINPOINT) {rightWinPoint();}
-    }
-  }
+  Test();
+  // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
+  // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+  // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
+  // else {
+  //   if (side==LEFT) {
+  //     if (mode==SIMPLE) {leftSimple();}
+  //     else if (mode==COMPLEX) {leftComplex();}
+  //     else if (mode==WINPOINT) {leftWinPoint();}
+  //   } else if (side==RIGHT) {
+  //     if (mode==SIMPLE) {rightSimple();}
+  //     else if (mode==COMPLEX) {rightComplex();}
+  //     else if (mode==WINPOINT) {rightWinPoint();}
+  //   }
+  // }
 }

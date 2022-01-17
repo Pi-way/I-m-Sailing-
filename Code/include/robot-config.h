@@ -1,5 +1,4 @@
 using namespace vex;
-#include "CoustomMotorClass.h"
 
 extern brain Brain;
 
