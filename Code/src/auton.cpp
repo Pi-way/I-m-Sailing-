@@ -283,37 +283,37 @@ void rightWinPoint() {
 
 void leftComplex() {//untested
   backAir.set(true);
-  wait(.25,sec);
-  BackLiftt(100,false);
-  wait(.75,sec);
-  Turn(90);
-  Drive(30,100,true,true,false,false,40);
-  frontAir.set(true);
-  wait(.25,sec);
-  FrontLiftt(50);
-  Drive(-15,false);
-  BackLiftt(0);
+  wait(.25, sec);
   tilt.set(true);
-  Turn(90);
-  RingLiftL.spin(forward,400,rpm);
-  RingLiftR.spin(forward,400,rpm);
-  Drive(40,30);
+  Turn(94,80);
+  Drive(47,90,true,true);
+  frontAir.set(true);
+  FrontLiftt(15);
+  Turn(-78,80,false);
+  FrontLiftt(90);
+  StartRingThing();
+  Drive(18,60);
+  Drive(-4);
+  Turn(96);
+  Drive(-42);
+  FrontLiftt(0);
+  tilt.set(false);
 
 }
 void leftSimple() {
   backAir.set(true);
-  FrontLiftt(90,false);
-  wait(1,sec);
-  RingLiftL.spin(forward,400,rpm);
-  RingLiftR.spin(forward,400,rpm);
-  Drive(20,50,false);
   wait(.25, sec);
   tilt.set(true);
-  repeat(3){
-    Drive(-15,50);
-    Drive(15,50);
+  FrontLiftt(50);
+  StartRingThing();
+  Drive(2);
+  repeat(7){
+    Drive(8,60);
+    Drive(-8,60);
   }
+  //BackLiftt(15);
   tilt.set(false);
+
   
 }
 void leftWinPoint() {
@@ -324,7 +324,7 @@ void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
 // advancedAdvancedSkills();
-  advancedAdvancedSkills();
+  leftComplex();
   // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
   // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
   // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
