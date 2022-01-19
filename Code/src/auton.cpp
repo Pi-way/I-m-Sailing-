@@ -18,7 +18,9 @@
   FLMotor.setStopping(brake_mode);
 
 void Test( void ) { // A test auton. Drives in a square 3 times, while rotating.
-  RingThing(400,1000);
+  StartRingThing();
+  wait(10,sec);
+  StopRingThing();
 }
 
 
@@ -43,7 +45,7 @@ void advancedAdvancedSkills() {
 
   FrontLiftt(100,false);
   wait(0.75,seconds);
-  Turn(80,90);
+  Turn(93,80);
   Drive(-40,100,true,false,true,true);
   backAir.set(true);//grab first yellow goal
 
@@ -63,40 +65,31 @@ void advancedAdvancedSkills() {
 
   Drive(-6);
   TurnTo(-36,-36,90,true,180,3);
-  BackLiftt(0,false);
-  DriveTo(-36,-36,80,0,true,1.5);
-  TurnAndDrive(-36,-60,100,100,-2,false,true,3,3);
+  TurnAndDrive(-36,-60,100,100,-2,false,false,3,3);
+  BackLiftt(-2,false,70);
+  Drive(0);
   backAir.set(true);//grab blue goal
   wait(.25,sec);
   tilt.set(true);
 
-  RingLiftL.setVelocity(400,rpm);
-  RingLiftR.setVelocity(400,rpm);
-
-  RingLiftL.spin(forward);
-  RingLiftR.spin(forward);
+  
 
   TurnAndDrive(-10,-10,90,90,6,true,false,2.5,1.25);
+  StartRingThing();
   FrontLiftt(2);
   Drive(0);
-  TurnAndDrive(0,0,50,80,-1,true);
+  TurnAndDrive(1,1,50,80,-1,true);
   frontAir.set(true);//grab middle goal
-
   wait(0.25,sec);
 
+  TurnAndDrive(60,4,50,100,24,true,false);
   FrontLiftt(85, false);  
-
-
-  TurnAndDrive(60,0,50,100,24,true);
+  Drive(0);
   FrontLiftt(62,false);
   wait(1,sec);
   frontAir.set(false);//dropping middle goal
 
-  RingLiftL.setVelocity(400,rpm);
-  RingLiftR.setVelocity(400,rpm);
-
-  RingLiftL.spin(reverse);
-  RingLiftR.spin(reverse);
+  StopRingThing();
 
   tilt.set(false);
   BackLiftt(80,false);
@@ -105,7 +98,7 @@ void advancedAdvancedSkills() {
 
   Drive(-10);
 
-  TurnAndDrive(60,8,100,100,24,false);
+  TurnAndDrive(60,10,100,100,26,false);
   backAir.set(false);//dropping blue goal
 
   RingLiftL.stop();
@@ -114,6 +107,7 @@ void advancedAdvancedSkills() {
   //FrontLiftt(10,false);
 
   Drive(10);
+  BackLiftt(0,false);
   FrontLiftt(2.5,false);
   // TurnTo(36,60,70,true,180);
   // Drive(-30,100);
@@ -132,13 +126,21 @@ void advancedAdvancedSkills() {
   // RingLiftL.spin(forward);
   // RingLiftR.spin(forward);
 
-  TurnAndDrive(0,36,100,100,-1,true,true);
+  TurnAndDrive(36,40,100,80,0,false,true,2.5,3);
+  TurnAndDrive(36,60,100,80,-2,false,true);
+  backAir.set(true);
+  wait(.2, sec);
+  tilt.set(true);
+  StartRingThing();
+  TurnAndDrive(0,35,100,100,-1,true,true);
   frontAir.set(true);
-  TurnAndDrive(-60,0,90,90,24,true,false);
+  TurnAndDrive(-60,6,90,90,24,true,false);
+  
   FrontLiftt(75);
   Drive(0);
   frontAir.set(false);
-  Drive(-20);
+  Drive(-5);
+  Turn(-45);
   
   //TurnAndDrive(-60,-2,90,90,16,false,false);
   // Drive(0);
@@ -322,8 +324,7 @@ void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
 // advancedAdvancedSkills();
-  //advancedAdvancedSkills();
-  Test();
+  advancedAdvancedSkills();
   // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
   // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
   // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}

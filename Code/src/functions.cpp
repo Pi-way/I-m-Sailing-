@@ -6,6 +6,8 @@ float Waittt;
 task RingTHING;
 int RingThingsRunning = 0;
 
+bool RTS = false;
+
 void FrontLiftt(float target, bool Waitttt, float speed){
 
   float FrontLiftPos = FrontLift.position(degrees);
@@ -33,6 +35,7 @@ void BackLiftt(float target, bool Waitttt, float speed){
 int Please(){
 
   RingThingsRunning ++;
+  RTS = false;
 
   while(RingThingsRunning > 1){
     task::yield();
@@ -46,24 +49,33 @@ int Please(){
 
   RingLiftL.setPosition(0,degrees);
 
-  while(true){//RingLiftL.position(degrees) < Amount * 360
-    while(std::abs(RingLiftL.velocity(rpm)) > Speed / 50 && RingLiftL.position(degrees) < Amount * 360){
-      RingLiftL.setVelocity(Speed,rpm);
-      RingLiftR.setVelocity(Speed,rpm);
+  while(!RTS){//RingLiftL.position(degrees) < Amount * 360
+    RingLiftL.setVelocity(Speed,rpm);
+    RingLiftR.setVelocity(Speed,rpm);
+    wait(.25,sec);
+    while(std::abs(RingLiftL.velocity(rpm)) > 0.65 * Speed && RingLiftL.position(degrees) < Amount * 360 && !RTS){
+      task::yield();
     }
-    while(std::abs(RingLiftL.velocity(rpm)) < Speed / 50 && RingLiftL.position(degrees) < Amount * 360){
-      RingLiftL.setVelocity(-100,pct);
-      RingLiftR.setVelocity(-100,pct);
+    RingLiftL.setVelocity(-100,pct);
+    RingLiftR.setVelocity(-100,pct);
+    wait(.125,sec);
+    while(std::abs(RingLiftL.velocity(rpm)) < Speed / 2 && RingLiftL.position(degrees) < Amount * 360 && !RTS){
+      task::yield();
     }
+
+    
   }
 
   RingLiftL.setVelocity(0,percent);
   RingLiftR.setVelocity(0,percent);
 
   RingThingsRunning -= 1;
+  RTS = false;
+
+  return 0;
 }
 
-void RingThing(float speed, float amount, bool Waitttt){
+void StartRingThing(float speed, float amount, bool Waitttt){
   Speed = speed;
   Amount = amount;
   if(Waitttt){
@@ -72,6 +84,10 @@ void RingThing(float speed, float amount, bool Waitttt){
     RingTHING = task(Please);
   }
 
+}
+
+void StopRingThing(){
+  RTS = true;
 }
 
 
