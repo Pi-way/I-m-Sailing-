@@ -82,7 +82,7 @@ void advancedAdvancedSkills() {
   frontAir.set(true);//grab middle goal
   wait(0.25,sec);
 
-  TurnAndDrive(60,-1,50,100,24,true,false);
+  TurnAndDrive(60,0,50,100,24,true,false);
   FrontLiftt(85, false);  
   Drive(0);
   FrontLiftt(62,false);
@@ -338,7 +338,7 @@ void leftWinPoint() {
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
- advancedAdvancedSkills();
+ leftWinPoint();
 
   // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
   // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}

@@ -971,7 +971,7 @@ int GPS_H(){
 int ControllerGps(){
   while(true){
     Controller1.Screen.setCursor(3,1);
-    Controller1.Screen.print(FrontSensorsSenseATouch);
+    Controller1.Screen.print("(");
     Controller1.Screen.print(GpsX);
     Controller1.Screen.print(", ");
     Controller1.Screen.print(GpsY);
