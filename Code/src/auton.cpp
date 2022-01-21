@@ -51,14 +51,14 @@ void advancedAdvancedSkills() {
 
   TurnAndDrive(-35,5,100,100,3,false,false,2,2);
   BackLiftt(96);
-  TurnAndDrive(-60,0,100,100,24,false,false,1.75,1.75);
+  TurnAndDrive(-60,-4,100,100,24,false,false,1.75,1.75);
   task::sleep(300);
   BackLiftt(75);
   wait(.25,sec);
   backAir.set(false);//drop yellow goal on platform
 
-  Drive(6);
-  TurnAndDrive(-60,7,100,100,24,true,true,2.5,2);
+  Drive(10);
+  TurnAndDrive(-60,0,100,100,24,true,true,2.5,2);
 
   FrontLiftt(75);
   frontAir.set(false);//drop red goal on platform
@@ -82,7 +82,7 @@ void advancedAdvancedSkills() {
   frontAir.set(true);//grab middle goal
   wait(0.25,sec);
 
-  TurnAndDrive(60,0,50,100,24,true,false);
+  TurnAndDrive(60,-1,50,100,24,true,false);
   FrontLiftt(85, false);  
   Drive(0);
   FrontLiftt(62,false);
@@ -98,7 +98,7 @@ void advancedAdvancedSkills() {
 
   Drive(-10);
 
-  TurnAndDrive(60,10,100,100,26,false);
+  TurnAndDrive(60,6,100,100,26,false);
   backAir.set(false);//dropping blue goal
 
   RingLiftL.stop();
