@@ -82,7 +82,7 @@ void advancedAdvancedSkills() {
   frontAir.set(true);//grab middle goal
   wait(0.25,sec);
 
-  TurnAndDrive(60,4,50,100,24,true,false);
+  TurnAndDrive(60,0,50,100,24,true,false);
   FrontLiftt(85, false);  
   Drive(0);
   FrontLiftt(62,false);
@@ -317,14 +317,29 @@ void leftSimple() {
   
 }
 void leftWinPoint() {
+  backAir.set(true);
+  FrontLiftt(15);
+  wait(.25, sec);
+  tilt.set(true);
+  Drive(6,90,false);
+  StartRingThing();
+  Turn(90,80);
+  Drive(17);
+  Turn(88,80);
+  Drive(98,80,false);
+  FrontLiftt(30);
+  Drive(0);
+  frontAir.set(true);
+  Drive(-10);
+
 
 }
 
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
-// advancedAdvancedSkills();
-  leftComplex();
+ advancedAdvancedSkills();
+
   // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
   // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
   // if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
