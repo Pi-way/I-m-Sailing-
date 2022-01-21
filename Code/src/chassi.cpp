@@ -1004,7 +1004,7 @@ int FrontLiftSensors(){
       task::yield();
     } 
     
-    if(RSD < 1.4 && LSD < 1.4){
+    if(RSD < 1.6 && LSD < 1.6){
       FrontSensorsSenseATouch = true;
     }else{
       FrontSensorsSenseATouch = false;

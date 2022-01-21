@@ -58,7 +58,7 @@ void advancedAdvancedSkills() {
   backAir.set(false);//drop yellow goal on platform
 
   Drive(10);
-  TurnAndDrive(-60,0,100,100,24,true,true,2.5,2);
+  TurnAndDrive(-60,4,100,100,24,true,true,2.5,2);
 
   FrontLiftt(75);
   frontAir.set(false);//drop red goal on platform
@@ -82,7 +82,7 @@ void advancedAdvancedSkills() {
   frontAir.set(true);//grab middle goal
   wait(0.25,sec);
 
-  TurnAndDrive(60,0,50,100,24,true,false);
+  TurnAndDrive(60,2,50,100,24,true,false);
   FrontLiftt(85, false);  
   Drive(0);
   FrontLiftt(62,false);
@@ -98,7 +98,7 @@ void advancedAdvancedSkills() {
 
   Drive(-10);
 
-  TurnAndDrive(60,6,100,100,26,false);
+  TurnAndDrive(60,8,100,100,26,false);
   backAir.set(false);//dropping blue goal
 
   RingLiftL.stop();
@@ -338,7 +338,7 @@ void leftWinPoint() {
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
- leftWinPoint();
+ advancedAdvancedSkills();
 
   // if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
   // if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
