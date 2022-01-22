@@ -82,7 +82,7 @@ void advancedAdvancedSkills() {
   frontAir.set(true);//grab middle goal
   wait(0.25,sec);
 
-  TurnAndDrive(60,2,50,100,24,true,false);
+  TurnAndDrive(60,8,50,100,24,true,false);
   FrontLiftt(85, false);  
   Drive(0);
   FrontLiftt(62,false);
