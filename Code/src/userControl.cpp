@@ -47,11 +47,11 @@ int Lift(){
       RingLiftR.stop(coast);
     }
 
-    if(Controller1.ButtonR1.pressing() && BackLift.position(degrees) < 580) {
-      BackLift.setVelocity(100, percent);
-    } else if(Controller1.ButtonY.pressing()){
+    if(Controller1.ButtonR1.pressing() && Controller1.ButtonR2.pressing()) {
       BackLift.setVelocity(-100, percent);
-    } else if (Controller1.ButtonR2.pressing() && BackLift.position(degrees) > 20){
+    } else if(Controller1.ButtonR1.pressing() && BackLift.position(degrees) < 580){
+      BackLift.setVelocity(100, percent);
+    } else if (Controller1.ButtonR2.pressing() && BackLift.position(degrees) > 18){
       BackLift.setVelocity(-100, percent);
     } else {
       BackLift.setVelocity(0,percent);
