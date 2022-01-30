@@ -945,44 +945,68 @@ void TurnAndDrive(float x_point, float y_point, float driveSpeed, float turnSpee
 
 int GPS_X(){
   while(true){
-    GpsX = (GPS5.xPosition(inches) + GPS5.xPosition(inches) + GPS5.xPosition(inches) + GPS5.xPosition(inches))/4;
-    task::yield();
+    if(GPSRight.quality() > 90){
+      GpsX = (GPSRight.xPosition(inches) + GPSRight.xPosition(inches) + GPSRight.xPosition(inches) + GPSRight.xPosition(inches))/4;
+      task::yield();
+    } else {
+      GpsX = (GPSLeft.xPosition(inches) + GPSLeft.xPosition(inches) + GPSLeft.xPosition(inches) + GPSLeft.xPosition(inches))/4;
+      task::yield();
+    }
   }
   return 0;
 }
 
 int GPS_Y(){
   while(true){
-    GpsY = (GPS5.yPosition(inches) + GPS5.yPosition(inches) + GPS5.yPosition(inches) + GPS5.yPosition(inches))/4;
-    task::yield();
+    if(GPSRight.quality() > 90){
+      GpsY = (GPSRight.yPosition(inches) + GPSRight.yPosition(inches) + GPSRight.yPosition(inches) + GPSRight.yPosition(inches))/4;
+      task::yield();
+    } else {
+      GpsY = (GPSLeft.yPosition(inches) + GPSLeft.yPosition(inches) + GPSLeft.yPosition(inches) + GPSLeft.yPosition(inches))/4;
+      task::yield();
+    }
   }
   return 0;
 }
 
 int GPS_H(){
   while(true){
-    GpsH = (-GPS5.heading() -GPS5.heading() -GPS5.heading() -GPS5.heading())/4;
-    RotationG = (GPS5.rotation() + GPS5.rotation() + GPS5.rotation() + GPS5.rotation())/4;
-    task::yield();
+    if(GPSRight.quality() > 90){
+      GpsH = (-GPSRight.heading() -GPSRight.heading() -GPSRight.heading() -GPSRight.heading())/4;
+      RotationG = (GPSRight.rotation() + GPSRight.rotation() + GPSRight.rotation() + GPSRight.rotation())/4;
+      task::yield();
+    } else {
+      GpsH = (-GPSLeft.heading() -GPSLeft.heading() -GPSLeft.heading() -GPSLeft.heading())/4;
+      RotationG = (GPSLeft.rotation() + GPSLeft.rotation() + GPSLeft.rotation() + GPSLeft.rotation())/4;
+      task::yield();      
+    }
   }
   return 0;
 }
 
 int ControllerGps(){
   while(true){
-    Controller1.Screen.setCursor(3,1);
-    Controller1.Screen.print("(");
-    Controller1.Screen.print(GpsX);
-    Controller1.Screen.print(", ");
-    Controller1.Screen.print(GpsY);
-    Controller1.Screen.print(", ");
-    Controller1.Screen.print(std::round(GpsH));
-    Controller1.Screen.print(")        ");
-
-    Controller2.Screen.setCursor(1,1);
-    Controller2.Screen.print(FrontLift.temperature(celsius));
-    Controller2.Screen.print("             ");
-    task::yield();
+    if(GPSRight.quality() > 90){
+      Controller1.Screen.setCursor(3,1);
+      Controller1.Screen.print("(");
+      Controller1.Screen.print(GpsX);
+      Controller1.Screen.print(", ");
+      Controller1.Screen.print(GpsY);
+      Controller1.Screen.print(", ");
+      Controller1.Screen.print(std::round(GpsH));
+      Controller1.Screen.print(")  ");
+      task::yield();
+    } else {
+      Controller2.Screen.setCursor(3,1);
+      Controller2.Screen.print("(");
+      Controller2.Screen.print(GpsX);
+      Controller2.Screen.print(", ");
+      Controller2.Screen.print(GpsY);
+      Controller2.Screen.print(", ");
+      Controller2.Screen.print(std::round(GpsH));
+      Controller2.Screen.print(")  ");
+      task::yield();
+    }
   }
   return 0;
 }

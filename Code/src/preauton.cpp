@@ -233,7 +233,8 @@ void  pre_auton( void ) {
 
   Calibrate();
   Inertial.calibrate();
-  GPS5.calibrate();
+  GPSLeft.calibrate();
+  GPSRight.calibrate();
   StartGps();
   wait(3,seconds);
   vexcodeInit();

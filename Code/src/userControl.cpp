@@ -85,8 +85,8 @@ void usercontrol(void) {
   bool BP4Past = false;
 
   while(true){
-
-    GPS5.resetRotation();
+    GPSLeft.resetRotation();
+    GPSRight.resetRotation();
 
     Lefty= Controller1.Axis3.position();
     Righty= Controller1.Axis2.position();

@@ -337,20 +337,20 @@ void leftWinPoint() {
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
-  //advancedAdvancedSkills();
+advancedAdvancedSkills();
 
-   if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
-   if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-   if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
-   else {
-     if (side==LEFT) {
-       if (mode==SIMPLE) {leftSimple();}
-       else if (mode==COMPLEX) {leftComplex();}
-       else if (mode==WINPOINT) {leftWinPoint();}
-     } else if (side==RIGHT) {
-       if (mode==SIMPLE) {rightSimple();}
-       else if (mode==COMPLEX) {rightComplex();}
-       else if (mode==WINPOINT) {rightWinPoint();}
-     }
-   }
+  //  if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
+  //  if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+  //  if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
+  //  else {
+  //    if (side==LEFT) {
+  //      if (mode==SIMPLE) {leftSimple();}
+  //      else if (mode==COMPLEX) {leftComplex();}
+  //      else if (mode==WINPOINT) {leftWinPoint();}
+  //    } else if (side==RIGHT) {
+  //      if (mode==SIMPLE) {rightSimple();}
+  //      else if (mode==COMPLEX) {rightComplex();}
+  //      else if (mode==WINPOINT) {rightWinPoint();}
+  //    }
+  //  }
 }
