@@ -353,24 +353,24 @@ void betterLeftWinPoint() {
   BackLiftt(80);
 
   Turn(135,80);
+
+  Drive(31,90,false);
   wait(.25,sec);
   BackLiftt(-3,false);
-
-  Drive(32,90,true);
+  Drive(0);
   wait(.4,sec);
   tilt.set(true);
   Turn(43,70);
   Drive(64,80,false);
-  FrontLiftt(57);
+  FrontLiftt(58);
   wait(1,sec);
   StopRingThing();
-  Drive(18,70,true,false,false,true);
+  Drive(21,70,true,false,false,true);
   wait(.2,sec);
   frontAir.set(true);
   wait(.25,sec);
   tilt.set(false);
-  Drive(-20,100,false);
-  FrontLiftt(0,false);
+  Turn(-40,100,false);
   BackLiftt(0,false);
 
 
