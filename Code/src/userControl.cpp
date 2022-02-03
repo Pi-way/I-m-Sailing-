@@ -101,7 +101,7 @@ void usercontrol(void) {
     BLMotor.setVelocity((Lefty + AvgStrafe),percent);
     BRMotor.setVelocity((Righty - AvgStrafe),percent);
 
-    if (Controller1.ButtonB.pressing()){
+    if (Controller2.ButtonB.pressing()){
       BRMotor.setStopping(hold);
       BLMotor.setStopping(hold);
       FRMotor.setStopping(hold);

@@ -135,13 +135,15 @@ void advancedAdvancedSkills() {
 
   TurnAndDrive(0,35,100,100,-1,true,true);
   frontAir.set(true);
-  TurnAndDrive(-60,0,90,90,24,true,false);
+  TurnAndDrive(-60,0,80,90,24,true,false);
   
   FrontLiftt(75);
   Drive(0);
   frontAir.set(false);
   Drive(-5);
-  Turn(-90,100);
+  Turn(-90,100,false);
+  wait(.5,sec);
+  tilt.set(false);
   
   
   //TurnAndDrive(-60,-2,90,90,16,false,false);
@@ -376,7 +378,7 @@ void betterLeftWinPoint() {
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
-advancedAdvancedSkills();
+leftComplex();
 //betterLeftWinPoint();
   //  if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
   //  if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
@@ -385,7 +387,7 @@ advancedAdvancedSkills();
   //    if (side==LEFT) {
   //      if (mode==SIMPLE) {leftSimple();}
   //      else if (mode==COMPLEX) {leftComplex();}
-  //      else if (mode==WINPOINT) {leftWinPoint();}
+  //      else if (mode==WINPOINT) {betterLeftWinPoint();}
   //    } else if (side==RIGHT) {
   //      if (mode==SIMPLE) {rightSimple();}
   //      else if (mode==COMPLEX) {rightComplex();}
