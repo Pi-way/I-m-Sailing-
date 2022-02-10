@@ -58,7 +58,7 @@ void advancedAdvancedSkills() {
   backAir.set(false);//drop yellow goal on platform
 
   Drive(10);
-  TurnAndDrive(-60,4,100,100,24,true,true,2.5,2);
+  TurnAndDrive(-60,7,100,100,24,true,true,2.5,2);
 
   FrontLiftt(75);
   frontAir.set(false);//drop red goal on platform
@@ -82,7 +82,7 @@ void advancedAdvancedSkills() {
   frontAir.set(true);//grab middle goal
   wait(0.25,sec);
 
-  TurnAndDrive(60,8,50,100,24,true,false);
+  TurnAndDrive(60,-3,50,100,24,true,false); //y was 8
   FrontLiftt(85, false);  
   Drive(0);
   FrontLiftt(62,false);
@@ -378,20 +378,21 @@ void betterLeftWinPoint() {
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
-leftComplex();
+//leftComplex();
 //betterLeftWinPoint();
-  //  if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
-  //  if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-  //  if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
-  //  else {
-  //    if (side==LEFT) {
-  //      if (mode==SIMPLE) {leftSimple();}
-  //      else if (mode==COMPLEX) {leftComplex();}
-  //      else if (mode==WINPOINT) {betterLeftWinPoint();}
-  //    } else if (side==RIGHT) {
-  //      if (mode==SIMPLE) {rightSimple();}
-  //      else if (mode==COMPLEX) {rightComplex();}
-  //      else if (mode==WINPOINT) {rightWinPoint();}
-  //    }
-  //  }
+//advancedAdvancedSkills();
+   if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
+   if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+   if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
+   else {
+     if (side==LEFT) {
+       if (mode==SIMPLE) {leftSimple();}
+       else if (mode==COMPLEX) {leftComplex();}
+       else if (mode==WINPOINT) {betterLeftWinPoint();}
+     } else if (side==RIGHT) {
+       if (mode==SIMPLE) {rightSimple();}
+       else if (mode==COMPLEX) {rightComplex();}
+       else if (mode==WINPOINT) {rightWinPoint();}
+     }
+   }
 }
