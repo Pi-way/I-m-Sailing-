@@ -232,7 +232,3 @@ void  pre_auton( void ) {
   else {Brain.Screen.printAt(1, 60, "Mode: Win Point");}
 
 }
-
-
-
-
