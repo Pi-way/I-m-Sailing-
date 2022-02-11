@@ -381,6 +381,8 @@ void autonomous(void) {
 //leftComplex();
 //betterLeftWinPoint();
 //advancedAdvancedSkills();
+
+
    if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
    if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
    if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}

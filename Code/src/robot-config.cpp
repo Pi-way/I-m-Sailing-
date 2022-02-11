@@ -18,8 +18,8 @@ motor RingLiftR = motor(PORT4, ratio6_1, false);
 controller Controller1 = controller(primary);
 controller Controller2 = controller(partner);
 motor FrontLift = motor(PORT15, ratio36_1, true);
-gps GPSLeft = gps(PORT12, 1.45, 5.02, inches, -2);
-gps GPSRight = gps(PORT5, -2.68, -4.51, inches, 177.5); //vALUES FOR LEFT FIELD: gps GPS5 = gps(PORT5, 2.7, 5.60, inches, -3); (SLOT 8) ///////add x to make it smaller and add y to make it smaller 
+gps GPSLeft = gps(PORT12, .9, 5.47, inches, -2);
+gps GPSRight = gps(PORT5, -2.06, -6.07, inches, 178); //vALUES FOR LEFT FIELD: gps GPS5 = gps(PORT5, 2.7, 5.60, inches, -3); (SLOT 8) ///////add x to make it smaller and add y to make it smaller 
 inertial Inertial = inertial(PORT18);
 motor BackLift = motor(PORT10, ratio36_1, false);
 digital_out frontAir = digital_out(Brain.ThreeWirePort.G);

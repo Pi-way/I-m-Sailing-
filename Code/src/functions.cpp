@@ -90,5 +90,20 @@ void StopRingThing(){
   RTS = true;
 }
 
+void spinMotors(float speed){
+  FLMotor.spin(forward,speed,pct);
+  FRMotor.spin(forward,speed,pct);
+  BRMotor.spin(forward,speed,pct);
+  BLMotor.spin(forward,speed,pct);
+}
 
+void stopMotors(){
+  FLMotor.stop();
+  FRMotor.stop();
+  BRMotor.stop();
+  BLMotor.stop();
+}
 
+void autoPark(bool forward){
+  
+}
