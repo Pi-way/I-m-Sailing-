@@ -94,8 +94,6 @@ void advancedAdvancedSkills() {
   tilt.set(false);
   BackLiftt(80,false);
 
-
-
   Drive(-10);
 
   TurnAndDrive(60,8,100,100,26,false);
@@ -104,27 +102,9 @@ void advancedAdvancedSkills() {
   RingLiftL.stop();
   RingLiftR.stop();
 
-  //FrontLiftt(10,false);
-
   Drive(10);
   BackLiftt(0,false);
   FrontLiftt(2.5,false);
-  // TurnTo(36,60,70,true,180);
-  // Drive(-30,100);
-  // TurnTo(36,60,80,true,180);
-  // Drive(-10,100,false,false,true);
-  // BackLiftt(0,false);
-  // Drive(0);
-  // backAir.set(true);//grabbing red and tilt
-  // FrontLiftt(0);
-  // wait(0.25,seconds);
-  // tilt.set(true);
-
-  // RingLiftL.setVelocity(400,rpm);
-  // RingLiftR.setVelocity(400,rpm);
-
-  // RingLiftL.spin(forward);
-  // RingLiftR.spin(forward);
 
   TurnAndDrive(36,40,100,80,0,false,true,2.5,3);
   TurnAndDrive(36,60,100,80,-2,false,true);
@@ -380,21 +360,21 @@ void autonomous(void) {
   // Determining the auton to run based on the one selected.
 //leftComplex();
 //betterLeftWinPoint();
-//advancedAdvancedSkills();
+advancedAdvancedSkills();
 
 
-   if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
-   if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-   if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
-   else {
-     if (side==LEFT) {
-       if (mode==SIMPLE) {leftSimple();}
-       else if (mode==COMPLEX) {leftComplex();}
-       else if (mode==WINPOINT) {betterLeftWinPoint();}
-     } else if (side==RIGHT) {
-       if (mode==SIMPLE) {rightSimple();}
-       else if (mode==COMPLEX) {rightComplex();}
-       else if (mode==WINPOINT) {rightWinPoint();}
-     }
-   }
+  //  if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
+  //  if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+  //  if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
+  //  else {
+  //    if (side==LEFT) {
+  //      if (mode==SIMPLE) {leftSimple();}
+  //      else if (mode==COMPLEX) {leftComplex();}
+  //      else if (mode==WINPOINT) {betterLeftWinPoint();}
+  //    } else if (side==RIGHT) {
+  //      if (mode==SIMPLE) {rightSimple();}
+  //      else if (mode==COMPLEX) {rightComplex();}
+  //      else if (mode==WINPOINT) {rightWinPoint();}
+  //    }
+  //  }
 }
