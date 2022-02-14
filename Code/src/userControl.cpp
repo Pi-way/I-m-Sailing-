@@ -6,17 +6,13 @@
   FRMotor.MotorMember;                   \
   FLMotor.MotorMember;
 
-
 int Lift(){
+	
   bool Roller = false;
   bool BP3Present = false;
   bool BP3Past = false;
 
   while(true){
-  
-
-
-
 
     if(Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing()){
       FrontLift.setVelocity(-100, percent);
@@ -27,8 +23,6 @@ int Lift(){
     } else {
       FrontLift.setVelocity(0,percent);
     }
-
-
 
     BP3Past = BP3Present;
     BP3Present = Controller2.ButtonR1.pressing();
@@ -112,8 +106,6 @@ void usercontrol(void) {
       FRMotor.setStopping(coast);
       FLMotor.setStopping(coast);
     }
-    
-    //////////////////////////////////////////////////////////////
 
     BP1Past = BP1Present;
     BP1Present = Controller1.ButtonLeft.pressing();
@@ -128,8 +120,6 @@ void usercontrol(void) {
       frontAir.set(false);
     }
 
-    ////////////////////////////////////////////////////////////////
-
     BP2Past = BP2Present;
     BP2Present = Controller1.ButtonA.pressing();
 
@@ -142,8 +132,6 @@ void usercontrol(void) {
     }else{
       backAir.set(false);
     }
-    
-    //////////////////////////////////////////////////////////////
 
     BP4Past = BP4Present;
     BP4Present = Controller2.ButtonL1.pressing();
@@ -157,22 +145,6 @@ void usercontrol(void) {
     }else{
       tilt.set(false);
     }
-
-    //////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////
-
-
-    
-
-    // if(Controller1.ButtonDown.pressing() && Controller1.ButtonB.pressing()){
-    //   Drive(-6);
-    //   BackLiftt(66);
-    //   Air1 = true;
-    //   Drivetrain(spin(forward));
-    //   BackLift.spin(forward);
-    // }
-
-    //////////////////////////////////////////////////////////////
 
     wait(20, msec);
 
