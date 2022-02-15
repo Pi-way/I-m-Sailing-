@@ -1,11 +1,5 @@
 #include "vex.h"
 
-#define Drivetrain( MotorMember )            \
-  BRMotor.MotorMember;                   \
-  BLMotor.MotorMember;                   \
-  FRMotor.MotorMember;                   \
-  FLMotor.MotorMember;
-
 int Lift(){
 	
   bool Roller = false;
@@ -147,6 +141,5 @@ void usercontrol(void) {
     }
 
     wait(20, msec);
-
   }
 }
