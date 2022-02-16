@@ -3,7 +3,7 @@
 /*    Module:       preauton.cpp                                              */
 /*    Author:       Team 98548A                                               */
 /*    Created:      8/20/2021                                                 */
-/*    Description:  Contains code for user controll                           */
+/*    Description:  Contains code for user control                            */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
@@ -19,7 +19,7 @@ int Lift(){
   while(true){
   
     // IF we are telling the lift to go down and it can still go down -OR- we are telling the lift to go down no matter what...
-    if((Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing()) || (Controller1.ButtonL2.pressing() && FrontLift.position(degrees) > 0){
+    if((Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing()) || (Controller1.ButtonL2.pressing() && FrontLift.position(degrees) > 0)){
       FrontLift.setVelocity(-100, percent);
     } else if(Controller1.ButtonL1.pressing() && FrontLift.position(degrees) < 580) {
       FrontLift.setVelocity(100, percent);
@@ -27,7 +27,7 @@ int Lift(){
       FrontLift.setVelocity(0,percent);
     }
 
-    if((Controller1.ButtonR1.pressing() && Controller1.ButtonR2.pressing()) || (Controller1.ButtonR2.pressing() && BackLift.position(degrees) > 18) {
+    if((Controller1.ButtonR1.pressing() && Controller1.ButtonR2.pressing()) || (Controller1.ButtonR2.pressing() && BackLift.position(degrees) > 18)) {
       BackLift.setVelocity(-100, percent);
     } else if(Controller1.ButtonR1.pressing() && BackLift.position(degrees) < 580){
       BackLift.setVelocity(100, percent);
