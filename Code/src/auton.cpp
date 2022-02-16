@@ -51,14 +51,14 @@ void advancedAdvancedSkills() {
 
   TurnAndDrive(-35,5,100,100,3,false,false,2,2);
   BackLiftt(96);
-  TurnAndDrive(-60,-4,100,100,24,false,false,1.75,1.75);
+  TurnAndDrive(-60,-4,100,100,20,false,false,1.75,1.75);
   task::sleep(300);
   BackLiftt(75);
   wait(.25,sec);
   backAir.set(false);//drop yellow goal on platform
 
   Drive(10);
-  TurnAndDrive(-60,7,100,100,24,true,true,2.5,2);
+  TurnAndDrive(-60,12,100,100,21,true,true,2.5,2);
 
   FrontLiftt(75);
   frontAir.set(false);//drop red goal on platform
@@ -82,7 +82,7 @@ void advancedAdvancedSkills() {
   frontAir.set(true);//grab middle goal
   wait(0.25,sec);
 
-  TurnAndDrive(60,-3,50,100,24,true,false); //y was 8
+  TurnAndDrive(60,0,50,100,21,true,false); //y was 8
   FrontLiftt(85, false);  
   Drive(0);
   FrontLiftt(62,false);
@@ -106,7 +106,7 @@ void advancedAdvancedSkills() {
   BackLiftt(0,false);
   FrontLiftt(2.5,false);
 
-  TurnAndDrive(36,40,100,80,0,false,true,2.5,3);
+  TurnAndDrive(36,40,80,80,0,false,true,2.5,3);
   TurnAndDrive(36,60,100,80,-2,false,true);
   backAir.set(true);
   wait(.25,sec);
@@ -355,26 +355,38 @@ void betterLeftWinPoint() {
 
 }
 
+void dopeRun(){
+  DriveFast(-47,100,true,false,true,false,60);
+  backAir.set(true);
+  wait(0.2, sec);
+  BackLiftt(50,false);
+  DriveFast(45);
+  Turn(180,100,false);
+  BackLiftt(0,true,30);
+  backAir.set(false);
+  
+}
+
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
 //leftComplex();
 //betterLeftWinPoint();
-advancedAdvancedSkills();
+//advancedAdvancedSkills();
+//dopeRun();
 
-
-  //  if (alliance==SKILLS && mode == SIMPLE) {easySkills();}//speeeeed
-  //  if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-  //  if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
-  //  else {
-  //    if (side==LEFT) {
-  //      if (mode==SIMPLE) {leftSimple();}
-  //      else if (mode==COMPLEX) {leftComplex();}
-  //      else if (mode==WINPOINT) {betterLeftWinPoint();}
-  //    } else if (side==RIGHT) {
-  //      if (mode==SIMPLE) {rightSimple();}
-  //      else if (mode==COMPLEX) {rightComplex();}
-  //      else if (mode==WINPOINT) {rightWinPoint();}
-  //    }
-  //  }
+  if (alliance==SKILLS && mode == SIMPLE) {dopeRun();}//easySkills();}//speeeeed
+  else if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+  else if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
+  else if (true){
+    if (side==LEFT) {
+      if (mode==SIMPLE) {leftSimple();}
+      else if (mode==COMPLEX) {leftComplex();}
+      else if (mode==WINPOINT) {betterLeftWinPoint();}
+    } else if (side==RIGHT) {
+      if (mode==SIMPLE) {rightSimple();}
+      else if (mode==COMPLEX) {rightComplex();}
+      else if (mode==WINPOINT) {rightWinPoint();}
+    }
+  }
 }

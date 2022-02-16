@@ -127,163 +127,163 @@ void Calibrate(){
   Calibrated = true;
 }
 
-// int _Drive_Fast() {
-//   float SessionDistance = ((Distance/12.566))*360;
-//   bool SessionWait = Wait;
-//   float SessionSpeed_V = Speed_V;
-//   bool SessionCoast = Coast;
-//   float SessionMaxDistance = MaxDistance;
+int _Drive_Fast() {
+  float SessionDistance = ((Distance/12.566))*360;
+  bool SessionWait = Wait;
+  float SessionSpeed_V = Speed_V;
+  bool SessionCoast = Coast;
+  float SessionMaxDistance = MaxDistance;
 
-//   bool FrontButton = fb;
-//   bool BackButton = bb;
+  bool FrontButton = fb;
+  bool BackButton = bb;
 
-//   PIDsRunning ++;
+  PIDsRunning ++;
 
-//   while(PIDsRunning > 1){
-//     task::yield();
-//   }
+  while(PIDsRunning > 1){
+    task::yield();
+  }
 
-//   Brain.Timer.reset();
+  Brain.Timer.reset();
 
-//   SetDriveBrake(hold);
+  SetDriveBrake(hold);
 
-//   FLMotor.setPosition(0, degrees);
-//   FRMotor.setPosition(0, degrees);
-//   BLMotor.setPosition(0, degrees);
-//   BRMotor.setPosition(0, degrees);
+  FLMotor.setPosition(0, degrees);
+  FRMotor.setPosition(0, degrees);
+  BLMotor.setPosition(0, degrees);
+  BRMotor.setPosition(0, degrees);
 
-//   bool Condition = true;
+  bool Condition = true;
 
-//   float Error;
-//   float Integral = 0;
-//   float PreviousError = 0;
-//   float Derivative;
-//   float Speed;
-//   float smartError;
-//   int x = 0;
-//   float avgm;
+  float Error;
+  float Integral = 0;
+  float PreviousError = 0;
+  float Derivative;
+  float Speed;
+  float smartError;
+  int x = 0;
+  float avgm;
 
-//   float StartEndTime = 0.0;
+  float StartEndTime = 0.0;
 
-//   bool STAHP = false;
+  bool STAHP = false;
 
-//   while (Condition) {
+  while (Condition) {
 
-//     avgm = std::abs((FLMotor.position(degrees) + FRMotor.position(degrees) + BLMotor.position(degrees) + BRMotor.position(degrees)) / 4);
+    avgm = std::abs((FLMotor.position(degrees) + FRMotor.position(degrees) + BLMotor.position(degrees) + BRMotor.position(degrees)) / 4);
 
-//     Error = std::abs(SessionDistance) - avgm;
+    Error = std::abs(SessionDistance) - avgm;
 
-//     if(Error < ((1/12.566))*360 && (FrontButton || BackButton)){
-//       if (avgm > ((SessionMaxDistance/12.566))*360){
-//         STAHP = true;
-//       }else{
-//         Error = ((1/12.566))*360;
-//       }
-//     }
+    if(Error < ((5/12.566))*360 && (FrontButton || BackButton)){
+      if (avgm > ((SessionMaxDistance/12.566))*360){
+        STAHP = true;
+      }else{
+        Error = ((5/12.566))*360;
+      }
+    }
 
-//     Integral = Integral + Error;
+    Integral = Integral + Error;
 
-//     if (Error <= x) {
-//       smartError = Error;
-//     } else if (x <= Error) {
-//        smartError = x;
-//     }
+    if (Error <= x) {
+      smartError = Error;
+    } else if (x <= Error) {
+       smartError = x;
+    }
  
 
-//     if (Error == 0) {
-//       Integral = 0;
-//     }
+    if (Error == 0) {
+      Integral = 0;
+    }
 
-//     if (std::abs(Error) > SessionSpeed_V ) {
-//       Integral = 0;
-//     }
+    if (std::abs(Error) > SessionSpeed_V ) {
+      Integral = 0;
+    }
 
-//     Derivative = Error - PreviousError;
-//     PreviousError = Error;
+    Derivative = Error - PreviousError;
+    PreviousError = Error;
 
-//     Speed = smartError * fKp + Integral * fKi + Derivative * fKd;
+    Speed = smartError * fKp + Integral * fKi + Derivative * fKd;
 
-//     x += 40;
+    x += 60;
 
-//     if (Speed > SessionSpeed_V) {
-//       Speed = SessionSpeed_V;
-//     }
+    if (Speed > SessionSpeed_V) {
+      Speed = SessionSpeed_V;
+    }
 
-//     if (SessionDistance > 0) {
-//     FLMotor.spin(forward, Speed + Speed * -0.1, voltageUnits::volt);
-//     FRMotor.spin(forward, Speed - Speed * -0.1, voltageUnits::volt);
-//     BRMotor.spin(forward, Speed - Speed * -0.1, voltageUnits::volt);
-//     BLMotor.spin(forward, Speed + Speed * -0.1, voltageUnits::volt);
-//     } else {
-//       FLMotor.spin(reverse, Speed + Speed * -0.1, voltageUnits::volt);
-//       FRMotor.spin(reverse, Speed - Speed * -0.1, voltageUnits::volt);
-//       BRMotor.spin(reverse, Speed - Speed * -0.1, voltageUnits::volt);
-//       BLMotor.spin(reverse, Speed + Speed * -0.1, voltageUnits::volt);
-//     }
+    if (SessionDistance > 0) {
+    FLMotor.spin(forward, Speed + Speed * Drive_balance, voltageUnits::volt);
+    FRMotor.spin(forward, Speed - Speed * Drive_balance, voltageUnits::volt);
+    BRMotor.spin(forward, Speed - Speed * Drive_balance, voltageUnits::volt);
+    BLMotor.spin(forward, Speed + Speed * Drive_balance, voltageUnits::volt);
+    } else {
+      FLMotor.spin(reverse, Speed + Speed * Drive_balance, voltageUnits::volt);
+      FRMotor.spin(reverse, Speed - Speed * Drive_balance, voltageUnits::volt);
+      BRMotor.spin(reverse, Speed - Speed * Drive_balance, voltageUnits::volt);
+      BLMotor.spin(reverse, Speed + Speed * Drive_balance, voltageUnits::volt);
+    }
 
-//     if ((avgm > std::abs(SessionDistance) && !(FrontButton || BackButton)) || Brain.Timer.value() > 3 || ((FrontButton && LimSwitchFront.pressing())||(BackButton && LimSwitchBack.pressing())) || STAHP) {    //Was: avgm > std::abs(SessionDistance) - 40 || Brain.Timer.value() > 4
+    if ((avgm > std::abs(SessionDistance) && !(FrontButton || BackButton)) || Brain.Timer.value() > 3 || ((FrontButton && FrontSensorsSenseATouch)||(BackButton && LimSwitchBack.pressing())) || STAHP) {    //Was: avgm > std::abs(SessionDistance) - 40 || Brain.Timer.value() > 4
 
-//       if (StartEndTime == 0.0){
-//         StartEndTime = Brain.Timer.systemHighResolution();
-//       }
+      if (StartEndTime == 0.0){
+        StartEndTime = Brain.Timer.systemHighResolution();
+      }
 
-//       if (FrontButton || BackButton || STAHP) {
-//         if(Brain.Timer.systemHighResolution() - StartEndTime > 250000 || Brain.Timer.value() > 3){
-//           Condition = false;
-//         }
-//         if (STAHP){
-//           Condition = false;
-//         }
-//       } else {
-//         Condition = false;
-//       }
-//     }
+      if (FrontButton || BackButton || STAHP) {
+        if(Brain.Timer.systemHighResolution() - StartEndTime > 250000 || Brain.Timer.value() > 3){
+          Condition = false;
+        }
+        if (STAHP){
+          Condition = false;
+        }
+      } else {
+        Condition = false;
+      }
+    }
 
-//     if (SessionWait) {
-//       wait(20, msec);
-//     } else {
-//       task::yield();
-//     }
+    if (SessionWait) {
+      wait(20, msec);
+    } else {
+      task::yield();
+    }
 
-//   }
+  }
 
-//   if(SessionCoast){
-//     Drivetrain(stop(coast););
-//   }else{
-//     Drivetrain(stop(););
-//   }
+  if(SessionCoast){
+    Drivetrain(stop(hold););
+  }else{
+    Drivetrain(stop(hold););
+  }
 
-//   PIDsRunning --;
+  PIDsRunning --;
 
-//   return 0;
+  return 0;
 
-// }
+}
 
-// void DriveFast(float Distance_, float Speed_V_, bool Wait_, bool f_b, bool b_b, bool coast, float maxDistance) {
+void DriveFast(float Distance_, float Speed_V_, bool Wait_, bool f_b, bool b_b, bool coast, float maxDistance) {
 
-//   Distance = Distance_;
-//   Wait = Wait_;
-//   Speed_V = (Speed_V_/100)*12;
-//   fb= f_b;
-//   bb = b_b;
-//   Coast = coast;
-//   MaxDistance = maxDistance;
+  Distance = Distance_;
+  Wait = Wait_;
+  Speed_V = (Speed_V_/100)*12;
+  fb= f_b;
+  bb = b_b;
+  Coast = coast;
+  MaxDistance = maxDistance;
 
-//   wait(20, msec);
+  wait(20, msec);
 
-//   if (Wait) {
+  if (Wait) {
 
-//     _Drive_Fast();
+    _Drive_Fast();
 
-//   } else {
+  } else {
 
-//     PID = task(_Drive_Fast);
+    PID = task(_Drive_Fast);
 
-//   }
+  }
 
-//   wait(20, msec);
+  wait(20, msec);
 
-// }
+}
 
 int _Drive_() {
   float SessionDistance = ((Distance/12.566))*360;
@@ -997,14 +997,14 @@ int ControllerGps(){
       Controller1.Screen.print(")  ");
       task::yield();
     } else {
-      Controller2.Screen.setCursor(3,1);
-      Controller2.Screen.print("(");
-      Controller2.Screen.print(GpsX);
-      Controller2.Screen.print(", ");
-      Controller2.Screen.print(GpsY);
-      Controller2.Screen.print(", ");
-      Controller2.Screen.print(std::round(GpsH));
-      Controller2.Screen.print(")  ");
+      Controller1.Screen.setCursor(3,1);
+      Controller1.Screen.print("(");
+      Controller1.Screen.print(GpsX);
+      Controller1.Screen.print(", ");
+      Controller1.Screen.print(GpsY);
+      Controller1.Screen.print(", ");
+      Controller1.Screen.print(std::round(GpsH));
+      Controller1.Screen.print(")  ");
       task::yield();
     }
   }
