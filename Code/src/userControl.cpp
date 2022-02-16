@@ -1,26 +1,25 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       preauton.cpp                                              */
+/*    Author:       Team 98548A                                               */
+/*    Created:      8/20/2021                                                 */
+/*    Description:  Contains code for user controll                           */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 
-#define Drivetrain( MotorMember )            \
-  BRMotor.MotorMember;                   \
-  BLMotor.MotorMember;                   \
-  FRMotor.MotorMember;                   \
-  FLMotor.MotorMember;
-
-
+// this is the function that controlls the lifts and ring intake:
 int Lift(){
+	
   bool Roller = false;
   bool BP3Present = false;
   bool BP3Past = false;
 
   while(true){
   
-
-
-
-
-    if(Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing()){
-      FrontLift.setVelocity(-100, percent);
-    } else if (Controller1.ButtonL2.pressing() && FrontLift.position(degrees) > 0){
+    // IF we are telling the lift to go down and it can still go down -OR- we are telling the lift to go down no matter what...
+    if((Controller1.ButtonL1.pressing() && Controller1.ButtonL2.pressing()) || (Controller1.ButtonL2.pressing() && FrontLift.position(degrees) > 0){
       FrontLift.setVelocity(-100, percent);
     } else if(Controller1.ButtonL1.pressing() && FrontLift.position(degrees) < 580) {
       FrontLift.setVelocity(100, percent);
@@ -28,14 +27,21 @@ int Lift(){
       FrontLift.setVelocity(0,percent);
     }
 
-
-
+    if((Controller1.ButtonR1.pressing() && Controller1.ButtonR2.pressing()) || (Controller1.ButtonR2.pressing() && BackLift.position(degrees) > 18) {
+      BackLift.setVelocity(-100, percent);
+    } else if(Controller1.ButtonR1.pressing() && BackLift.position(degrees) < 580){
+      BackLift.setVelocity(100, percent);
+    } else {
+      BackLift.setVelocity(0,percent);
+    }
+    
     BP3Past = BP3Present;
     BP3Present = Controller2.ButtonR1.pressing();
 
     if(!BP3Past && BP3Present){
       Roller = !Roller;
     }
+    
     if(Controller2.ButtonR2.pressing()) {
       RingLiftL.spin(reverse,400,rpm);
       RingLiftR.spin(reverse,400,rpm);
@@ -47,17 +53,7 @@ int Lift(){
       RingLiftR.stop(coast);
     }
 
-    if(Controller1.ButtonR1.pressing() && Controller1.ButtonR2.pressing()) {
-      BackLift.setVelocity(-100, percent);
-    } else if(Controller1.ButtonR1.pressing() && BackLift.position(degrees) < 580){
-      BackLift.setVelocity(100, percent);
-    } else if (Controller1.ButtonR2.pressing() && BackLift.position(degrees) > 18){
-      BackLift.setVelocity(-100, percent);
-    } else {
-      BackLift.setVelocity(0,percent);
-    }
-
-    task::sleep(20);
+    task::yield();
 
   }
   return 0;
@@ -85,8 +81,6 @@ void usercontrol(void) {
   bool BP4Past = false;
 
   while(true){
-    GPSLeft.resetRotation();
-    GPSRight.resetRotation();
 
     Lefty= Controller1.Axis3.position();
     Righty= Controller1.Axis2.position();
@@ -112,8 +106,6 @@ void usercontrol(void) {
       FRMotor.setStopping(coast);
       FLMotor.setStopping(coast);
     }
-    
-    //////////////////////////////////////////////////////////////
 
     BP1Past = BP1Present;
     BP1Present = Controller1.ButtonLeft.pressing();
@@ -128,8 +120,6 @@ void usercontrol(void) {
       frontAir.set(false);
     }
 
-    ////////////////////////////////////////////////////////////////
-
     BP2Past = BP2Present;
     BP2Present = Controller1.ButtonA.pressing();
 
@@ -142,8 +132,6 @@ void usercontrol(void) {
     }else{
       backAir.set(false);
     }
-    
-    //////////////////////////////////////////////////////////////
 
     BP4Past = BP4Present;
     BP4Present = Controller2.ButtonL1.pressing();
@@ -158,23 +146,7 @@ void usercontrol(void) {
       tilt.set(false);
     }
 
-    //////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////
-
-
+    task::yield();
     
-
-    // if(Controller1.ButtonDown.pressing() && Controller1.ButtonB.pressing()){
-    //   Drive(-6);
-    //   BackLiftt(66);
-    //   Air1 = true;
-    //   Drivetrain(spin(forward));
-    //   BackLift.spin(forward);
-    // }
-
-    //////////////////////////////////////////////////////////////
-
-    wait(20, msec);
-
   }
 }
