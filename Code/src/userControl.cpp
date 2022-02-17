@@ -85,15 +85,27 @@ void usercontrol(void) {
     Lefty= Controller1.Axis3.position();
     Righty= Controller1.Axis2.position();
 
-    RightySt = -Controller1.Axis4.position();
-    LeftySt = -Controller1.Axis1.position();
+    // RightySt = -Controller1.Axis4.position();
+    // LeftySt = -Controller1.Axis1.position();
 
-    AvgStrafe = (LeftySt + RightySt)/2;
+    // AvgStrafe = (LeftySt + RightySt)/2;
 
-    FLMotor.setVelocity((Lefty - AvgStrafe),percent);
-    FRMotor.setVelocity((Righty + AvgStrafe),percent);
-    BLMotor.setVelocity((Lefty + AvgStrafe),percent);
-    BRMotor.setVelocity((Righty - AvgStrafe),percent);
+    // FLMotor.setVelocity((Lefty - AvgStrafe),percent);
+    // FRMotor.setVelocity((Righty + AvgStrafe),percent);
+    // BLMotor.setVelocity((Lefty + AvgStrafe),percent);
+    // BRMotor.setVelocity((Righty - AvgStrafe),percent);
+    
+    if(((Lefty > 0) && (Righty < 0)) || ((Lefty < 0) && (Righty > 0))){
+      FLMotor.setVelocity((Lefty/1.4),pct);
+      FRMotor.setVelocity((Righty/1.4),pct);
+      BLMotor.setVelocity((Lefty/1.4),pct);
+      BRMotor.setVelocity((Righty/1.4),pct);
+    } else {
+      FLMotor.setVelocity(Lefty,pct);
+      FRMotor.setVelocity(Righty,pct);
+      BLMotor.setVelocity(Lefty,pct);
+      BRMotor.setVelocity(Righty,pct);
+    }
 
     if (Controller2.ButtonB.pressing()){
       BRMotor.setStopping(hold);

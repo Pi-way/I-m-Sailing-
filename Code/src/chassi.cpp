@@ -220,7 +220,11 @@ int _Drive_Fast() {
       BRMotor.spin(reverse, Speed - Speed * Drive_balance, voltageUnits::volt);
       BLMotor.spin(reverse, Speed + Speed * Drive_balance, voltageUnits::volt);
     }
-
+    if(FrontButton && FrontSensorsSenseATouch){
+      frontAir.set(true);
+    } else if(BackButton && LimSwitchBack.pressing()){
+      backAir.set(true);
+    }
     if ((avgm > std::abs(SessionDistance) && !(FrontButton || BackButton)) || Brain.Timer.value() > 3 || ((FrontButton && FrontSensorsSenseATouch)||(BackButton && LimSwitchBack.pressing())) || STAHP) {    //Was: avgm > std::abs(SessionDistance) - 40 || Brain.Timer.value() > 4
 
       if (StartEndTime == 0.0){
