@@ -3,7 +3,7 @@
 /*    Module:       preauton.cpp                                              */
 /*    Author:       Team 98548A                                               */
 /*    Created:      8/20/2021                                                 */
-/*    Description:  Contains code for user control                            */
+/*    Description:  Contains code for user controll                           */
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
