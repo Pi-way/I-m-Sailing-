@@ -35,22 +35,22 @@ bool FrontSensorsSenseATouch = false;
 
 bool Calibrated = false;
 int PIDsRunning = 0;
-float Drive_balance = -0.045;
-float TKp = .5;
-float TKi = .25;
-float TKd = 0.01;
+float Drive_balance = 0;//-0.045
+float TKp = 0.1;
+float TKi = 0.025;//1;
+float TKd = 0;//1;
 
-float Kp = 0.1;
+float Kp = 0.05;
 float Ki = 0.1;
-float Kd = 0.05;
+float Kd = 0.1;
 
 
-float fKp = 0.05;
+float fKp = 0.04;
 float fKi = 0.01;
 float fKd = 0.1;
 
-float DKp = 100;
-float DKi = 5;
+float DKp = 0.02;
+float DKi = 0.0;//000005;
 float DKd = 0.1;
 
 float Distance;
@@ -71,6 +71,7 @@ float TurnX;
 float TurnY;
 
 bool Wait;
+bool DriveForwards;
 
 task PID;
 task TURN_PID;
@@ -128,7 +129,7 @@ void Calibrate(){
 }
 
 int _Drive_Fast() {
-  float SessionDistance = ((Distance/12.566))*360;
+  float SessionDistance = ((Distance/12.566)/1.4)*360;
   bool SessionWait = Wait;
   float SessionSpeed_V = Speed_V;
   bool SessionCoast = Coast;
@@ -173,11 +174,11 @@ int _Drive_Fast() {
 
     Error = std::abs(SessionDistance) - avgm;
 
-    if(Error < ((5/12.566))*360 && (FrontButton || BackButton)){
-      if (avgm > ((SessionMaxDistance/12.566))*360){
+    if(Error < ((5/12.566)/1.4)*360 && (FrontButton || BackButton)){
+      if (avgm > ((SessionMaxDistance/12.566)/1.4)*360){
         STAHP = true;
       }else{
-        Error = ((5/12.566))*360;
+        Error = ((5/12.566)/1.4)*360;
       }
     }
 
@@ -290,7 +291,7 @@ void DriveFast(float Distance_, float Speed_V_, bool Wait_, bool f_b, bool b_b, 
 }
 
 int _Drive_() {
-  float SessionDistance = ((Distance/12.566))*360;
+  float SessionDistance = ((Distance/12.566)/1.4)*360;
   bool SessionWait = Wait;
   float SessionSpeed_V = Speed_V;
   bool SessionCoast = Coast;
@@ -334,11 +335,11 @@ int _Drive_() {
     avgm = std::abs((FLMotor.position(degrees) + FRMotor.position(degrees) + BLMotor.position(degrees) + BRMotor.position(degrees)) / 4);
     Error = std::abs(SessionDistance) - avgm;
 
-    if(Error < ((3/12.566))*360 && (FrontButton || BackButton)){ //If error is less than ~3 inch AND you are waiting for a goal to touch
-      if (std::abs(avgm) > std::abs(((SessionMaxDistance/12.566))*360)){ //If you have gone too far
+    if(Error < ((3/12.566)/1.4)*360 && (FrontButton || BackButton)){ //If error is less than ~3 inch AND you are waiting for a goal to touch
+      if (std::abs(avgm) > std::abs(((SessionMaxDistance/12.566)/1.4)*360)){ //If you have gone too far
         STAHP = true;
       }else{ //you haven't reached the goal and haven't gone too far.
-        Error = ((3/12.566))*360; 
+        Error = ((3/12.566)/1.4)*360; 
       }
     }
 
@@ -442,6 +443,13 @@ int _DriveTo_ (){
   float SessionDriveRadius;
   bool LimitSwitchFront;
   bool LimitSwitchBack;
+  int DirectionalFactor = 0;
+
+  if(DriveForwards){
+    DirectionalFactor = 1;
+  }else{
+    DirectionalFactor = -1;
+  }
 
   if (DriveRadius == -1.0){
     SessionDriveRadius = 0;
@@ -487,7 +495,8 @@ int _DriveTo_ (){
   float PreviousError;
 
   float Error;
-  float Voltage;
+  float OverallSpeed;
+  float SideDifferenceSpeed;
   float SmartVoltage;
   float Ramp = 0;
 
@@ -496,13 +505,16 @@ int _DriveTo_ (){
 
   PreviousError = sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2)) - SessionDriveRadius;
 
+  float RightSpeed = 0;
+  float LeftSpeed = 0;
+
   while (Condition) {
 
     x1 = GpsX;
     y1 = GpsY;
     h1 = GpsH;
-    x2 = x1 + cos(Rads(h1));
-    y2 = y1 + sin(Rads(h1));
+    x2 = x1 + cos(Rads(h1))*DirectionalFactor;
+    y2 = y1 + sin(Rads(h1))*DirectionalFactor;
     DistB = sqrt(powf(x1-SessionDriveX,2)+powf(y1-SessionDriveY,2));                          //get Distance B for arccos function
     DistC = sqrt(powf(x2-SessionDriveX,2)+powf(y2-SessionDriveY,2));                          //get Distance C for arccos function
     SessionTurn = Degs(acosf((powf(DistC,2)-powf(DistA,2)-powf(DistB,2))/(-2*DistA*DistB)));  //get positive angle (from robot - to target)
@@ -513,7 +525,7 @@ int _DriveTo_ (){
 
     SessionTurn = SessionTurn * ((RotatedY)/std::abs(RotatedY));                             //make SessionTurn the proper value
 
-    Error = sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2)) - SessionDriveRadius;
+    Error = (sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2)) - SessionDriveRadius)*(sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2)) - SessionDriveRadius);
 
     if(LimitSwitchFront || LimitSwitchBack){
       if(Error < 5){
@@ -530,22 +542,39 @@ int _DriveTo_ (){
 
     Ramp += 0.125;
 
-    Voltage = SmartVoltage * DKp + Integral * DKi + Derivative * DKd;                                                                   //* TKp + Integral * TKi + Derivative * TKd;
-    Voltage = GetClosestToZero(Voltage, SessionMaxSpeed * (Error/std::abs(Error)));
+    OverallSpeed = SmartVoltage * DKp + Integral * DKi + Derivative * DKd;                                                                   //* TKp + Integral * TKi + Derivative * TKd;
+    OverallSpeed = GetClosestToZero(OverallSpeed, SessionMaxSpeed * (Error/std::abs(Error)));
 
-    if(std::abs(Voltage)<MinVoltage){
-      Voltage = MinVoltage * (std::abs(Voltage)/Voltage);
+    if(std::abs(OverallSpeed)<MinVoltage){
+      OverallSpeed = MinVoltage * (std::abs(OverallSpeed)/OverallSpeed);
     }
 
     PreviousError = Error;
 
-    PositiveDiagonalVoltage = sin(Rads(SessionTurn+45))*std::abs(Voltage);
-    NegativeDiagonalVoltage = -sin(Rads(SessionTurn-45))*std::abs(Voltage);
+    RightSpeed = SessionTurn * std::abs(Error/500);
 
-    FLMotor.spin(forward, NegativeDiagonalVoltage, voltageUnits::volt);
-    FRMotor.spin(forward, PositiveDiagonalVoltage, voltageUnits::volt);
-    BRMotor.spin(forward, NegativeDiagonalVoltage, voltageUnits::volt);
-    BLMotor.spin(forward, PositiveDiagonalVoltage, voltageUnits::volt);
+    if(std::abs(OverallSpeed) > 12){
+      OverallSpeed = 12 * std::abs(OverallSpeed)/OverallSpeed;
+    }
+
+    if(std::abs(RightSpeed) > 6){
+      RightSpeed = 6 * (std::abs(RightSpeed)/RightSpeed);
+    }    
+
+
+    if((FrontSensorsSenseATouch = true) && (DriveRadius == -2)) {
+      frontAir.set(true);
+    } else if((LimSwitchBack.pressing()) && (DriveRadius == -1)) {
+      backAir.set(true);
+    }
+
+    //PositiveDiagonalVoltage = sin(Rads(SessionTurn+45))*std::abs(Voltage);
+    //NegativeDiagonalVoltage = -sin(Rads(SessionTurn-45))*std::abs(Voltage);
+
+    FLMotor.spin(forward, (OverallSpeed - RightSpeed)*DirectionalFactor, voltageUnits::volt);
+    FRMotor.spin(forward, (OverallSpeed + RightSpeed)*DirectionalFactor, voltageUnits::volt);
+    BRMotor.spin(forward, (OverallSpeed + RightSpeed)*DirectionalFactor, voltageUnits::volt);
+    BLMotor.spin(forward, (OverallSpeed - RightSpeed)*DirectionalFactor, voltageUnits::volt);
 
 
     if (std::abs(Error)-4 <= 0.0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout || ((LimitSwitchFront && FrontSensorsSenseATouch) || (LimitSwitchBack && LimSwitchBack.pressing()))) {
@@ -573,13 +602,14 @@ int _DriveTo_ (){
 
 }
 
-void DriveTo(float Drive_x, float Drive_y, float speed, float radius, bool Wait_, float Coustom_Timeout){
+void DriveTo(float Drive_x, float Drive_y, float speed, float radius, bool Wait_, float Coustom_Timeout, bool _DriveForwards){
 
   Speed_V = (speed/100)*12;
 
   DriveX = Drive_x;
   DriveY = Drive_y;
   CoustomTimeout = Coustom_Timeout * 1000000;
+  DriveForwards = _DriveForwards;
 
   DriveRadius = radius;
 
@@ -712,7 +742,7 @@ int _Turn_To_() {
     if (std::abs(Voltage) > 5) {Integral = 0;}
     //if (std::abs(Error) > std::abs(SessionMaxSpeed/12)) {Integral = 0;}
 
-    Ramp += 1;
+    Ramp += 10;
     PreviousError = Error;
 
     SmartError = GetClosestToZero(Error, Ramp * (Error/std::abs(Error)));
@@ -731,6 +761,8 @@ int _Turn_To_() {
     FRMotor.spin(reverse, ActualVoltage, voltageUnits::volt);
     BRMotor.spin(reverse, ActualVoltage, voltageUnits::volt);
     BLMotor.spin(forward, ActualVoltage, voltageUnits::volt);
+
+    
 
     if (std::abs(SessionTurn)-.5 <= 0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout) {
       if(!(ReachedTarget)){
@@ -835,6 +867,8 @@ int _Turn_() {
   float smartError;
   int x = 0;
   float avgm;
+  bool ReachedTarget = false;
+  bool ReachedTargetTime = 0;
   while (Condition) {
 
     //avgm = std::abs((FrontLeftDrive.position(degrees) - FrontRightDrive.position(degrees) + BackLeftDrive.position(degrees) -     BackRightDrive.position(degrees)) / 4);
@@ -853,16 +887,20 @@ int _Turn_() {
       Integral = 0;
     }
 
-    if (std::abs(Error) > SessionSpeed/12 ) {
+    if (std::abs(Error) > 5 || FLMotor.velocity(percent) > 25) {
       Integral = 0;
     }
+
+    //if(Integral > 12){
+    //  Integral = 12;
+    //}
 
     Derivative = Error - PreviousError;
     PreviousError = Error;
 
     Speed = smartError * TKp + Integral * TKi + Derivative * TKd;
 
-    x += 2;
+    x += 50;
 
     if (Speed > SessionSpeed) {
       Speed = SessionSpeed;
@@ -880,9 +918,16 @@ int _Turn_() {
       BLMotor.spin(reverse, Speed, voltageUnits::volt);
     }
 
-    if (std::abs(avgm) > std::abs(SessionTurn) + 3.5 || Brain.Timer.value() > SessionTimeout) { //was 40
+    if (std::abs(avgm) > std::abs(SessionTurn) - 1.5 || Brain.Timer.value() > SessionTimeout) { //was 40
 
-      Condition = false;
+      if(!ReachedTarget){
+        ReachedTarget = true;
+        ReachedTargetTime = Brain.Timer.systemHighResolution();
+      }
+
+      if(Brain.Timer.systemHighResolution() - ReachedTargetTime >= 500000 || Brain.Timer.value() > SessionTimeout){
+        //break;
+      }
 
     }
 
@@ -895,10 +940,10 @@ int _Turn_() {
   }
   
 
-  FLMotor.stop();
-  FRMotor.stop();
-  BRMotor.stop();
-  BLMotor.stop();
+  FLMotor.stop(brake);
+  FRMotor.stop(brake);
+  BRMotor.stop(brake);
+  BLMotor.stop(brake);
 
   PIDsRunning --;
 
@@ -937,12 +982,14 @@ void TurnAndDrive(float x_point, float y_point, float driveSpeed, float turnSpee
   
   if(faceDirection == true){
     Direction = 0;
+    DriveForwards = true;
   } else {
     Direction = 180;
+    DriveForwards = false;
   }
 
   TurnTo(x_point, y_point, turnSpeed, true, Direction, Turn_Timeout);
-  DriveTo(x_point, y_point, driveSpeed, radius, driveWait, Drive_Timeout);
+  DriveTo(x_point, y_point, driveSpeed, radius, driveWait, Drive_Timeout, DriveForwards);
 }
 
 

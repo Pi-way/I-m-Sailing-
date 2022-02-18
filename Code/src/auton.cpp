@@ -18,9 +18,9 @@
   FLMotor.setStopping(brake_mode);
 
 void Test( void ) { // A test auton. Drives in a square 3 times, while rotating.
-  StartRingThing();
-  wait(10,sec);
-  StopRingThing();
+  Drive(6);
+  Drive(-6);
+  Drive(6);
 }
 
 
@@ -232,12 +232,17 @@ void rightSimple() {
   StartRingThing();
 
   Drive(14);
-
-
-  repeat(4){
     Drive(-8);
     Drive(8);
-  }
+    Drive(-8);
+    Drive(8);
+    Drive(-8);
+    Drive(8);
+    Drive(-8);
+    Drive(8);
+    Drive(-8);
+    Drive(8);
+    Drive(-8);
   Drive(12,100,false);
   wait(.25, sec);
   tilt.set(false);
@@ -289,11 +294,22 @@ void leftSimple() {
   tilt.set(true);
   FrontLiftt(50);
   StartRingThing();
-  Drive(2);
-  repeat(7){
-    Drive(8,60);
-    Drive(-8,60);
-  }
+    Drive(8,100);
+    Drive(-8,100);
+    Drive(8,100);
+    Drive(-8,100);
+    Drive(8,100);
+    Drive(-8,100);
+    Drive(8,100);
+    Drive(-8,100);
+    Drive(8,100);
+    Drive(-8,100);
+    Drive(8,100);
+    Drive(-8,100);
+    Drive(8,100);
+    Drive(-8,100);
+    Drive(8,100);
+    Drive(-8,100);
   //BackLiftt(15);
   tilt.set(false);
 
@@ -304,16 +320,23 @@ void leftWinPoint() {
   FrontLiftt(15);
   wait(.25, sec);
   tilt.set(true);
-  Drive(6,90,false);
+  wait(.2,sec);
   StartRingThing();
-  Turn(90,80);
-  Drive(17);
-  Turn(88,80);
-  Drive(98,80,false);
-  FrontLiftt(30);
-  Drive(0);
+  wait(1,sec);
+  StopRingThing();
+  Drive(6,90,false);
+  tilt.set(false);
+  BackLiftt(75);
+  Turn(90,60);
+  Drive(20,100,false);
+  BackLiftt(10);
+  Turn(87,60);
+  Drive(70,100,false);
+  FrontLiftt(0,false);
+  Drive(20,100,true,true);
   frontAir.set(true);
-  Drive(-10);
+  Turn(-40);
+
 
 
 }
@@ -330,20 +353,20 @@ void betterLeftWinPoint() {
   tilt.set(false);
   BackLiftt(80);
 
-  Turn(135,80);
+  Turn(135,70);
 
-  Drive(31,90,false);
+  Drive(31,80,false);
   wait(.25,sec);
   BackLiftt(-3,false);
   Drive(0);
   wait(.4,sec);
   tilt.set(true);
-  Turn(45,70);
-  Drive(64,80,false);
+  Turn(45,60);
+  Drive(64,70,false);
   FrontLiftt(58);
   wait(1,sec);
   StopRingThing();
-  Drive(21,70,true,false,false,true);
+  Drive(21,60,true,false,false,true);
   wait(.2,sec);
   frontAir.set(true);
   wait(.25,sec);
@@ -358,44 +381,52 @@ void betterLeftWinPoint() {
 void midRush(){
   DriveFast(-47,100,true,false,true,false,60);
   backAir.set(true);
-  wait(0.2, sec);
-  BackLiftt(50,false);
+  wait(0.19, sec);
+  tilt.set(true);
   DriveFast(45);
-  Turn(180,100,false);
-  BackLiftt(0,true,30);
-  backAir.set(false);
+
 }
 
 void midStandRush(){
-  DriveFast(-42,100,true,false,true,false,60);
-  //backAir.set(true);
+  DriveFast(-42,100,false,false,true,false,60);
+  BackLiftt(50);
+  BackLiftt(0);
+  Drive(0);
+  backAir.set(true);
   wait(0.19, sec);
-  tilt.set(true);
-  BackLiftt(50,false);
+  //tilt.set(true);
+  BackLiftt(10,false);
   DriveFast(40);
+  BackLiftt(0);
 }
 void autonomous(void) {
   Brain.resetTimer();
+  TurnAndDrive(24,24,100,100,12,false);
+  //Turn(90);
+  //wait(1,sec);
+  //Turn(180);
   // Determining the auton to run based on the one selected.
 //leftComplex();
+//leftWinPoint();
 //betterLeftWinPoint();
 //advancedAdvancedSkills();
 //midRush();
-midStandRush();
+//midStandRush();
+//Test();
+//leftSimple();
 
-
-  // if (alliance==SKILLS && mode == SIMPLE) {midRush();}//easySkills();}//speeeeed
-  // else if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-  // else if (alliance == SKILLS && mode == COMPLEX) {midStandRush();}
-  // else if (true){
-  //   if (side==LEFT) {
-  //     if (mode==SIMPLE) {leftSimple();}
-  //     else if (mode==COMPLEX) {leftComplex();}
-  //     else if (mode==WINPOINT) {betterLeftWinPoint();}
-  //   } else if (side==RIGHT) {
-  //     if (mode==SIMPLE) {rightSimple();}
-  //     else if (mode==COMPLEX) {rightComplex();}
-  //     else if (mode==WINPOINT) {rightWinPoint();}
-  //   }
-  // }
+// if (alliance==SKILLS && mode == SIMPLE) {midRush();}//easySkills();}//speeeeed
+//   else if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+//   else if (alliance == SKILLS && mode == COMPLEX) {midStandRush();}
+//   else if (true){
+//     if (side==LEFT) {
+//       if (mode==SIMPLE) {leftSimple();}
+//       else if (mode==COMPLEX) {leftComplex();}
+//       else if (mode==WINPOINT) {betterLeftWinPoint();}
+//     } else if (side==RIGHT) {
+//       if (mode==SIMPLE) {rightSimple();}
+//       else if (mode==COMPLEX) {rightComplex();}
+//       else if (mode==WINPOINT) {rightWinPoint();}
+//     }
+//   }
 }

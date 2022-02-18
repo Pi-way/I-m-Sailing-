@@ -67,9 +67,9 @@ void usercontrol(void) {
 
   float Lefty;
   float Righty;
-  float LeftySt;
-  float RightySt;
-  float AvgStrafe;
+  // float LeftySt;
+  // float RightySt;
+  // float AvgStrafe;
   bool Air1 = false;
   bool BP1Present = false;
   bool BP1Past = false;
@@ -95,17 +95,10 @@ void usercontrol(void) {
     // BLMotor.setVelocity((Lefty + AvgStrafe),percent);
     // BRMotor.setVelocity((Righty - AvgStrafe),percent);
     
-    if(((Lefty > 0) && (Righty < 0)) || ((Lefty < 0) && (Righty > 0))){
-      FLMotor.setVelocity((Lefty/1.4),pct);
-      FRMotor.setVelocity((Righty/1.4),pct);
-      BLMotor.setVelocity((Lefty/1.4),pct);
-      BRMotor.setVelocity((Righty/1.4),pct);
-    } else {
-      FLMotor.setVelocity(Lefty,pct);
-      FRMotor.setVelocity(Righty,pct);
-      BLMotor.setVelocity(Lefty,pct);
-      BRMotor.setVelocity(Righty,pct);
-    }
+    FLMotor.setVelocity(Lefty,pct);
+    FRMotor.setVelocity(Righty,pct);
+    BLMotor.setVelocity(Lefty,pct);
+    BRMotor.setVelocity(Righty,pct);
 
     if (Controller2.ButtonB.pressing()){
       BRMotor.setStopping(hold);
