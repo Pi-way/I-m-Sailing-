@@ -483,8 +483,8 @@ int _DriveTo_ (){
   float RotatedY; //      Variables for rotated plane
   float SessionTurn;
 
-  float PositiveDiagonalVoltage;
-  float NegativeDiagonalVoltage;
+  //float PositiveDiagonalVoltage;
+  //float NegativeDiagonalVoltage;
 
   bool Condition = true;
   bool ReachedTarget = false;
@@ -496,7 +496,7 @@ int _DriveTo_ (){
 
   float Error;
   float OverallSpeed;
-  float SideDifferenceSpeed;
+  //float SideDifferenceSpeed;
   float SmartVoltage;
   float Ramp = 0;
 
@@ -506,7 +506,7 @@ int _DriveTo_ (){
   PreviousError = sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2)) - SessionDriveRadius;
 
   float RightSpeed = 0;
-  float LeftSpeed = 0;
+  //float LeftSpeed = 0;
 
   while (Condition) {
 
@@ -524,8 +524,8 @@ int _DriveTo_ (){
     //SessionTurn = SessionTurn * -((RotatedY)/std::abs(RotatedY));                             //make SessionTurn the proper value
 
     SessionTurn = SessionTurn * ((RotatedY)/std::abs(RotatedY));                             //make SessionTurn the proper value
-
-    Error = (sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2)) - SessionDriveRadius)*(sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2)) - SessionDriveRadius);
+    float thisThing = 1;
+    Error = (sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2))*thisThing - SessionDriveRadius*thisThing)*(sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2))*thisThing - SessionDriveRadius*thisThing);
 
     if(LimitSwitchFront || LimitSwitchBack){
       if(Error < 5){
@@ -540,7 +540,7 @@ int _DriveTo_ (){
     if (Error > 1) {Integral = 0;}
     if (std::abs(Error) > std::abs(SessionMaxSpeed/12)) {Integral = 0;}
 
-    Ramp += 0.125;
+    Ramp += 10;
 
     OverallSpeed = SmartVoltage * DKp + Integral * DKi + Derivative * DKd;                                                                   //* TKp + Integral * TKi + Derivative * TKd;
     OverallSpeed = GetClosestToZero(OverallSpeed, SessionMaxSpeed * (Error/std::abs(Error)));
@@ -557,15 +557,17 @@ int _DriveTo_ (){
       OverallSpeed = 12 * std::abs(OverallSpeed)/OverallSpeed;
     }
 
-    if(std::abs(RightSpeed) > 6){
-      RightSpeed = 6 * (std::abs(RightSpeed)/RightSpeed);
+    if(std::abs(RightSpeed) > 4){
+      RightSpeed = 4 * (std::abs(RightSpeed)/RightSpeed);
     }    
 
 
-    if((FrontSensorsSenseATouch = true) && (DriveRadius == -2)) {
+    if((FrontSensorsSenseATouch == true) && LimitSwitchFront) {
       frontAir.set(true);
-    } else if((LimSwitchBack.pressing()) && (DriveRadius == -1)) {
+      Condition=false;
+    } else if((LimSwitchBack.pressing()) && LimitSwitchBack) {
       backAir.set(true);
+      Condition=false;
     }
 
     //PositiveDiagonalVoltage = sin(Rads(SessionTurn+45))*std::abs(Voltage);
@@ -577,7 +579,7 @@ int _DriveTo_ (){
     BLMotor.spin(forward, (OverallSpeed - RightSpeed)*DirectionalFactor, voltageUnits::volt);
 
 
-    if (std::abs(Error)-4 <= 0.0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout || ((LimitSwitchFront && FrontSensorsSenseATouch) || (LimitSwitchBack && LimSwitchBack.pressing()))) {
+    if (std::abs(Error)-4 <= 0.0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout) {
       if(!(ReachedTarget)){
         ReachedTargetTime = Brain.Timer.systemHighResolution();
       }
@@ -715,7 +717,17 @@ int _Turn_To_() {
   float SmartError;
   int Ramp = 0;
   float ActualVoltage = 0;
+  float Multiplier = 4.5;
 
+  if(FrontSensorsSenseATouch && !(LimSwitchBack.pressing())) {
+    Multiplier +=2;
+  }
+  if(!(FrontSensorsSenseATouch) && (LimSwitchBack.pressing())) {
+    Multiplier +=5.1;
+  }
+  if(LimSwitchBack.pressing() && FrontSensorsSenseATouch){
+    Multiplier +=4;
+  }
 
   while (Condition) {
 
@@ -742,12 +754,12 @@ int _Turn_To_() {
     if (std::abs(Voltage) > 5) {Integral = 0;}
     //if (std::abs(Error) > std::abs(SessionMaxSpeed/12)) {Integral = 0;}
 
-    Ramp += 10;
+    Ramp += 15;
     PreviousError = Error;
 
     SmartError = GetClosestToZero(Error, Ramp * (Error/std::abs(Error)));
 
-    Voltage = SmartError * TKp + Integral * TKi + Derivative * TKd;
+    Voltage = SmartError * TKp * Multiplier + Integral * TKi + Derivative * TKd;
     Voltage = GetClosestToZero(Voltage, SessionMaxSpeed * (Error/std::abs(Error)));
 
     if(std::abs(Voltage)<MinVoltage){
@@ -1079,11 +1091,14 @@ int FrontLiftSensors(){
       task::yield();
     } 
     
-    if(RSD < 1.6 && LSD < 1.6){
+    if((RSD < 1.6 && LSD < 1.6) && (DistanceRight.isObjectDetected() && DistanceLeft.isObjectDetected())){
       FrontSensorsSenseATouch = true;
     }else{
       FrontSensorsSenseATouch = false;
     }
+
+    Brain.Screen.clearScreen();
+    Brain.Screen.print(FrontSensorsSenseATouch);
 
     task::yield();
   }

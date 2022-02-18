@@ -134,67 +134,17 @@ void advancedAdvancedSkills() {
   // Turn(45);
 }
 void advancedSkills() {
+
   backAir.set(true);
-  wait(.3,sec);
+  wait(.2,sec);
   tilt.set(true);
-
-  TurnAndDrive(28,-48,100,90,0,true,true); 
-  FrontLiftt(10); 
-  RingLiftL.spin(forward,400,rpm);
-  RingLiftR.spin(forward,400,rpm);
-  FrontLiftt(2.5);
-  TurnAndDrive(10,-10);
-  TurnAndDrive(0,0,80,90,-1,true); //Tall yellow goal
-  frontAir.set(true);
-
-  TurnAndDrive(-60,-3,90,80,17,true,false); //Drives to red platform
-  FrontLiftt(85);
-  RingLiftL.spin(reverse,400,rpm);
-  RingLiftR.spin(reverse,400,rpm);
-  tilt.set(false);
-  BackLiftt(85,false);
-  Drive(0);
-  FrontLiftt(58);
-  Turn(-20);
-  wait(.8,sec);
-  frontAir.set(false); //Drops tall goal on red platform
-  Drive(-10);
-  TurnAndDrive(-60,8,90,80,17,false,true);
-  backAir.set(false); // Drops red goal on platform
-
-  Drive(10);
-  FrontLiftt(0);
-  TurnAndDrive(-36,-60,90,80,-2,true,true); // drives to blue goal
-  frontAir.set(true);
-  BackLiftt(0);
-  TurnAndDrive(0,-30,90,80,0,false,true);
-  TurnAndDrive(0,-36,90,80,-1,false,true);
-  backAir.set(true);
-  BackLiftt(85);
-  TurnAndDrive(60,-3,90,80,17,false,true);
-  BackLiftt(60);
-  backAir.set(false);
-  Drive(12);
-  FrontLiftt(85);
-  TurnAndDrive(60,6,90,80,17,true,true);
-  FrontLiftt(60);
+  TurnAndDrive(0,-36,100,100,-1);
+  FrontLiftt(90,false);
+  TurnAndDrive(-38,0,100,100,0,true);
+  TurnAndDrive(-60,-5,100,100,14,true);
+  FrontLiftt(72);
   frontAir.set(false);
-  Drive(-10);
-  FrontLiftt(0);
 
-  TurnAndDrive(36,60,90,80,-2,true,true); // drives to red goal
-  frontAir.set(true);
-  FrontLiftt(85);
-  TurnAndDrive(-60,-3,90,80,17,true,false); //Drives to red platform
-  frontAir.set(false);
-  
-
-
-
-
-
-
-  
 
 }
 void easySkills() {
@@ -377,7 +327,6 @@ void betterLeftWinPoint() {
 
 
 }
-
 void midRush(){
   DriveFast(-47,100,true,false,true,false,60);
   backAir.set(true);
@@ -386,7 +335,6 @@ void midRush(){
   DriveFast(45);
 
 }
-
 void midStandRush(){
   DriveFast(-42,100,false,false,true,false,60);
   BackLiftt(50);
@@ -401,15 +349,16 @@ void midStandRush(){
 }
 void autonomous(void) {
   Brain.resetTimer();
-  TurnAndDrive(24,24,100,100,12,false);
-  //Turn(90);
-  //wait(1,sec);
-  //Turn(180);
+  backAir.set(true);
+  wait(0.125,sec);
+  tilt.set(true);
+  TurnTo(0,0);
   // Determining the auton to run based on the one selected.
 //leftComplex();
 //leftWinPoint();
 //betterLeftWinPoint();
 //advancedAdvancedSkills();
+//advancedSkills();
 //midRush();
 //midStandRush();
 //Test();
