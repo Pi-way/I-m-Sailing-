@@ -108,10 +108,11 @@ void advancedAdvancedSkills() {
 
   TurnAndDrive(36,40,80,80,0,false,true,2.5,3);
   TurnAndDrive(36,60,100,80,-2,false,true);
-  backAir.set(true);
+  backAir.set(true);//grab last goal(red)
   wait(.25,sec);
   tilt.set(true);
   StartRingThing();
+  Drive(12);
 
   TurnAndDrive(0,35,100,100,-1,true,true);
   frontAir.set(true);
@@ -233,7 +234,6 @@ void rightSimple() {
 
   Drive(14);
 
-
   repeat(4){
     Drive(-8);
     Drive(8);
@@ -241,6 +241,9 @@ void rightSimple() {
   Drive(12,100,false);
   wait(.25, sec);
   tilt.set(false);
+  backAir.set(false);
+  wait(0.25,sec);
+  Drive(12);
 
 }
 void rightWinPoint() {
@@ -296,6 +299,9 @@ void leftSimple() {
   }
   //BackLiftt(15);
   tilt.set(false);
+  backAir.set(false);
+  wait(0.25,sec);
+  Drive(12);
 
   
 }
@@ -363,21 +369,32 @@ void dopeRun(){
   DriveFast(45);
   Turn(180,100,false);
   BackLiftt(0,true,30);
-  backAir.set(false);
-  
+  backAir.set(false); 
+}
+
+void midStandRush(){
+  DriveFast(-47,100,true,false,true,false,60);
+  backAir.set(true);
+  wait(0.2, sec);
+  tilt.set(true);
+  DriveFast(40);
+
+    
 }
 
 void autonomous(void) {
   Brain.resetTimer();
   // Determining the auton to run based on the one selected.
+//leftSimple();
 //leftComplex();
 //betterLeftWinPoint();
 //advancedAdvancedSkills();
+//midStandRush();
 //dopeRun();
 
   if (alliance==SKILLS && mode == SIMPLE) {dopeRun();}//easySkills();}//speeeeed
   else if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-  else if (alliance == SKILLS && mode == COMPLEX) {advancedSkills();}
+  else if (alliance == SKILLS && mode == COMPLEX) {midStandRush();}
   else if (true){
     if (side==LEFT) {
       if (mode==SIMPLE) {leftSimple();}
