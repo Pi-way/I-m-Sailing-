@@ -391,7 +391,7 @@ void autonomous(void) {
 //advancedAdvancedSkills();
 //midStandRush();
 //dopeRun();
-rightComplex();
+//rightComplex();
   // if (alliance==SKILLS && mode == SIMPLE) {dopeRun();}//easySkills();}//speeeeed
   // else if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
   // else if (alliance == SKILLS && mode == COMPLEX) {midStandRush();}

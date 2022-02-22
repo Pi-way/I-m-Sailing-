@@ -543,6 +543,14 @@ int _DriveTo_ (){
     BRMotor.spin(forward, NegativeDiagonalVoltage, voltageUnits::volt);
     BLMotor.spin(forward, PositiveDiagonalVoltage, voltageUnits::volt);
 
+    if((LimitSwitchFront==true) && (FrontSensorsSenseATouch == true)){
+      frontAir.set(true);
+      Condition = false;
+    } else if((LimitSwitchBack==true) && (LimSwitchBack.pressing())){
+      backAir.set(true);
+      Condition = false;
+    }
+
 
     if (std::abs(Error)-4 <= 0.0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout || ((LimitSwitchFront && FrontSensorsSenseATouch) || (LimitSwitchBack && LimSwitchBack.pressing()))) {
       if(!(ReachedTarget)){
