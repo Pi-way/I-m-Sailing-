@@ -85,9 +85,9 @@ Discarded input sections
                 0x00000000       0xc8 build/src/functions.o
  .ARM.exidx.text._Z9BackLifttfbf
                 0x00000000        0x8 build/src/functions.o
- .text._Z6Pleasev
+ .text._Z16_StartRingThing_v
                 0x00000000      0x364 build/src/functions.o
- .ARM.exidx.text._Z6Pleasev
+ .ARM.exidx.text._Z16_StartRingThing_v
                 0x00000000        0x8 build/src/functions.o
  .text._Z14StartRingThingffb
                 0x00000000       0x5c build/src/functions.o
@@ -97,25 +97,13 @@ Discarded input sections
                 0x00000000       0x14 build/src/functions.o
  .ARM.exidx.text._Z13StopRingThingv
                 0x00000000        0x8 build/src/functions.o
- .text._Z10spinMotorsf
-                0x00000000       0xa8 build/src/functions.o
- .ARM.exidx.text._Z10spinMotorsf
-                0x00000000        0x8 build/src/functions.o
- .text._Z10stopMotorsv
-                0x00000000       0x3c build/src/functions.o
- .ARM.exidx.text._Z10stopMotorsv
-                0x00000000        0x8 build/src/functions.o
- .text._Z8autoParkb
-                0x00000000        0x4 build/src/functions.o
- .ARM.exidx.text._Z8autoParkb
-                0x00000000        0x8 build/src/functions.o
  .bss.Amount    0x00000000        0x4 build/src/functions.o
  .bss.Speed     0x00000000        0x4 build/src/functions.o
- .bss.Waittt    0x00000000        0x4 build/src/functions.o
  .bss.RingThingsRunning
                 0x00000000        0x4 build/src/functions.o
- .bss.RTS       0x00000000        0x1 build/src/functions.o
- .llvm_addrsig  0x00000000        0xc build/src/functions.o
+ .bss._StopRingThing_
+                0x00000000        0x1 build/src/functions.o
+ .llvm_addrsig  0x00000000        0x8 build/src/functions.o
  .text          0x00000000        0x0 build/src/main.o
  .llvm_addrsig  0x00000000        0x5 build/src/main.o
  .text          0x00000000        0x0 build/src/userControl.o
@@ -4176,9 +4164,9 @@ Linker script and memory map
                 0x03807188                __bss_start = .
  *(.bss)
  *(.bss.*)
- .bss.RingTHING
+ .bss.RingLiftTask
                 0x03807188        0x8 build/src/functions.o
-                0x03807188                RingTHING
+                0x03807188                RingLiftTask
  .bss.Competition
                 0x03807190       0x28 build/src/main.o
                 0x03807190                Competition
