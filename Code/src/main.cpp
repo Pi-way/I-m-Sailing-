@@ -29,7 +29,8 @@ int main() {
   while (true) {
     wait(100, msec);
   }
-
+  backAir.set(true);
+  frontAir.set(true);
 
 }
 
