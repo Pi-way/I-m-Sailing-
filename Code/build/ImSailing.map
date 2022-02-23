@@ -13,7 +13,7 @@ C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_globa
 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_motor.cpp.obj)
                               build/src/robot-config.o (vex::motor::~motor())
 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_imu.cpp.obj)
-                              build/src/chassisStuff/Turn.o (vex::inertial::setRotation(double, vex::rotationUnits))
+                              build/src/DrivetrianCode/Turn.o (vex::inertial::setRotation(double, vex::rotationUnits))
 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_distance.cpp.obj)
                               build/src/robot-config.o (vex::distance::~distance())
 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_gps.cpp.obj)
@@ -55,9 +55,9 @@ C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libc.a(lib
 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libc.a(lib_a-ctype_.o)
                               C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libc.a(lib_a-tolower.o) (__ctype_ptr__)
 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libm.a(lib_a-sf_round.o)
-                              build/src/chassisStuff/Tasks.o (roundf)
+                              build/src/DrivetrianCode/Tasks.o (roundf)
 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libm.a(lib_a-wf_acos.o)
-                              build/src/chassisStuff/DriveTo.o (acosf)
+                              build/src/DrivetrianCode/DriveTo.o (acosf)
 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libm.a(lib_a-ef_acos.o)
                               C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libm.a(lib_a-wf_acos.o) (__ieee754_acosf)
 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libm.a(lib_a-s_lib_ver.o)
@@ -65,7 +65,7 @@ C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libm.a(lib
 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libm.a(lib_a-sf_fabs.o)
                               C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libm.a(lib_a-wf_acos.o) (fabsf)
 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libgcc.a(_arm_addsubsf3.o)
-                              build/src/chassisStuff/DriveFast.o (__aeabi_ul2f)
+                              build/src/DrivetrianCode/DriveFast.o (__aeabi_ul2f)
 
 Allocating common symbols
 Common symbol       size              file
@@ -112,6 +112,8 @@ Discarded input sections
  .llvm_addrsig  0x00000000        0x5 build/src/main.o
  .text          0x00000000        0x0 build/src/userControl.o
  .llvm_addrsig  0x00000000        0xc build/src/userControl.o
+ .text          0x00000000        0x0 build/src/Calibrate.o
+ .llvm_addrsig  0x00000000        0x8 build/src/Calibrate.o
  .text          0x00000000        0x0 build/src/auton.o
  .text._Z4Testv
                 0x00000000       0x40 build/src/auton.o
@@ -166,156 +168,156 @@ Discarded input sections
  .ARM.exidx.text._Z12midStandRushv
                 0x00000000        0x8 build/src/auton.o
  .llvm_addrsig  0x00000000        0x6 build/src/auton.o
+ .text          0x00000000        0x0 build/src/DrivetrainStuff.o
+ .text._Z16GetClosestToZeroff
+                0x00000000       0x24 build/src/DrivetrainStuff.o
+ .ARM.exidx.text._Z16GetClosestToZeroff
+                0x00000000        0x8 build/src/DrivetrainStuff.o
+ .bss.PIDsRunning
+                0x00000000        0x4 build/src/DrivetrainStuff.o
+ .bss.Distance  0x00000000        0x4 build/src/DrivetrainStuff.o
+ .bss.TurnDegree
+                0x00000000        0x4 build/src/DrivetrainStuff.o
+ .bss.TurnDistance
+                0x00000000        0x4 build/src/DrivetrainStuff.o
+ .bss.CoustomTimeout
+                0x00000000        0x4 build/src/DrivetrainStuff.o
+ .bss.fb        0x00000000        0x1 build/src/DrivetrainStuff.o
+ .bss.bb        0x00000000        0x1 build/src/DrivetrainStuff.o
+ .bss.Coast     0x00000000        0x1 build/src/DrivetrainStuff.o
+ .bss.MaxDistance
+                0x00000000        0x4 build/src/DrivetrainStuff.o
+ .bss.DriveRadius
+                0x00000000        0x4 build/src/DrivetrainStuff.o
+ .bss.DriveX    0x00000000        0x4 build/src/DrivetrainStuff.o
+ .bss.DriveY    0x00000000        0x4 build/src/DrivetrainStuff.o
+ .bss.TurnX     0x00000000        0x4 build/src/DrivetrainStuff.o
+ .bss.TurnY     0x00000000        0x4 build/src/DrivetrainStuff.o
+ .bss.Wait      0x00000000        0x1 build/src/DrivetrainStuff.o
+ .bss.Speed_V   0x00000000        0x4 build/src/DrivetrainStuff.o
+ .data.Drive_balance
+                0x00000000        0x4 build/src/DrivetrainStuff.o
+ .llvm_addrsig  0x00000000        0x8 build/src/DrivetrainStuff.o
  .text          0x00000000        0x0 build/src/robot-config.o
  .data.RemoteControlCodeEnabled
                 0x00000000        0x1 build/src/robot-config.o
  .llvm_addrsig  0x00000000       0x16 build/src/robot-config.o
- .text          0x00000000        0x0 build/src/chassi.o
- .text._Z16GetClosestToZeroff
-                0x00000000       0x24 build/src/chassi.o
- .ARM.exidx.text._Z16GetClosestToZeroff
-                0x00000000        0x8 build/src/chassi.o
- .bss.PIDsRunning
-                0x00000000        0x4 build/src/chassi.o
- .bss.Distance  0x00000000        0x4 build/src/chassi.o
- .bss.TurnDegree
-                0x00000000        0x4 build/src/chassi.o
- .bss.TurnDistance
-                0x00000000        0x4 build/src/chassi.o
- .bss.CoustomTimeout
-                0x00000000        0x4 build/src/chassi.o
- .bss.fb        0x00000000        0x1 build/src/chassi.o
- .bss.bb        0x00000000        0x1 build/src/chassi.o
- .bss.Coast     0x00000000        0x1 build/src/chassi.o
- .bss.MaxDistance
-                0x00000000        0x4 build/src/chassi.o
- .bss.DriveRadius
-                0x00000000        0x4 build/src/chassi.o
- .bss.DriveX    0x00000000        0x4 build/src/chassi.o
- .bss.DriveY    0x00000000        0x4 build/src/chassi.o
- .bss.TurnX     0x00000000        0x4 build/src/chassi.o
- .bss.TurnY     0x00000000        0x4 build/src/chassi.o
- .bss.Wait      0x00000000        0x1 build/src/chassi.o
- .bss.Speed_V   0x00000000        0x4 build/src/chassi.o
- .data.Drive_balance
-                0x00000000        0x4 build/src/chassi.o
- .llvm_addrsig  0x00000000       0x10 build/src/chassi.o
  .text          0x00000000        0x0 build/src/preauton.o
  .llvm_addrsig  0x00000000        0x8 build/src/preauton.o
- .text          0x00000000        0x0 build/src/chassisStuff/DriveFast.o
+ .text          0x00000000        0x0 build/src/DrivetrianCode/DriveFast.o
  .text._Z11_Drive_Fastv
-                0x00000000      0x5ec build/src/chassisStuff/DriveFast.o
+                0x00000000      0x5ec build/src/DrivetrianCode/DriveFast.o
  .ARM.exidx.text._Z11_Drive_Fastv
-                0x00000000        0x8 build/src/chassisStuff/DriveFast.o
+                0x00000000        0x8 build/src/DrivetrianCode/DriveFast.o
  .text._Z9DriveFastffbbbbf
-                0x00000000       0xf8 build/src/chassisStuff/DriveFast.o
+                0x00000000       0xf8 build/src/DrivetrianCode/DriveFast.o
  .ARM.exidx.text._Z9DriveFastffbbbbf
-                0x00000000        0x8 build/src/chassisStuff/DriveFast.o
- .data.fKp      0x00000000        0x4 build/src/chassisStuff/DriveFast.o
- .data.fKi      0x00000000        0x4 build/src/chassisStuff/DriveFast.o
- .data.fKd      0x00000000        0x4 build/src/chassisStuff/DriveFast.o
- .comment       0x00000000       0x2e build/src/chassisStuff/DriveFast.o
+                0x00000000        0x8 build/src/DrivetrianCode/DriveFast.o
+ .data.fKp      0x00000000        0x4 build/src/DrivetrianCode/DriveFast.o
+ .data.fKi      0x00000000        0x4 build/src/DrivetrianCode/DriveFast.o
+ .data.fKd      0x00000000        0x4 build/src/DrivetrianCode/DriveFast.o
+ .comment       0x00000000       0x2e build/src/DrivetrianCode/DriveFast.o
  .note.GNU-stack
-                0x00000000        0x0 build/src/chassisStuff/DriveFast.o
+                0x00000000        0x0 build/src/DrivetrianCode/DriveFast.o
  .ARM.attributes
-                0x00000000       0x3a build/src/chassisStuff/DriveFast.o
- .llvm_addrsig  0x00000000        0x7 build/src/chassisStuff/DriveFast.o
- .text          0x00000000        0x0 build/src/chassisStuff/TurnAndDrive.o
+                0x00000000       0x3a build/src/DrivetrianCode/DriveFast.o
+ .llvm_addrsig  0x00000000        0x7 build/src/DrivetrianCode/DriveFast.o
+ .text          0x00000000        0x0 build/src/DrivetrianCode/TurnAndDrive.o
  .text._Z12TurnAndDrivefffffbbff
-                0x00000000       0x7c build/src/chassisStuff/TurnAndDrive.o
+                0x00000000       0x7c build/src/DrivetrianCode/TurnAndDrive.o
  .ARM.exidx.text._Z12TurnAndDrivefffffbbff
-                0x00000000        0x8 build/src/chassisStuff/TurnAndDrive.o
- .comment       0x00000000       0x2e build/src/chassisStuff/TurnAndDrive.o
+                0x00000000        0x8 build/src/DrivetrianCode/TurnAndDrive.o
+ .comment       0x00000000       0x2e build/src/DrivetrianCode/TurnAndDrive.o
  .note.GNU-stack
-                0x00000000        0x0 build/src/chassisStuff/TurnAndDrive.o
+                0x00000000        0x0 build/src/DrivetrianCode/TurnAndDrive.o
  .ARM.attributes
-                0x00000000       0x3a build/src/chassisStuff/TurnAndDrive.o
- .llvm_addrsig  0x00000000        0x0 build/src/chassisStuff/TurnAndDrive.o
- .text          0x00000000        0x0 build/src/chassisStuff/Turn.o
+                0x00000000       0x3a build/src/DrivetrianCode/TurnAndDrive.o
+ .llvm_addrsig  0x00000000        0x0 build/src/DrivetrianCode/TurnAndDrive.o
+ .text          0x00000000        0x0 build/src/DrivetrianCode/Turn.o
  .text._Z6_Turn_v
-                0x00000000      0x438 build/src/chassisStuff/Turn.o
+                0x00000000      0x438 build/src/DrivetrianCode/Turn.o
  .ARM.exidx.text._Z6_Turn_v
-                0x00000000        0x8 build/src/chassisStuff/Turn.o
+                0x00000000        0x8 build/src/DrivetrianCode/Turn.o
  .text._Z4Turnffbf
-                0x00000000       0xc8 build/src/chassisStuff/Turn.o
+                0x00000000       0xc8 build/src/DrivetrianCode/Turn.o
  .ARM.exidx.text._Z4Turnffbf
-                0x00000000        0x8 build/src/chassisStuff/Turn.o
- .data.TKp      0x00000000        0x4 build/src/chassisStuff/Turn.o
- .data.TKi      0x00000000        0x4 build/src/chassisStuff/Turn.o
- .data.TKd      0x00000000        0x4 build/src/chassisStuff/Turn.o
- .comment       0x00000000       0x2e build/src/chassisStuff/Turn.o
+                0x00000000        0x8 build/src/DrivetrianCode/Turn.o
+ .data.TKp      0x00000000        0x4 build/src/DrivetrianCode/Turn.o
+ .data.TKi      0x00000000        0x4 build/src/DrivetrianCode/Turn.o
+ .data.TKd      0x00000000        0x4 build/src/DrivetrianCode/Turn.o
+ .comment       0x00000000       0x2e build/src/DrivetrianCode/Turn.o
  .note.GNU-stack
-                0x00000000        0x0 build/src/chassisStuff/Turn.o
+                0x00000000        0x0 build/src/DrivetrianCode/Turn.o
  .ARM.attributes
-                0x00000000       0x3a build/src/chassisStuff/Turn.o
- .llvm_addrsig  0x00000000        0x7 build/src/chassisStuff/Turn.o
- .text          0x00000000        0x0 build/src/chassisStuff/DriveTo.o
+                0x00000000       0x3a build/src/DrivetrianCode/Turn.o
+ .llvm_addrsig  0x00000000        0x7 build/src/DrivetrianCode/Turn.o
+ .text          0x00000000        0x0 build/src/DrivetrianCode/DriveTo.o
  .text._Z9_DriveTo_v
-                0x00000000      0x794 build/src/chassisStuff/DriveTo.o
+                0x00000000      0x794 build/src/DrivetrianCode/DriveTo.o
  .ARM.exidx.text._Z9_DriveTo_v
-                0x00000000        0x8 build/src/chassisStuff/DriveTo.o
+                0x00000000        0x8 build/src/DrivetrianCode/DriveTo.o
  .text._Z7DriveToffffbf
-                0x00000000       0xf4 build/src/chassisStuff/DriveTo.o
+                0x00000000       0xf4 build/src/DrivetrianCode/DriveTo.o
  .ARM.exidx.text._Z7DriveToffffbf
-                0x00000000        0x8 build/src/chassisStuff/DriveTo.o
- .data.DKp      0x00000000        0x4 build/src/chassisStuff/DriveTo.o
- .data.DKi      0x00000000        0x4 build/src/chassisStuff/DriveTo.o
- .data.DKd      0x00000000        0x4 build/src/chassisStuff/DriveTo.o
- .comment       0x00000000       0x2e build/src/chassisStuff/DriveTo.o
+                0x00000000        0x8 build/src/DrivetrianCode/DriveTo.o
+ .data.DKp      0x00000000        0x4 build/src/DrivetrianCode/DriveTo.o
+ .data.DKi      0x00000000        0x4 build/src/DrivetrianCode/DriveTo.o
+ .data.DKd      0x00000000        0x4 build/src/DrivetrianCode/DriveTo.o
+ .comment       0x00000000       0x2e build/src/DrivetrianCode/DriveTo.o
  .note.GNU-stack
-                0x00000000        0x0 build/src/chassisStuff/DriveTo.o
+                0x00000000        0x0 build/src/DrivetrianCode/DriveTo.o
  .ARM.attributes
-                0x00000000       0x3a build/src/chassisStuff/DriveTo.o
- .llvm_addrsig  0x00000000        0x8 build/src/chassisStuff/DriveTo.o
- .text          0x00000000        0x0 build/src/chassisStuff/Drive.o
+                0x00000000       0x3a build/src/DrivetrianCode/DriveTo.o
+ .llvm_addrsig  0x00000000        0x8 build/src/DrivetrianCode/DriveTo.o
+ .text          0x00000000        0x0 build/src/DrivetrianCode/Drive.o
  .text._Z7_Drive_v
-                0x00000000      0x624 build/src/chassisStuff/Drive.o
+                0x00000000      0x624 build/src/DrivetrianCode/Drive.o
  .ARM.exidx.text._Z7_Drive_v
-                0x00000000        0x8 build/src/chassisStuff/Drive.o
+                0x00000000        0x8 build/src/DrivetrianCode/Drive.o
  .text._Z5Driveffbbbbf
-                0x00000000       0xf8 build/src/chassisStuff/Drive.o
+                0x00000000       0xf8 build/src/DrivetrianCode/Drive.o
  .ARM.exidx.text._Z5Driveffbbbbf
-                0x00000000        0x8 build/src/chassisStuff/Drive.o
- .data.Kp       0x00000000        0x4 build/src/chassisStuff/Drive.o
- .data.Ki       0x00000000        0x4 build/src/chassisStuff/Drive.o
- .data.Kd       0x00000000        0x4 build/src/chassisStuff/Drive.o
- .comment       0x00000000       0x2e build/src/chassisStuff/Drive.o
+                0x00000000        0x8 build/src/DrivetrianCode/Drive.o
+ .data.Kp       0x00000000        0x4 build/src/DrivetrianCode/Drive.o
+ .data.Ki       0x00000000        0x4 build/src/DrivetrianCode/Drive.o
+ .data.Kd       0x00000000        0x4 build/src/DrivetrianCode/Drive.o
+ .comment       0x00000000       0x2e build/src/DrivetrianCode/Drive.o
  .note.GNU-stack
-                0x00000000        0x0 build/src/chassisStuff/Drive.o
+                0x00000000        0x0 build/src/DrivetrianCode/Drive.o
  .ARM.attributes
-                0x00000000       0x3a build/src/chassisStuff/Drive.o
- .llvm_addrsig  0x00000000        0x7 build/src/chassisStuff/Drive.o
- .text          0x00000000        0x0 build/src/chassisStuff/TurnTo.o
+                0x00000000       0x3a build/src/DrivetrianCode/Drive.o
+ .llvm_addrsig  0x00000000        0x7 build/src/DrivetrianCode/Drive.o
+ .text          0x00000000        0x0 build/src/DrivetrianCode/TurnTo.o
  .text._Z9_Turn_To_v
-                0x00000000      0x820 build/src/chassisStuff/TurnTo.o
+                0x00000000      0x820 build/src/DrivetrianCode/TurnTo.o
  .ARM.exidx.text._Z9_Turn_To_v
-                0x00000000        0x8 build/src/chassisStuff/TurnTo.o
- .group         0x00000000        0xc build/src/chassisStuff/TurnTo.o
+                0x00000000        0x8 build/src/DrivetrianCode/TurnTo.o
+ .group         0x00000000        0xc build/src/DrivetrianCode/TurnTo.o
  .text._ZN3vex5brain3lcd5printIfEEvT_
-                0x00000000       0x3c build/src/chassisStuff/TurnTo.o
+                0x00000000       0x3c build/src/DrivetrianCode/TurnTo.o
  .ARM.exidx.text._ZN3vex5brain3lcd5printIfEEvT_
-                0x00000000        0x8 build/src/chassisStuff/TurnTo.o
+                0x00000000        0x8 build/src/DrivetrianCode/TurnTo.o
  .text._Z6TurnTofffbff
-                0x00000000       0xf4 build/src/chassisStuff/TurnTo.o
+                0x00000000       0xf4 build/src/DrivetrianCode/TurnTo.o
  .ARM.exidx.text._Z6TurnTofffbff
-                0x00000000        0x8 build/src/chassisStuff/TurnTo.o
- .data.TTKp     0x00000000        0x4 build/src/chassisStuff/TurnTo.o
- .data.TTKi     0x00000000        0x4 build/src/chassisStuff/TurnTo.o
- .data.TTKd     0x00000000        0x4 build/src/chassisStuff/TurnTo.o
+                0x00000000        0x8 build/src/DrivetrianCode/TurnTo.o
+ .data.TTKp     0x00000000        0x4 build/src/DrivetrianCode/TurnTo.o
+ .data.TTKi     0x00000000        0x4 build/src/DrivetrianCode/TurnTo.o
+ .data.TTKd     0x00000000        0x4 build/src/DrivetrianCode/TurnTo.o
  .rodata.str1.1
-                0x00000000        0x8 build/src/chassisStuff/TurnTo.o
- .comment       0x00000000       0x2e build/src/chassisStuff/TurnTo.o
+                0x00000000        0x8 build/src/DrivetrianCode/TurnTo.o
+ .comment       0x00000000       0x2e build/src/DrivetrianCode/TurnTo.o
  .note.GNU-stack
-                0x00000000        0x0 build/src/chassisStuff/TurnTo.o
+                0x00000000        0x0 build/src/DrivetrianCode/TurnTo.o
  .ARM.attributes
-                0x00000000       0x3a build/src/chassisStuff/TurnTo.o
- .llvm_addrsig  0x00000000        0x6 build/src/chassisStuff/TurnTo.o
- .text          0x00000000        0x0 build/src/chassisStuff/Tasks.o
- .text._Z3GPSv  0x00000000        0x8 build/src/chassisStuff/Tasks.o
+                0x00000000       0x3a build/src/DrivetrianCode/TurnTo.o
+ .llvm_addrsig  0x00000000        0x6 build/src/DrivetrianCode/TurnTo.o
+ .text          0x00000000        0x0 build/src/DrivetrianCode/Tasks.o
+ .text._Z3GPSv  0x00000000        0x8 build/src/DrivetrianCode/Tasks.o
  .ARM.exidx.text._Z3GPSv
-                0x00000000        0x8 build/src/chassisStuff/Tasks.o
- .group         0x00000000        0xc build/src/chassisStuff/Tasks.o
- .llvm_addrsig  0x00000000        0xa build/src/chassisStuff/Tasks.o
+                0x00000000        0x8 build/src/DrivetrianCode/Tasks.o
+ .group         0x00000000        0xc build/src/DrivetrianCode/Tasks.o
+ .llvm_addrsig  0x00000000        0xa build/src/DrivetrianCode/Tasks.o
  .text          0x00000000        0x0 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
  .data          0x00000000        0x0 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
  .bss           0x00000000        0x0 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
@@ -2806,52 +2808,52 @@ Linker script and memory map
  .text._Z11usercontrolv
                 0x03800570      0x294 build/src/userControl.o
                 0x03800570                usercontrol()
- .text._Z10autonomousv
-                0x03800804        0xc build/src/auton.o
-                0x03800804                autonomous()
- .text._Z11vexcodeInitv
-                0x03800810        0x4 build/src/robot-config.o
-                0x03800810                vexcodeInit()
- *fill*         0x03800814        0x4 
- .text._GLOBAL__sub_I_robot_config.cpp
-                0x03800818      0x480 build/src/robot-config.o
  .text._Z9Calibratev
-                0x03800c98      0x208 build/src/chassi.o
-                0x03800c98                Calibrate()
- .text._GLOBAL__sub_I_chassi.cpp
-                0x03800ea0       0xdc build/src/chassi.o
+                0x03800804      0x208 build/src/Calibrate.o
+                0x03800804                Calibrate()
+ .text._Z10autonomousv
+                0x03800a0c        0xc build/src/auton.o
+                0x03800a0c                autonomous()
+ .text._GLOBAL__sub_I_DrivetrainStuff.cpp
+                0x03800a18       0xdc build/src/DrivetrainStuff.o
+ .text._Z11vexcodeInitv
+                0x03800af4        0x4 build/src/robot-config.o
+                0x03800af4                vexcodeInit()
+ .text._GLOBAL__sub_I_robot_config.cpp
+                0x03800af8      0x480 build/src/robot-config.o
  .text._Z10selectModev
-                0x03800f7c      0x220 build/src/preauton.o
-                0x03800f7c                selectMode()
+                0x03800f78      0x220 build/src/preauton.o
+                0x03800f78                selectMode()
  .text._Z14selectAlliancev
-                0x0380119c      0x1f8 build/src/preauton.o
-                0x0380119c                selectAlliance()
+                0x03801198      0x1f8 build/src/preauton.o
+                0x03801198                selectAlliance()
  .text._Z10selectSidev
-                0x03801394      0x1a8 build/src/preauton.o
-                0x03801394                selectSide()
+                0x03801390      0x1a8 build/src/preauton.o
+                0x03801390                selectSide()
  .text._Z9pre_autonv
-                0x0380153c      0x178 build/src/preauton.o
-                0x0380153c                pre_auton()
+                0x03801538      0x178 build/src/preauton.o
+                0x03801538                pre_auton()
  .text._Z5GPS_Xv
-                0x038016b4       0x5c build/src/chassisStuff/Tasks.o
-                0x038016b4                GPS_X()
+                0x038016b0       0x5c build/src/DrivetrianCode/Tasks.o
+                0x038016b0                GPS_X()
  .text._Z5GPS_Yv
-                0x03801710       0x5c build/src/chassisStuff/Tasks.o
-                0x03801710                GPS_Y()
+                0x0380170c       0x5c build/src/DrivetrianCode/Tasks.o
+                0x0380170c                GPS_Y()
  .text._Z5GPS_Hv
-                0x0380176c       0x54 build/src/chassisStuff/Tasks.o
-                0x0380176c                GPS_H()
+                0x03801768       0x54 build/src/DrivetrianCode/Tasks.o
+                0x03801768                GPS_H()
  .text._Z13ControllerGpsv
-                0x038017c0       0xc4 build/src/chassisStuff/Tasks.o
-                0x038017c0                ControllerGps()
+                0x038017bc       0xc4 build/src/DrivetrianCode/Tasks.o
+                0x038017bc                ControllerGps()
  .text._ZN3vex10controller3lcd5printIfEEvT_
-                0x03801884       0x3c build/src/chassisStuff/Tasks.o
-                0x03801884                void vex::controller::lcd::print<float>(float)
+                0x03801880       0x3c build/src/DrivetrianCode/Tasks.o
+                0x03801880                void vex::controller::lcd::print<float>(float)
+ *fill*         0x038018bc        0x4 
  .text._Z16FrontLiftSensorsv
-                0x038018c0       0xa8 build/src/chassisStuff/Tasks.o
+                0x038018c0       0xa8 build/src/DrivetrianCode/Tasks.o
                 0x038018c0                FrontLiftSensors()
  .text._Z10StartTasksv
-                0x03801968       0xc8 build/src/chassisStuff/Tasks.o
+                0x03801968       0xc8 build/src/DrivetrianCode/Tasks.o
                 0x03801968                StartTasks()
  .text.vexMain  0x03801a30       0xb0 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
                 0x03801a30                vexMain
@@ -3747,7 +3749,7 @@ Linker script and memory map
  .rodata.str1.1
                 0x038052c0      0x10d build/src/preauton.o
  .rodata.str1.1
-                0x038053cd       0x11 build/src/chassisStuff/Tasks.o
+                0x038053cd       0x11 build/src/DrivetrianCode/Tasks.o
  .rodata.str1.1
                 0x038053de       0x2e C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
  .rodata._ZN3vex6PORT20E
@@ -3992,20 +3994,20 @@ Linker script and memory map
  .ARM.exidx.text._Z11usercontrolv
                 0x03805a6c        0x0 build/src/userControl.o
                                   0x8 (size before relaxing)
+ .ARM.exidx.text._Z9Calibratev
+                0x03805a6c        0x0 build/src/Calibrate.o
+                                  0x8 (size before relaxing)
  .ARM.exidx.text._Z10autonomousv
                 0x03805a6c        0x0 build/src/auton.o
+                                  0x8 (size before relaxing)
+ .ARM.exidx.text._GLOBAL__sub_I_DrivetrainStuff.cpp
+                0x03805a6c        0x0 build/src/DrivetrainStuff.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._Z11vexcodeInitv
                 0x03805a6c        0x0 build/src/robot-config.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._GLOBAL__sub_I_robot_config.cpp
                 0x03805a6c        0x0 build/src/robot-config.o
-                                  0x8 (size before relaxing)
- .ARM.exidx.text._Z9Calibratev
-                0x03805a6c        0x0 build/src/chassi.o
-                                  0x8 (size before relaxing)
- .ARM.exidx.text._GLOBAL__sub_I_chassi.cpp
-                0x03805a6c        0x0 build/src/chassi.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._Z10selectModev
                 0x03805a6c        0x0 build/src/preauton.o
@@ -4020,25 +4022,25 @@ Linker script and memory map
                 0x03805a6c        0x0 build/src/preauton.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._Z5GPS_Xv
-                0x03805a6c        0x0 build/src/chassisStuff/Tasks.o
+                0x03805a6c        0x0 build/src/DrivetrianCode/Tasks.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._Z5GPS_Yv
-                0x03805a6c        0x0 build/src/chassisStuff/Tasks.o
+                0x03805a6c        0x0 build/src/DrivetrianCode/Tasks.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._Z5GPS_Hv
-                0x03805a6c        0x0 build/src/chassisStuff/Tasks.o
+                0x03805a6c        0x0 build/src/DrivetrianCode/Tasks.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._Z13ControllerGpsv
-                0x03805a6c        0x0 build/src/chassisStuff/Tasks.o
+                0x03805a6c        0x0 build/src/DrivetrianCode/Tasks.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._ZN3vex10controller3lcd5printIfEEvT_
-                0x03805a6c        0x0 build/src/chassisStuff/Tasks.o
+                0x03805a6c        0x0 build/src/DrivetrianCode/Tasks.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._Z16FrontLiftSensorsv
-                0x03805a6c        0x0 build/src/chassisStuff/Tasks.o
+                0x03805a6c        0x0 build/src/DrivetrianCode/Tasks.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._Z10StartTasksv
-                0x03805a6c        0x0 build/src/chassisStuff/Tasks.o
+                0x03805a6c        0x0 build/src/DrivetrianCode/Tasks.o
                                   0x8 (size before relaxing)
  *(.gnu.linkonce.armexidix.*.*)
                 0x03805a6c                __exidx_end = .
@@ -4058,8 +4060,8 @@ Linker script and memory map
  *(.init_array)
  .init_array    0x03805a6c        0x4 build/src/functions.o
  .init_array    0x03805a70        0x4 build/src/main.o
- .init_array    0x03805a74        0x4 build/src/robot-config.o
- .init_array    0x03805a78        0x4 build/src/chassi.o
+ .init_array    0x03805a74        0x4 build/src/DrivetrainStuff.o
+ .init_array    0x03805a78        0x4 build/src/robot-config.o
  .init_array    0x03805a7c        0x4 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_triport.cpp.obj)
  .init_array    0x03805a80        0x4 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
                 0x03805a84                __init_array_end = .
@@ -4081,66 +4083,68 @@ Linker script and memory map
  .ARM.attributes
                 0x03805af8       0x3a build/src/userControl.o
  .ARM.attributes
-                0x03805b32       0x3a build/src/auton.o
+                0x03805b32       0x3a build/src/Calibrate.o
  .ARM.attributes
-                0x03805b6c       0x3a build/src/robot-config.o
+                0x03805b6c       0x3a build/src/auton.o
  .ARM.attributes
-                0x03805ba6       0x3a build/src/chassi.o
+                0x03805ba6       0x3a build/src/DrivetrainStuff.o
  .ARM.attributes
-                0x03805be0       0x3a build/src/preauton.o
+                0x03805be0       0x3a build/src/robot-config.o
  .ARM.attributes
-                0x03805c1a       0x3a build/src/chassisStuff/Tasks.o
+                0x03805c1a       0x3a build/src/preauton.o
  .ARM.attributes
-                0x03805c54       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
+                0x03805c54       0x3a build/src/DrivetrianCode/Tasks.o
  .ARM.attributes
-                0x03805c89       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_util.c.obj)
+                0x03805c8e       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
  .ARM.attributes
-                0x03805cbe       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_apijump.c.obj)
+                0x03805cc3       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_util.c.obj)
  .ARM.attributes
-                0x03805cf3       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_apiversions.c.obj)
+                0x03805cf8       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_apijump.c.obj)
  .ARM.attributes
-                0x03805d28       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_global.cpp.obj)
+                0x03805d2d       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_apiversions.c.obj)
  .ARM.attributes
-                0x03805d5d       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_motor.cpp.obj)
+                0x03805d62       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_global.cpp.obj)
  .ARM.attributes
-                0x03805d92       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_imu.cpp.obj)
+                0x03805d97       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_motor.cpp.obj)
  .ARM.attributes
-                0x03805dc7       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_distance.cpp.obj)
+                0x03805dcc       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_imu.cpp.obj)
  .ARM.attributes
-                0x03805dfc       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_gps.cpp.obj)
+                0x03805e01       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_distance.cpp.obj)
  .ARM.attributes
-                0x03805e31       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_controller.cpp.obj)
+                0x03805e36       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_gps.cpp.obj)
  .ARM.attributes
-                0x03805e66       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_task.cpp.obj)
+                0x03805e6b       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_controller.cpp.obj)
  .ARM.attributes
-                0x03805e9b       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_thread.cpp.obj)
+                0x03805ea0       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_task.cpp.obj)
  .ARM.attributes
-                0x03805ed0       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_event.cpp.obj)
+                0x03805ed5       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_thread.cpp.obj)
  .ARM.attributes
-                0x03805f05       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_mevent.cpp.obj)
+                0x03805f0a       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_event.cpp.obj)
  .ARM.attributes
-                0x03805f3a       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_brain.cpp.obj)
+                0x03805f3f       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_mevent.cpp.obj)
  .ARM.attributes
-                0x03805f6f       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
+                0x03805f74       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_brain.cpp.obj)
  .ARM.attributes
-                0x03805fa4       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_triport.cpp.obj)
+                0x03805fa9       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
  .ARM.attributes
-                0x03805fd9       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
+                0x03805fde       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_triport.cpp.obj)
  .ARM.attributes
-                0x0380600e       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_timer.cpp.obj)
+                0x03806013       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
  .ARM.attributes
-                0x03806043       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_apiuser.c.obj)
+                0x03806048       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_timer.cpp.obj)
  .ARM.attributes
-                0x03806078       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_device.cpp.obj)
+                0x0380607d       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_apiuser.c.obj)
  .ARM.attributes
-                0x038060ad       0x2b C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libc.a(lib_a-fini.o)
+                0x038060b2       0x35 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_device.cpp.obj)
  .ARM.attributes
-                0x038060d8       0x2b C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libc.a(lib_a-impure.o)
+                0x038060e7       0x2b C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libc.a(lib_a-fini.o)
  .ARM.attributes
-                0x03806103       0x2b C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libc.a(lib_a-init.o)
+                0x03806112       0x2b C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libc.a(lib_a-impure.o)
  .ARM.attributes
-                0x0380612e       0x2b C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libm.a(lib_a-sf_round.o)
-                0x03806159                __ARM.attributes_end = .
+                0x0380613d       0x2b C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libc.a(lib_a-init.o)
+ .ARM.attributes
+                0x03806168       0x2b C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libm.a(lib_a-sf_round.o)
+                0x03806193                __ARM.attributes_end = .
 
 .sdata          0x03805a84        0x0
                 0x03805a84                __sdata_start = .
@@ -4180,81 +4184,81 @@ Linker script and memory map
  .bss.Competition
                 0x03805a90       0x28 build/src/main.o
                 0x03805a90                Competition
- .bss.Brain     0x03805ab8      0x2bc build/src/robot-config.o
-                0x03805ab8                Brain
- .bss.FRMotor   0x03805d74       0x24 build/src/robot-config.o
-                0x03805d74                FRMotor
- .bss.FLMotor   0x03805d98       0x24 build/src/robot-config.o
-                0x03805d98                FLMotor
- .bss.BRMotor   0x03805dbc       0x24 build/src/robot-config.o
-                0x03805dbc                BRMotor
- .bss.BLMotor   0x03805de0       0x24 build/src/robot-config.o
-                0x03805de0                BLMotor
- .bss.RingLiftL
-                0x03805e04       0x24 build/src/robot-config.o
-                0x03805e04                RingLiftL
- .bss.RingLiftR
-                0x03805e28       0x24 build/src/robot-config.o
-                0x03805e28                RingLiftR
- .bss.Controller1
-                0x03805e4c      0x1e0 build/src/robot-config.o
-                0x03805e4c                Controller1
- .bss.Controller2
-                0x0380602c      0x1e0 build/src/robot-config.o
-                0x0380602c                Controller2
- .bss.FrontLift
-                0x0380620c       0x24 build/src/robot-config.o
-                0x0380620c                FrontLift
- .bss.GPSLeft   0x03806230       0x30 build/src/robot-config.o
-                0x03806230                GPSLeft
- .bss.GPSRight  0x03806260       0x30 build/src/robot-config.o
-                0x03806260                GPSRight
- .bss.Inertial  0x03806290       0x30 build/src/robot-config.o
-                0x03806290                Inertial
- .bss.BackLift  0x038062c0       0x24 build/src/robot-config.o
-                0x038062c0                BackLift
- .bss.frontAir  0x038062e4       0x18 build/src/robot-config.o
-                0x038062e4                frontAir
- .bss.backAir   0x038062fc       0x18 build/src/robot-config.o
-                0x038062fc                backAir
- .bss.tilt      0x03806314       0x18 build/src/robot-config.o
-                0x03806314                tilt
- .bss.LimSwitchBack
-                0x0380632c       0x20 build/src/robot-config.o
-                0x0380632c                LimSwitchBack
- .bss.DistanceRight
-                0x0380634c       0x10 build/src/robot-config.o
-                0x0380634c                DistanceRight
- .bss.DistanceLeft
-                0x0380635c       0x10 build/src/robot-config.o
-                0x0380635c                DistanceLeft
- .bss.Gps_X     0x0380636c        0x8 build/src/chassi.o
-                0x0380636c                Gps_X
- .bss.GpsX      0x03806374        0x4 build/src/chassi.o
-                0x03806374                GpsX
- .bss.Gps_Y     0x03806378        0x8 build/src/chassi.o
-                0x03806378                Gps_Y
- .bss.GpsY      0x03806380        0x4 build/src/chassi.o
-                0x03806380                GpsY
- .bss.Gps_H     0x03806384        0x8 build/src/chassi.o
-                0x03806384                Gps_H
- .bss.GpsH      0x0380638c        0x4 build/src/chassi.o
-                0x0380638c                GpsH
- .bss.PID       0x03806390        0x8 build/src/chassi.o
-                0x03806390                PID
+ .bss.Gps_X     0x03805ab8        0x8 build/src/DrivetrainStuff.o
+                0x03805ab8                Gps_X
+ .bss.GpsX      0x03805ac0        0x4 build/src/DrivetrainStuff.o
+                0x03805ac0                GpsX
+ .bss.Gps_Y     0x03805ac4        0x8 build/src/DrivetrainStuff.o
+                0x03805ac4                Gps_Y
+ .bss.GpsY      0x03805acc        0x4 build/src/DrivetrainStuff.o
+                0x03805acc                GpsY
+ .bss.Gps_H     0x03805ad0        0x8 build/src/DrivetrainStuff.o
+                0x03805ad0                Gps_H
+ .bss.GpsH      0x03805ad8        0x4 build/src/DrivetrainStuff.o
+                0x03805ad8                GpsH
+ .bss.PID       0x03805adc        0x8 build/src/DrivetrainStuff.o
+                0x03805adc                PID
  .bss.ControllerGPS
-                0x03806398        0x8 build/src/chassi.o
-                0x03806398                ControllerGPS
+                0x03805ae4        0x8 build/src/DrivetrainStuff.o
+                0x03805ae4                ControllerGPS
  .bss.FrontLiftSensorsTask
-                0x038063a0        0x8 build/src/chassi.o
-                0x038063a0                FrontLiftSensorsTask
+                0x03805aec        0x8 build/src/DrivetrainStuff.o
+                0x03805aec                FrontLiftSensorsTask
  .bss.FrontSensorsSenseATouch
-                0x038063a8        0x1 build/src/chassi.o
-                0x038063a8                FrontSensorsSenseATouch
+                0x03805af4        0x1 build/src/DrivetrainStuff.o
+                0x03805af4                FrontSensorsSenseATouch
  .bss.Calibrated
-                0x038063a9        0x1 build/src/chassi.o
-                0x038063a9                Calibrated
- *fill*         0x038063aa        0x2 
+                0x03805af5        0x1 build/src/DrivetrainStuff.o
+                0x03805af5                Calibrated
+ *fill*         0x03805af6        0x2 
+ .bss.Brain     0x03805af8      0x2bc build/src/robot-config.o
+                0x03805af8                Brain
+ .bss.FRMotor   0x03805db4       0x24 build/src/robot-config.o
+                0x03805db4                FRMotor
+ .bss.FLMotor   0x03805dd8       0x24 build/src/robot-config.o
+                0x03805dd8                FLMotor
+ .bss.BRMotor   0x03805dfc       0x24 build/src/robot-config.o
+                0x03805dfc                BRMotor
+ .bss.BLMotor   0x03805e20       0x24 build/src/robot-config.o
+                0x03805e20                BLMotor
+ .bss.RingLiftL
+                0x03805e44       0x24 build/src/robot-config.o
+                0x03805e44                RingLiftL
+ .bss.RingLiftR
+                0x03805e68       0x24 build/src/robot-config.o
+                0x03805e68                RingLiftR
+ .bss.Controller1
+                0x03805e8c      0x1e0 build/src/robot-config.o
+                0x03805e8c                Controller1
+ .bss.Controller2
+                0x0380606c      0x1e0 build/src/robot-config.o
+                0x0380606c                Controller2
+ .bss.FrontLift
+                0x0380624c       0x24 build/src/robot-config.o
+                0x0380624c                FrontLift
+ .bss.GPSLeft   0x03806270       0x30 build/src/robot-config.o
+                0x03806270                GPSLeft
+ .bss.GPSRight  0x038062a0       0x30 build/src/robot-config.o
+                0x038062a0                GPSRight
+ .bss.Inertial  0x038062d0       0x30 build/src/robot-config.o
+                0x038062d0                Inertial
+ .bss.BackLift  0x03806300       0x24 build/src/robot-config.o
+                0x03806300                BackLift
+ .bss.frontAir  0x03806324       0x18 build/src/robot-config.o
+                0x03806324                frontAir
+ .bss.backAir   0x0380633c       0x18 build/src/robot-config.o
+                0x0380633c                backAir
+ .bss.tilt      0x03806354       0x18 build/src/robot-config.o
+                0x03806354                tilt
+ .bss.LimSwitchBack
+                0x0380636c       0x20 build/src/robot-config.o
+                0x0380636c                LimSwitchBack
+ .bss.DistanceRight
+                0x0380638c       0x10 build/src/robot-config.o
+                0x0380638c                DistanceRight
+ .bss.DistanceLeft
+                0x0380639c       0x10 build/src/robot-config.o
+                0x0380639c                DistanceLeft
  .bss.side      0x038063ac        0x4 build/src/preauton.o
                 0x038063ac                side
  .bss.mode      0x038063b0        0x4 build/src/preauton.o
@@ -4377,17 +4381,18 @@ LOAD C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/stdlib_0.lib
 LOAD build/src/functions.o
 LOAD build/src/main.o
 LOAD build/src/userControl.o
+LOAD build/src/Calibrate.o
 LOAD build/src/auton.o
+LOAD build/src/DrivetrainStuff.o
 LOAD build/src/robot-config.o
-LOAD build/src/chassi.o
 LOAD build/src/preauton.o
-LOAD build/src/chassisStuff/DriveFast.o
-LOAD build/src/chassisStuff/TurnAndDrive.o
-LOAD build/src/chassisStuff/Turn.o
-LOAD build/src/chassisStuff/DriveTo.o
-LOAD build/src/chassisStuff/Drive.o
-LOAD build/src/chassisStuff/TurnTo.o
-LOAD build/src/chassisStuff/Tasks.o
+LOAD build/src/DrivetrianCode/DriveFast.o
+LOAD build/src/DrivetrianCode/TurnAndDrive.o
+LOAD build/src/DrivetrianCode/Turn.o
+LOAD build/src/DrivetrianCode/DriveTo.o
+LOAD build/src/DrivetrianCode/Drive.o
+LOAD build/src/DrivetrianCode/TurnTo.o
+LOAD build/src/DrivetrianCode/Tasks.o
 START GROUP
 LOAD C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a
 LOAD C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libstdc++.a
@@ -4402,11 +4407,12 @@ OUTPUT(build/ImSailing.elf elf32-littlearm)
                                  0x2e (size before relaxing)
  .comment       0x00000000       0x2e build/src/main.o
  .comment       0x00000000       0x2e build/src/userControl.o
+ .comment       0x00000000       0x2e build/src/Calibrate.o
  .comment       0x00000000       0x2e build/src/auton.o
+ .comment       0x00000000       0x2e build/src/DrivetrainStuff.o
  .comment       0x00000000       0x2e build/src/robot-config.o
- .comment       0x00000000       0x2e build/src/chassi.o
  .comment       0x00000000       0x2e build/src/preauton.o
- .comment       0x00000000       0x2e build/src/chassisStuff/Tasks.o
+ .comment       0x00000000       0x2e build/src/DrivetrianCode/Tasks.o
  .comment       0x0000002d       0x70 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
                                  0x71 (size before relaxing)
  .comment       0x00000000       0x71 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_util.c.obj)
@@ -4439,15 +4445,17 @@ OUTPUT(build/ImSailing.elf elf32-littlearm)
  .note.GNU-stack
                 0x00000000        0x0 build/src/userControl.o
  .note.GNU-stack
+                0x00000000        0x0 build/src/Calibrate.o
+ .note.GNU-stack
                 0x00000000        0x0 build/src/auton.o
+ .note.GNU-stack
+                0x00000000        0x0 build/src/DrivetrainStuff.o
  .note.GNU-stack
                 0x00000000        0x0 build/src/robot-config.o
  .note.GNU-stack
-                0x00000000        0x0 build/src/chassi.o
- .note.GNU-stack
                 0x00000000        0x0 build/src/preauton.o
  .note.GNU-stack
-                0x00000000        0x0 build/src/chassisStuff/Tasks.o
+                0x00000000        0x0 build/src/DrivetrianCode/Tasks.o
 
 .debug_frame    0x00000000       0x8c
  .debug_frame   0x00000000       0x34 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5/gcc/libs\libc.a(lib_a-fini.o)
