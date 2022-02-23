@@ -4,8 +4,6 @@ float Kp = 0.1;
 float Ki = 0.1;
 float Kd = 0.05;
 
-float Drive_balance = -0.045;
-
 int _Drive_() {
   float SessionDistance = ((Distance/12.566))*360;
   bool SessionWait = Wait;

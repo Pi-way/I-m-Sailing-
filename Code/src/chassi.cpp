@@ -1,10 +1,43 @@
 #include "vex.h"
 
-void Calibrate(){
-  Calibrated = false;
-  PIDsRunning = 0;
-  FrontSensorsSenseATouch = false;
 
+ vex::task Gps_X;  float GpsX;
+ vex::task Gps_Y;  float GpsY;
+ vex::task Gps_H;  float GpsH;
+ vex::task PID;
+ vex::task ControllerGPS;
+ vex::task FrontLiftSensorsTask;
+
+ bool FrontSensorsSenseATouch = false;
+ bool Calibrated = false;
+ int PIDsRunning = 0;
+ float Distance;
+ float TurnDegree;
+ float TurnDistance;
+ float CoustomTimeout;
+ bool fb;
+ bool bb;
+ bool Coast;
+ float MaxDistance;
+ float DriveRadius;
+ float DriveX;
+ float DriveY;
+ float TurnX;
+ float TurnY;
+ bool Wait;
+ float Speed_V;
+ float Drive_balance = -0.045;
+
+float GetClosestToZero(float First, float Second){
+  if(std::abs(First) < std::abs(Second)){
+    return First;
+  }else{
+    return Second;
+  }
+}
+
+void Calibrate(){
+  
   BRMotor.spin(forward);
   BLMotor.spin(forward);
   FRMotor.spin(forward);
@@ -40,18 +73,3 @@ void Calibrate(){
 
   Calibrated = true;
 }
-
-void TurnAndDrive(float x_point, float y_point, float driveSpeed, float turnSpeed, float radius, bool faceDirection, bool driveWait, float Turn_Timeout, float Drive_Timeout) {
-  
-  float Direction;
-  
-  if(faceDirection == true){
-    Direction = 0;
-  } else {
-    Direction = 180;
-  }
-
-  TurnTo(x_point, y_point, turnSpeed, true, Direction, Turn_Timeout);
-  DriveTo(x_point, y_point, driveSpeed, radius, driveWait, Drive_Timeout);
-}
-

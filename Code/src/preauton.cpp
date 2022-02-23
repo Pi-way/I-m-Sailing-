@@ -212,7 +212,7 @@ void  pre_auton( void ) {
   Inertial.calibrate();
   GPSLeft.calibrate();
   GPSRight.calibrate();
-  StartGps();
+  StartTasks();
   wait(3,seconds);
   vexcodeInit();
   alliance = selectAlliance();

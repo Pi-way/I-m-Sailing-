@@ -1,16 +1,8 @@
 #include "vex.h"
 
-float TKp = .5;
-float TKi = .25;
-float TKd = 0.01;
-
-float GetClosestToZero(float First, float Second){
-  if(std::abs(First) < std::abs(Second)){
-    return First;
-  }else{
-    return Second;
-  }
-}
+float TTKp = .5;
+float TTKi = .25;
+float TTKd = 0.01;
 
 int _Turn_To_() {
 
@@ -128,7 +120,7 @@ int _Turn_To_() {
 
     SmartError = GetClosestToZero(Error, Ramp * (Error/std::abs(Error)));
 
-    Voltage = SmartError * TKp + Integral * TKi + Derivative * TKd;
+    Voltage = SmartError * TTKp + Integral * TTKi + Derivative * TTKd;
     Voltage = GetClosestToZero(Voltage, SessionMaxSpeed * (Error/std::abs(Error)));
 
     if(std::abs(Voltage)<MinVoltage){

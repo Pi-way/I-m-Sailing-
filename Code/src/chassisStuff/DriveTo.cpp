@@ -4,14 +4,6 @@ float DKp = 100;
 float DKi = 5;
 float DKd = 0.1;
 
-float GetClosestToZero(float First, float Second){
-  if(std::abs(First) < std::abs(Second)){
-    return First;
-  }else{
-    return Second;
-  }
-}
-
 int _DriveTo_ (){
 
   //Pull global variables into Drive Function:

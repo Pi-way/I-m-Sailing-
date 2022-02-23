@@ -3,7 +3,6 @@ extern vex::task Gps_X; extern float GpsX;
 extern vex::task Gps_Y; extern float GpsY;
 extern vex::task Gps_H; extern float GpsH;
 extern vex::task PID;
-extern vex::task TURN_PID;
 extern vex::task ControllerGPS;
 extern vex::task FrontLiftSensorsTask;
 extern bool FrontSensorsSenseATouch;
@@ -24,6 +23,7 @@ extern float TurnX;
 extern float TurnY;
 extern bool Wait;
 extern float Speed_V;
+extern float Drive_balance;
 
 
 
@@ -50,6 +50,7 @@ extern float Speed_V;
 
 #define MinVoltage 1.5
 
+float GetClosestToZero(float First, float Second);
 void Calibrate();
 void Turn(float Turn_, float speed = 100, bool Wait_ = true, float CoustomTimeout_ = 2.0);
 void TurnTo(float Turn_x, float Turn_y, float speed = 100, bool Wait_ = true, float Turn_Degree = 0, float Coustom_Timeout = 2.5);
@@ -57,5 +58,5 @@ void Drive(float Distance_, float Speed_V_ = 100, bool Wait_ = true, bool f_b = 
 void DriveFast(float Distance_, float Speed_V_ = 100, bool Wait_ = true, bool f_b = false, bool b_b = false, bool coast = false, float maxDistance = 10000000);
 
 void DriveTo(float Drive_x, float Drive_y, float speed, float radius = 0, bool Wait_ = true, float Coustom_Timeout = 5);
-void StartGps();
+void StartTasks();
 void TurnAndDrive(float x_point, float y_point, float driveSpeed = 80, float turnSpeed = 80, float radius = 0, bool faceDirection = true, bool driveWait = true, float TurnTimeout = 2.5, float DriveTimeout = 5);
