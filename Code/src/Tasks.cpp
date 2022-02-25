@@ -1,9 +1,5 @@
 #include "vex.h"
 
-int GPS(){
-  return 0;
-}
-
 int GPS_X(){
   while(true){
     if(GPSRight.quality() > 90){

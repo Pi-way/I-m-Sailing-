@@ -115,9 +115,6 @@ Discarded input sections
  .text          0x00000000        0x0 build/src/preauton.o
  .llvm_addrsig  0x00000000        0x8 build/src/preauton.o
  .text          0x00000000        0x0 build/src/Tasks.o
- .text._Z3GPSv  0x00000000        0x8 build/src/Tasks.o
- .ARM.exidx.text._Z3GPSv
-                0x00000000        0x8 build/src/Tasks.o
  .group         0x00000000        0xc build/src/Tasks.o
  .llvm_addrsig  0x00000000        0xa build/src/Tasks.o
  .text          0x00000000        0x0 build/src/DrivetrainCode/DriveFast.o
@@ -2663,9 +2660,9 @@ Linker script and memory map
  .text._Z10StartTasksv
                 0x03803670       0xc8 build/src/Tasks.o
                 0x03803670                StartTasks()
- .text._Z11_Drive_Fastv
+ .text._Z11_DriveFast_v
                 0x03803738      0x5ec build/src/DrivetrainCode/DriveFast.o
-                0x03803738                _Drive_Fast()
+                0x03803738                _DriveFast_()
  .text._Z9DriveFastffbbbbf
                 0x03803d24       0xf8 build/src/DrivetrainCode/DriveFast.o
                 0x03803d24                DriveFast(float, float, bool, bool, bool, bool, float)
@@ -2691,9 +2688,9 @@ Linker script and memory map
                 0x03805244       0xf8 build/src/DrivetrainCode/Drive.o
                 0x03805244                Drive(float, float, bool, bool, bool, bool, float)
  *fill*         0x0380533c        0x4 
- .text._Z9_Turn_To_v
+ .text._Z8_TurnTo_v
                 0x03805340      0x820 build/src/DrivetrainCode/TurnTo.o
-                0x03805340                _Turn_To_()
+                0x03805340                _TurnTo_()
  .text._ZN3vex5brain3lcd5printIfEEvT_
                 0x03805b60       0x3c build/src/DrivetrainCode/TurnTo.o
                 0x03805b60                void vex::brain::lcd::print<float>(float)
@@ -4050,7 +4047,7 @@ Linker script and memory map
  .ARM.exidx.text._Z10StartTasksv
                 0x0380a388        0x0 build/src/Tasks.o
                                   0x8 (size before relaxing)
- .ARM.exidx.text._Z11_Drive_Fastv
+ .ARM.exidx.text._Z11_DriveFast_v
                 0x0380a388        0x0 build/src/DrivetrainCode/DriveFast.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._Z9DriveFastffbbbbf
@@ -4077,7 +4074,7 @@ Linker script and memory map
  .ARM.exidx.text._Z5Driveffbbbbf
                 0x0380a388        0x0 build/src/DrivetrainCode/Drive.o
                                   0x8 (size before relaxing)
- .ARM.exidx.text._Z9_Turn_To_v
+ .ARM.exidx.text._Z8_TurnTo_v
                 0x0380a388        0x0 build/src/DrivetrainCode/TurnTo.o
                                   0x8 (size before relaxing)
  .ARM.exidx.text._ZN3vex5brain3lcd5printIfEEvT_
