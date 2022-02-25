@@ -4,7 +4,7 @@ float fKp = 0.05;
 float fKi = 0.01;
 float fKd = 0.1;
 
-int _Drive_Fast() {
+int _DriveFast_() {
   float SessionDistance = ((Distance/12.566))*360;
   bool SessionWait = Wait;
   float SessionSpeed_V = Speed_V;
@@ -150,11 +150,11 @@ void DriveFast(float Distance_, float Speed_V_, bool Wait_, bool f_b, bool b_b, 
 
   if (Wait) {
 
-    _Drive_Fast();
+    _DriveFast_();
 
   } else {
 
-    PID = task(_Drive_Fast);
+    PID = task(_DriveFast_);
 
   }
 

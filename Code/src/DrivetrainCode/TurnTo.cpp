@@ -4,7 +4,7 @@ float TTKp = .5;
 float TTKi = .25;
 float TTKd = 0.01;
 
-int _Turn_To_() {
+int _TurnTo_() {
 
   /*
   turns the robot in degrees
@@ -182,11 +182,11 @@ void TurnTo(float Turn_x, float Turn_y, float speed, bool Wait_, float Turn_Degr
 
   if (Wait) {
 
-    _Turn_To_();
+    _TurnTo_();
 
   } else {
 
-    PID = task(_Turn_To_);
+    PID = task(_TurnTo_);
 
   }
 
