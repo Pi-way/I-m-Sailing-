@@ -2,16 +2,6 @@
 
 void Calibrate(){
   
-  BRMotor.spin(forward);
-  BLMotor.spin(forward);
-  FRMotor.spin(forward);
-  FLMotor.spin(forward);
-  BackLift.spin(forward);
-  FrontLift.spin(forward);
-
-  RingLiftL.setStopping(coast);
-  RingLiftR.setStopping(coast);
-
   BRMotor.setVelocity(0,percent);
   BLMotor.setVelocity(0,percent);
   FRMotor.setVelocity(0,percent);
@@ -25,11 +15,18 @@ void Calibrate(){
   FLMotor.setStopping(coast);
   BackLift.setStopping(hold);
   FrontLift.setStopping(hold);
+  RingLiftL.setStopping(coast);
+  RingLiftR.setStopping(coast);
+
+  BRMotor.spin(forward);
+  BLMotor.spin(forward);
+  FRMotor.spin(forward);
+  FLMotor.spin(forward);
+  BackLift.spin(forward);
+  FrontLift.spin(forward);
 
   if(Calibrated){
-
     return;
-
   }
 
   BackLift.setPosition(0, degrees);
