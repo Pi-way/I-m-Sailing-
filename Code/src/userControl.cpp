@@ -36,13 +36,13 @@ int Lift(){
     }
     
     BP3Past = BP3Present;
-    BP3Present = Controller2.ButtonR1.pressing();
+    BP3Present = Controller1.ButtonDown.pressing();
 
     if(!BP3Past && BP3Present){
       Roller = !Roller;
     }
     
-    if(Controller2.ButtonR2.pressing()) {
+    if(Controller1.ButtonB.pressing()) {
       RingLiftL.spin(reverse,400,rpm);
       RingLiftR.spin(reverse,400,rpm);
     } else if (Roller){
@@ -134,7 +134,7 @@ void usercontrol(void) {
     }
 
     BP4Past = BP4Present;
-    BP4Present = Controller2.ButtonL1.pressing();
+    BP4Present = Controller1.ButtonDown.pressing();
 
     if(!BP4Past && BP4Present){
       Air4 = !Air4;

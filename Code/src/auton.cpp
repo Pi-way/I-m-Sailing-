@@ -72,8 +72,6 @@ void advancedAdvancedSkills() {
   wait(.25,sec);
   tilt.set(true);
 
-  
-
   TurnAndDrive(-10,-10,90,90,6,true,false,2.5,1.25);
   StartRingThing();
   FrontLiftt(2);
@@ -249,8 +247,7 @@ void rightSimple() {
 void rightWinPoint() {
   Drive(39,100,true,true,false,true);
   frontAir.set(true);
-  wait(.2, sec);
-  FrontLiftt(16);
+  FrontLiftt(16,false);
   Drive(-18);
   Turn(113.5);
   Drive(-26);
@@ -361,6 +358,8 @@ void betterLeftWinPoint() {
 
 }
 
+/****************** Rush Code  ******************/
+
 void dopeRun(){
   DriveFast(-47,100,true,false,true,false,60);
   backAir.set(true);
@@ -371,7 +370,6 @@ void dopeRun(){
   BackLiftt(0,true,30);
   backAir.set(false); 
 }
-
 void midStandRush(){
   DriveFast(-47,100,true,false,true,false,60);
   backAir.set(true);
@@ -392,18 +390,18 @@ void autonomous(void) {
 //midStandRush();
 //dopeRun();
 //rightComplex();
-  // if (alliance==SKILLS && mode == SIMPLE) {dopeRun();}//easySkills();}//speeeeed
-  // else if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-  // else if (alliance == SKILLS && mode == COMPLEX) {midStandRush();}
-  // else if (true){
-  //   if (side==LEFT) {
-  //     if (mode==SIMPLE) {leftSimple();}
-  //     else if (mode==COMPLEX) {leftComplex();}
-  //     else if (mode==WINPOINT) {betterLeftWinPoint();}
-  //   } else if (side==RIGHT) {
-  //     if (mode==SIMPLE) {rightSimple();}
-  //     else if (mode==COMPLEX) {rightComplex();}
-  //     else if (mode==WINPOINT) {rightWinPoint();}
-  //   }
-  // }
+  if (alliance==SKILLS && mode == SIMPLE) {dopeRun();}//easySkills();}//speeeeed
+  else if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+  else if (alliance == SKILLS && mode == COMPLEX) {midStandRush();}
+  else if (true){
+    if (side==LEFT) {
+      if (mode==SIMPLE) {leftSimple();}
+      else if (mode==COMPLEX) {leftComplex();}
+      else if (mode==WINPOINT) {betterLeftWinPoint();}
+    } else if (side==RIGHT) {
+      if (mode==SIMPLE) {rightSimple();}
+      else if (mode==COMPLEX) {rightComplex();}
+      else if (mode==WINPOINT) {rightWinPoint();}
+    }
+  }
 }
