@@ -94,7 +94,7 @@ void advancedAdvancedSkills() {
 
   Drive(-10);
 
-  TurnAndDrive(60,8,100,100,26,false);
+  TurnAndDrive(60,8,100,100,26,false,true,3.5);
   backAir.set(false);//dropping blue goal
 
   RingLiftL.stop();
@@ -368,7 +368,7 @@ void dopeRun(){
   DriveFast(45);
   Turn(180,100,false);
   BackLiftt(0,true,30);
-  backAir.set(false); 
+  //backAir.set(false); 
 }
 void midStandRush(){
   DriveFast(-47,100,true,false,true,false,60);
@@ -388,20 +388,20 @@ void autonomous(void) {
 //betterLeftWinPoint();
 //advancedAdvancedSkills();
 //midStandRush();
-//dopeRun();
+dopeRun();
 //rightComplex();
-  if (alliance==SKILLS && mode == SIMPLE) {dopeRun();}//easySkills();}//speeeeed
-  else if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-  else if (alliance == SKILLS && mode == COMPLEX) {midStandRush();}
-  else if (true){
-    if (side==LEFT) {
-      if (mode==SIMPLE) {leftSimple();}
-      else if (mode==COMPLEX) {leftComplex();}
-      else if (mode==WINPOINT) {betterLeftWinPoint();}
-    } else if (side==RIGHT) {
-      if (mode==SIMPLE) {rightSimple();}
-      else if (mode==COMPLEX) {rightComplex();}
-      else if (mode==WINPOINT) {rightWinPoint();}
-    }
-  }
+  // if (alliance==SKILLS && mode == SIMPLE) {dopeRun();}
+  // else if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+  // else if (alliance == SKILLS && mode == COMPLEX) {midStandRush();}
+  // else if (true){
+  //   if (side==LEFT) {
+  //     if (mode==SIMPLE) {leftSimple();}
+  //     else if (mode==COMPLEX) {leftComplex();}
+  //     else if (mode==WINPOINT) {betterLeftWinPoint();}
+  //   } else if (side==RIGHT) {
+  //     if (mode==SIMPLE) {rightSimple();}
+  //     else if (mode==COMPLEX) {rightComplex();}
+  //     else if (mode==WINPOINT) {rightWinPoint();}
+  //   }
+  // }
 }
