@@ -98,7 +98,7 @@ Discarded input sections
  .ARM.exidx.text._Z13StopRingThingv
                 0x00000000        0x8 build/src/functions.o
  .bss.Amount    0x00000000        0x4 build/src/functions.o
- .bss.Speed     0x00000000        0x4 build/src/functions.o
+ .bss.RunSpeed  0x00000000        0x4 build/src/functions.o
  .bss.RingThingsRunning
                 0x00000000        0x4 build/src/functions.o
  .bss._StopRingThing_
@@ -4207,7 +4207,7 @@ Linker script and memory map
  *(.gnu.linkonce.tb.*)
                 0x03806dd4                __tbss_end = .
 
-.bss            0x03806dd8      0x9d0
+.bss            0x03806dd8      0x9d8
                 0x03806dd8                __bss_start = .
  *(.bss)
  *(.bss.*)
@@ -4217,182 +4217,184 @@ Linker script and memory map
  .bss.Competition
                 0x03806de0       0x28 build/src/main.o
                 0x03806de0                Competition
- .bss.Gps_X     0x03806e08        0x8 build/src/DrivetrainStuff.o
-                0x03806e08                Gps_X
- .bss.GpsX      0x03806e10        0x4 build/src/DrivetrainStuff.o
-                0x03806e10                GpsX
- .bss.Gps_Y     0x03806e14        0x8 build/src/DrivetrainStuff.o
-                0x03806e14                Gps_Y
- .bss.GpsY      0x03806e1c        0x4 build/src/DrivetrainStuff.o
-                0x03806e1c                GpsY
- .bss.Gps_H     0x03806e20        0x8 build/src/DrivetrainStuff.o
-                0x03806e20                Gps_H
- .bss.GpsH      0x03806e28        0x4 build/src/DrivetrainStuff.o
-                0x03806e28                GpsH
- .bss.PID       0x03806e2c        0x8 build/src/DrivetrainStuff.o
-                0x03806e2c                PID
- .bss.ControllerGPS
-                0x03806e34        0x8 build/src/DrivetrainStuff.o
-                0x03806e34                ControllerGPS
- .bss.FrontLiftSensorsTask
-                0x03806e3c        0x8 build/src/DrivetrainStuff.o
-                0x03806e3c                FrontLiftSensorsTask
- .bss.FrontSensorsSenseATouch
-                0x03806e44        0x1 build/src/DrivetrainStuff.o
-                0x03806e44                FrontSensorsSenseATouch
  .bss.Calibrated
-                0x03806e45        0x1 build/src/DrivetrainStuff.o
-                0x03806e45                Calibrated
- *fill*         0x03806e46        0x2 
+                0x03806e08        0x1 build/src/Calibrate.o
+                0x03806e08                Calibrated
+ *fill*         0x03806e09        0x3 
+ .bss.Gps_X     0x03806e0c        0x8 build/src/DrivetrainStuff.o
+                0x03806e0c                Gps_X
+ .bss.GpsX      0x03806e14        0x4 build/src/DrivetrainStuff.o
+                0x03806e14                GpsX
+ .bss.Gps_Y     0x03806e18        0x8 build/src/DrivetrainStuff.o
+                0x03806e18                Gps_Y
+ .bss.GpsY      0x03806e20        0x4 build/src/DrivetrainStuff.o
+                0x03806e20                GpsY
+ .bss.Gps_H     0x03806e24        0x8 build/src/DrivetrainStuff.o
+                0x03806e24                Gps_H
+ .bss.GpsH      0x03806e2c        0x4 build/src/DrivetrainStuff.o
+                0x03806e2c                GpsH
+ .bss.PID       0x03806e30        0x8 build/src/DrivetrainStuff.o
+                0x03806e30                PID
+ .bss.ControllerGPS
+                0x03806e38        0x8 build/src/DrivetrainStuff.o
+                0x03806e38                ControllerGPS
+ .bss.FrontLiftSensorsTask
+                0x03806e40        0x8 build/src/DrivetrainStuff.o
+                0x03806e40                FrontLiftSensorsTask
+ .bss.FrontSensorsSenseATouch
+                0x03806e48        0x1 build/src/DrivetrainStuff.o
+                0x03806e48                FrontSensorsSenseATouch
+ *fill*         0x03806e49        0x3 
  .bss.PIDsRunning
-                0x03806e48        0x4 build/src/DrivetrainStuff.o
-                0x03806e48                PIDsRunning
- .bss.Distance  0x03806e4c        0x4 build/src/DrivetrainStuff.o
-                0x03806e4c                Distance
+                0x03806e4c        0x4 build/src/DrivetrainStuff.o
+                0x03806e4c                PIDsRunning
+ .bss.Distance  0x03806e50        0x4 build/src/DrivetrainStuff.o
+                0x03806e50                Distance
  .bss.TurnDistance
-                0x03806e50        0x4 build/src/DrivetrainStuff.o
-                0x03806e50                TurnDistance
- .bss.CoustomTimeout
                 0x03806e54        0x4 build/src/DrivetrainStuff.o
-                0x03806e54                CoustomTimeout
- .bss.fb        0x03806e58        0x1 build/src/DrivetrainStuff.o
-                0x03806e58                fb
- .bss.bb        0x03806e59        0x1 build/src/DrivetrainStuff.o
-                0x03806e59                bb
- .bss.Coast     0x03806e5a        0x1 build/src/DrivetrainStuff.o
-                0x03806e5a                Coast
- *fill*         0x03806e5b        0x1 
+                0x03806e54                TurnDistance
+ .bss.CoustomTimeout
+                0x03806e58        0x4 build/src/DrivetrainStuff.o
+                0x03806e58                CoustomTimeout
+ .bss.fb        0x03806e5c        0x1 build/src/DrivetrainStuff.o
+                0x03806e5c                fb
+ .bss.bb        0x03806e5d        0x1 build/src/DrivetrainStuff.o
+                0x03806e5d                bb
+ .bss.Coast     0x03806e5e        0x1 build/src/DrivetrainStuff.o
+                0x03806e5e                Coast
+ *fill*         0x03806e5f        0x1 
  .bss.MaxDistance
-                0x03806e5c        0x4 build/src/DrivetrainStuff.o
-                0x03806e5c                MaxDistance
- .bss.Wait      0x03806e60        0x1 build/src/DrivetrainStuff.o
-                0x03806e60                Wait
- *fill*         0x03806e61        0x3 
- .bss.Speed_V   0x03806e64        0x4 build/src/DrivetrainStuff.o
-                0x03806e64                Speed_V
- .bss.Brain     0x03806e68      0x2bc build/src/robot-config.o
-                0x03806e68                Brain
- .bss.FRMotor   0x03807124       0x24 build/src/robot-config.o
-                0x03807124                FRMotor
- .bss.FLMotor   0x03807148       0x24 build/src/robot-config.o
-                0x03807148                FLMotor
- .bss.BRMotor   0x0380716c       0x24 build/src/robot-config.o
-                0x0380716c                BRMotor
- .bss.BLMotor   0x03807190       0x24 build/src/robot-config.o
-                0x03807190                BLMotor
+                0x03806e60        0x4 build/src/DrivetrainStuff.o
+                0x03806e60                MaxDistance
+ .bss.Wait      0x03806e64        0x1 build/src/DrivetrainStuff.o
+                0x03806e64                Wait
+ *fill*         0x03806e65        0x3 
+ .bss.Speed     0x03806e68        0x4 build/src/DrivetrainStuff.o
+                0x03806e68                Speed
+ .bss.Brain     0x03806e6c      0x2bc build/src/robot-config.o
+                0x03806e6c                Brain
+ .bss.FRMotor   0x03807128       0x24 build/src/robot-config.o
+                0x03807128                FRMotor
+ .bss.FLMotor   0x0380714c       0x24 build/src/robot-config.o
+                0x0380714c                FLMotor
+ .bss.BRMotor   0x03807170       0x24 build/src/robot-config.o
+                0x03807170                BRMotor
+ .bss.BLMotor   0x03807194       0x24 build/src/robot-config.o
+                0x03807194                BLMotor
  .bss.RingLiftL
-                0x038071b4       0x24 build/src/robot-config.o
-                0x038071b4                RingLiftL
+                0x038071b8       0x24 build/src/robot-config.o
+                0x038071b8                RingLiftL
  .bss.RingLiftR
-                0x038071d8       0x24 build/src/robot-config.o
-                0x038071d8                RingLiftR
+                0x038071dc       0x24 build/src/robot-config.o
+                0x038071dc                RingLiftR
  .bss.Controller1
-                0x038071fc      0x1e0 build/src/robot-config.o
-                0x038071fc                Controller1
+                0x03807200      0x1e0 build/src/robot-config.o
+                0x03807200                Controller1
  .bss.Controller2
-                0x038073dc      0x1e0 build/src/robot-config.o
-                0x038073dc                Controller2
+                0x038073e0      0x1e0 build/src/robot-config.o
+                0x038073e0                Controller2
  .bss.FrontLift
-                0x038075bc       0x24 build/src/robot-config.o
-                0x038075bc                FrontLift
- .bss.GPSLeft   0x038075e0       0x30 build/src/robot-config.o
-                0x038075e0                GPSLeft
- .bss.GPSRight  0x03807610       0x30 build/src/robot-config.o
-                0x03807610                GPSRight
- .bss.Inertial  0x03807640       0x30 build/src/robot-config.o
-                0x03807640                Inertial
- .bss.BackLift  0x03807670       0x24 build/src/robot-config.o
-                0x03807670                BackLift
- .bss.frontAir  0x03807694       0x18 build/src/robot-config.o
-                0x03807694                frontAir
- .bss.backAir   0x038076ac       0x18 build/src/robot-config.o
-                0x038076ac                backAir
- .bss.tilt      0x038076c4       0x18 build/src/robot-config.o
-                0x038076c4                tilt
+                0x038075c0       0x24 build/src/robot-config.o
+                0x038075c0                FrontLift
+ *fill*         0x038075e4        0x4 
+ .bss.GPSLeft   0x038075e8       0x30 build/src/robot-config.o
+                0x038075e8                GPSLeft
+ .bss.GPSRight  0x03807618       0x30 build/src/robot-config.o
+                0x03807618                GPSRight
+ .bss.Inertial  0x03807648       0x30 build/src/robot-config.o
+                0x03807648                Inertial
+ .bss.BackLift  0x03807678       0x24 build/src/robot-config.o
+                0x03807678                BackLift
+ .bss.frontAir  0x0380769c       0x18 build/src/robot-config.o
+                0x0380769c                frontAir
+ .bss.backAir   0x038076b4       0x18 build/src/robot-config.o
+                0x038076b4                backAir
+ .bss.tilt      0x038076cc       0x18 build/src/robot-config.o
+                0x038076cc                tilt
  .bss.LimSwitchBack
-                0x038076dc       0x20 build/src/robot-config.o
-                0x038076dc                LimSwitchBack
+                0x038076e4       0x20 build/src/robot-config.o
+                0x038076e4                LimSwitchBack
  .bss.DistanceRight
-                0x038076fc       0x10 build/src/robot-config.o
-                0x038076fc                DistanceRight
+                0x03807704       0x10 build/src/robot-config.o
+                0x03807704                DistanceRight
  .bss.DistanceLeft
-                0x0380770c       0x10 build/src/robot-config.o
-                0x0380770c                DistanceLeft
- .bss.side      0x0380771c        0x4 build/src/preauton.o
-                0x0380771c                side
- .bss.mode      0x03807720        0x4 build/src/preauton.o
-                0x03807720                mode
+                0x03807714       0x10 build/src/robot-config.o
+                0x03807714                DistanceLeft
+ .bss.side      0x03807724        0x4 build/src/preauton.o
+                0x03807724                side
+ .bss.mode      0x03807728        0x4 build/src/preauton.o
+                0x03807728                mode
  .bss.__dso_handle
-                0x03807724        0x4 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
-                0x03807724                __dso_handle
+                0x0380772c        0x4 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
+                0x0380772c                __dso_handle
  .bss.lastTime.9623
-                0x03807728        0x4 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_apijump.c.obj)
+                0x03807730        0x4 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_apijump.c.obj)
  .bss._ZN3vex4task8_labelIdE
-                0x0380772c        0x4 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_task.cpp.obj)
-                0x0380772c                vex::task::_labelId
+                0x03807734        0x4 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_task.cpp.obj)
+                0x03807734                vex::task::_labelId
  .bss._ZN3vex11competition22bStopTasksBetweenModesE
-                0x03807730        0x1 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
-                0x03807730                vex::competition::bStopTasksBetweenModes
+                0x03807738        0x1 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
+                0x03807738                vex::competition::bStopTasksBetweenModes
  .bss._ZN3vex11competition15_driver_pendingE
-                0x03807731        0x1 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
-                0x03807731                vex::competition::_driver_pending
+                0x03807739        0x1 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
+                0x03807739                vex::competition::_driver_pending
  .bss._ZN3vex11competition14_auton_pendingE
-                0x03807732        0x1 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
-                0x03807732                vex::competition::_auton_pending
- *fill*         0x03807733        0x1 
+                0x0380773a        0x1 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
+                0x0380773a                vex::competition::_auton_pending
+ *fill*         0x0380773b        0x1 
  .bss._ZN3vex11competition23_drivercontrol_callbackE
-                0x03807734        0x4 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
-                0x03807734                vex::competition::_drivercontrol_callback
+                0x0380773c        0x4 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
+                0x0380773c                vex::competition::_drivercontrol_callback
  .bss._ZN3vex11competition20_autonomous_callbackE
-                0x03807738        0x4 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
-                0x03807738                vex::competition::_autonomous_callback
+                0x03807740        0x4 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
+                0x03807740                vex::competition::_autonomous_callback
  .bss._ZN3vex11competition25bStopAllTasksBetweenModesE
-                0x0380773c        0x1 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
-                0x0380773c                vex::competition::bStopAllTasksBetweenModes
+                0x03807744        0x1 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_competition.cpp.obj)
+                0x03807744                vex::competition::bStopAllTasksBetweenModes
  .bss._ZStL8__ioinit
-                0x0380773d        0x1 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_triport.cpp.obj)
- *fill*         0x0380773e        0x2 
+                0x03807745        0x1 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_triport.cpp.obj)
+ *fill*         0x03807746        0x2 
  .bss._ZN3vex5color6orangeE
-                0x03807740        0x8 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
-                0x03807740                vex::color::orange
- .bss._ZN3vex5color5blackE
                 0x03807748        0x8 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
-                0x03807748                vex::color::black
- .bss._ZN3vex5color6yellowE
+                0x03807748                vex::color::orange
+ .bss._ZN3vex5color5blackE
                 0x03807750        0x8 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
-                0x03807750                vex::color::yellow
- .bss._ZN3vex5color5greenE
+                0x03807750                vex::color::black
+ .bss._ZN3vex5color6yellowE
                 0x03807758        0x8 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
-                0x03807758                vex::color::green
- .bss._ZN3vex5color6purpleE
+                0x03807758                vex::color::yellow
+ .bss._ZN3vex5color5greenE
                 0x03807760        0x8 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
-                0x03807760                vex::color::purple
- .bss._ZN3vex5color4cyanE
+                0x03807760                vex::color::green
+ .bss._ZN3vex5color6purpleE
                 0x03807768        0x8 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
-                0x03807768                vex::color::cyan
- .bss._ZN3vex5color4blueE
+                0x03807768                vex::color::purple
+ .bss._ZN3vex5color4cyanE
                 0x03807770        0x8 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
-                0x03807770                vex::color::blue
- .bss._ZN3vex5color3redE
+                0x03807770                vex::color::cyan
+ .bss._ZN3vex5color4blueE
                 0x03807778        0x8 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
-                0x03807778                vex::color::red
- .bss._ZN3vex5color11transparentE
+                0x03807778                vex::color::blue
+ .bss._ZN3vex5color3redE
                 0x03807780        0x8 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
-                0x03807780                vex::color::transparent
- .bss._ZN3vex5color5whiteE
+                0x03807780                vex::color::red
+ .bss._ZN3vex5color11transparentE
                 0x03807788        0x8 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
-                0x03807788                vex::color::white
+                0x03807788                vex::color::transparent
+ .bss._ZN3vex5color5whiteE
+                0x03807790        0x8 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(vex_color.cpp.obj)
+                0x03807790                vex::color::white
  *(.gnu.linkonce.b.*)
  *(COMMON)
- COMMON         0x03807790       0x18 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
-                0x03807794                __vex_critical_section
-                0x038077a8                __bss_end = .
+ COMMON         0x03807798       0x18 C:\Program Files (x86)\VEX Robotics\VEXcode Pro V5\sdk/vexv5\libv5rt.a(v5_startup.c.obj)
+                0x0380779c                __vex_critical_section
+                0x038077b0                __bss_end = .
                 0x03806dd4                _SDA_BASE_ = (__sdata_start + ((__sbss_end - __sdata_start) / 0x2))
                 0x03806954                _SDA2_BASE_ = (__sdata2_start + ((__sbss2_end - __sdata2_start) / 0x2))
 
-.heap           0x038077a8   0x100008
+.heap           0x038077b0   0x100000
                 0x038077b0                . = ALIGN (0x10)
- *fill*         0x038077a8        0x8 
+ *fill*         0x038077b0        0x0 
                 0x038077b0                _heap = .
                 0x038077b0                HeapBase = .
                 0x038077b0                _heap_start = .

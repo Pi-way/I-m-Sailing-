@@ -8,7 +8,6 @@ vex::task ControllerGPS;
 vex::task FrontLiftSensorsTask;
 
 bool FrontSensorsSenseATouch = false;
-bool Calibrated = false;
 int PIDsRunning = 0;
 float Distance;
 float TurnDegree;
@@ -24,7 +23,7 @@ float DriveY;
 float TurnX;
 float TurnY;
 bool Wait;
-float Speed_V;
+float Speed;
 float Drive_balance = -0.045;
 
 float GetClosestToZero(float First, float Second){

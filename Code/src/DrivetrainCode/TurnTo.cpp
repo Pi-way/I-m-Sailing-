@@ -13,7 +13,7 @@ int _TurnTo_() {
   float SessionTimeout = CoustomTimeout;
   float SessionTurnX = TurnX;
   float SessionTurnY = TurnY;
-  float SessionMaxSpeed = Speed_V;
+  float SessionMaxSpeed = Speed;
   float SessionTurnDegree = TurnDegree;
 
   //float SessionTurn = ((( DriveCircumfrence * ( TurnDistance / 360 )) / ( WheelDiameter * 3.14 )) / DriveGearRatio ) *360;
@@ -170,7 +170,7 @@ int _TurnTo_() {
 
 void TurnTo(float Turn_x, float Turn_y, float speed, bool Wait_, float Turn_Degree, float Coustom_Timeout) {
 
-  Speed_V = (speed/100)*12;
+  Speed = (speed/100)*12;
 
   TurnDegree = Turn_Degree;
   CoustomTimeout = Coustom_Timeout * 1000000;

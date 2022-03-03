@@ -7,7 +7,7 @@ float Kd = 0.05;
 int _Drive_() {
   float SessionDistance = ((Distance/12.566))*360;
   bool SessionWait = Wait;
-  float SessionSpeed_V = Speed_V;
+  float SessionSpeed = Speed;
   bool SessionCoast = Coast;
   float SessionMaxDistance = MaxDistance;
 
@@ -65,11 +65,11 @@ int _Drive_() {
     if (Error <= Ramp) { smartError = Error; }
     else if (Ramp <= Error) { smartError = Ramp; }
     if (Error == 0) { Integral = 0; }
-    if (std::abs(Error) > SessionSpeed_V ) { Integral = 0; }
+    if (std::abs(Error) > SessionSpeed ) { Integral = 0; }
 
     Speed = smartError * Kp + Integral * Ki + Derivative * Kd;
 
-    if (Speed > SessionSpeed_V) { Speed = SessionSpeed_V; }
+    if (Speed > SessionSpeed) { Speed = SessionSpeed; }
 
     if (SessionDistance > 0) {
     FLMotor.spin(forward, Speed + Speed * Drive_balance, voltageUnits::volt);
@@ -121,11 +121,11 @@ int _Drive_() {
 
 }
 
-void Drive(float Distance_, float Speed_V_, bool Wait_, bool f_b, bool b_b, bool coast, float maxDistance) {
+void Drive(float Distance_, float Speed_, bool Wait_, bool f_b, bool b_b, bool coast, float maxDistance) {
 
   Distance = Distance_;
   Wait = Wait_;
-  Speed_V = (Speed_V_/100)*12;
+  Speed = (Speed_/100)*12;
   fb= f_b;
   bb = b_b;
   Coast = coast;

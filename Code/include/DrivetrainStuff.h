@@ -29,7 +29,7 @@ extern int PIDsRunning;
 
 // Variables below are global variables used as a wrap-around to the fact that vex::task doesn't support passing variables into the function they run.
 extern float Distance; 
-extern float Speed_V;
+extern float Speed;
 extern float TurnDegree;
 extern float TurnDistance;
 extern float CoustomTimeout;

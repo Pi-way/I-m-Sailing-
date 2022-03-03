@@ -8,9 +8,10 @@
 /*----------------------------------------------------------------------------*/
 
 #include "vex.h"
+
 //regular variables to specify the amount we want to do something and the speed to do it at
 float Amount;
-float Speed;
+float RunSpeed;
 
 //variables and objects for the ring lift
 task RingLiftTask;
@@ -53,8 +54,8 @@ int _StartRingThing_(){
 	//set the global override variable to false
 	_StopRingThing_ = false;
 	//set motor positions and velocities
-	RingLiftL.setVelocity(Speed,percent);
-	RingLiftR.setVelocity(Speed,percent);
+	RingLiftL.setVelocity(RunSpeed,percent);
+	RingLiftR.setVelocity(RunSpeed,percent);
 	RingLiftL.spin(forward);
 	RingLiftR.spin(forward);
 	RingLiftL.setPosition(0,degrees);
@@ -63,12 +64,12 @@ int _StartRingThing_(){
 	while(!_StopRingThing_){
 
 		//start the ring lift and wait for it to get up to speed for 1/4 of a second
-		RingLiftL.setVelocity(Speed,rpm);
-		RingLiftR.setVelocity(Speed,rpm);
+		RingLiftL.setVelocity(RunSpeed,rpm);
+		RingLiftR.setVelocity(RunSpeed,rpm);
 		wait(.25,sec);
 
 		//loop while the ring lift's speed is above 65%, the lift hasn't spun too much, and the global override isset to false
-		while(std::abs(RingLiftL.velocity(rpm)) > 0.65 * Speed && RingLiftL.position(degrees) < Amount * 360 &&!_StopRingThing_){
+		while(std::abs(RingLiftL.velocity(rpm)) > 0.65 * RunSpeed && RingLiftL.position(degrees) < Amount * 360 &&!_StopRingThing_){
 			task::yield();
 		}
 
@@ -78,7 +79,7 @@ int _StartRingThing_(){
 		wait(.125,sec);
 
 		//loop while the ring lift is jammed, the lift hasn't spun too much, and the global override is set to false
-		while(std::abs(RingLiftL.velocity(rpm)) < Speed / 2 && RingLiftL.position(degrees) < Amount * 360 &&!_StopRingThing_){
+		while(std::abs(RingLiftL.velocity(rpm)) < RunSpeed / 2 && RingLiftL.position(degrees) < Amount * 360 &&!_StopRingThing_){
 			task::yield();
 		}	
 	}
@@ -97,7 +98,7 @@ int _StartRingThing_(){
 void StartRingThing(float speed, float amount, bool wait){
 
 	//set global variables to desired values
-	Speed = speed;
+	RunSpeed = speed;
 	Amount = amount;
 
 	//determines if the ring lift function should run as a task Por a regular function

@@ -10,7 +10,7 @@ int _DriveTo_ (){
   float SessionTimeout = CoustomTimeout;
   float SessionDriveX = DriveX;
   float SessionDriveY = DriveY;
-  float SessionMaxSpeed = Speed_V;
+  float SessionMaxSpeed = Speed;
   float SessionDriveRadius;
   bool LimitSwitchFront;
   bool LimitSwitchBack;
@@ -155,7 +155,7 @@ int _DriveTo_ (){
 
 void DriveTo(float Drive_x, float Drive_y, float speed, float radius, bool Wait_, float Coustom_Timeout){
 
-  Speed_V = (speed/100)*12;
+  Speed = (speed/100)*12;
 
   DriveX = Drive_x;
   DriveY = Drive_y;

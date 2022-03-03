@@ -12,7 +12,7 @@ int _Turn_() {
   */
   float SessionTimeout = CoustomTimeout;
   float SessionTurn = TurnDistance;
-  float SessionSpeed = Speed_V;
+  float SessionSpeed = Speed;
 
   //float SessionTurn = ((( DriveCircumfrence * ( TurnDistance / 360 )) / ( WheelDiameter * 3.14 )) / DriveGearRatio ) *360;
   bool SessionWait = Wait;
@@ -122,7 +122,7 @@ int _Turn_() {
 
 void Turn(float Turn_, float speed, bool Wait_, float CoustomTimeout_) {
 
-  Speed_V = (speed/100)*12;
+  Speed = (speed/100)*12;
 
   CoustomTimeout = CoustomTimeout_;
   TurnDistance = Turn_;
