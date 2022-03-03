@@ -1,11 +1,30 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       vex.h                                                     */
+/*    Author:       Team 98548A                                               */
+/*    Created:      8/20/2021                                                 */
+/*    Description:  Header file for DrivetrainCode and other dependendents    */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
 
+// Declare vex::task objects for GPS, and declare corrisponding global variables
 extern vex::task Gps_X; extern float GpsX;
 extern vex::task Gps_Y; extern float GpsY;
 extern vex::task Gps_H; extern float GpsH;
-extern vex::task PID;
+
+// Declare a vex::task object that will print GPS values to the controller screen
 extern vex::task ControllerGPS;
+
+// Declare a vex::task object that will run any PID loops for drivetrain
+extern vex::task PID;
+
+// Declare a vex::task object to run the logic that allows the sensors on the front lift to be used
 extern vex::task FrontLiftSensorsTask;
+
+// Declare
 extern bool FrontSensorsSenseATouch;
+
+
 extern bool Calibrated;
 extern int PIDsRunning;
 extern float Distance;
