@@ -1,5 +1,7 @@
 #include "vex.h"
 
+bool Calibrated = false;
+
 void Calibrate(){
   
   BRMotor.setVelocity(0,percent);

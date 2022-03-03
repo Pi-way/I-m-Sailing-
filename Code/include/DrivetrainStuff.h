@@ -7,27 +7,29 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
-// Declare vex::task objects for GPS, and declare corrisponding global variables
+// Declare vex::task objects for GPS, and declare corrisponding global variables.
 extern vex::task Gps_X; extern float GpsX;
 extern vex::task Gps_Y; extern float GpsY;
 extern vex::task Gps_H; extern float GpsH;
 
-// Declare a vex::task object that will print GPS values to the controller screen
+// Declare a vex::task object that will print GPS values to the controller screen.
 extern vex::task ControllerGPS;
 
-// Declare a vex::task object that will run any PID loops for drivetrain
+// Declare a vex::task object that will run any PID loops for drivetrain.
 extern vex::task PID;
 
-// Declare a vex::task object to run the logic that allows the sensors on the front lift to be used
+// Declare a vex::task object to run the logic that allows the sensors on the front lift to be used.
 extern vex::task FrontLiftSensorsTask;
 
-// Declare
+// Declare a boolean variable that represents when the robot thinks a goal (or something) is within clamping reach of our pneumatic claws. This variable is continually updated via the FrontLiftSensorsTask.
 extern bool FrontSensorsSenseATouch;
 
-
-extern bool Calibrated;
+// Declare an integer variable that represents the number of active PIDs. This variable is utilitized by each PID controller to ensure they don't run at the same time.
 extern int PIDsRunning;
-extern float Distance;
+
+// Variables below are global variables used as a wrap-around to the fact that vex::task doesn't support passing variables into the function they run.
+extern float Distance; 
+extern float Speed_V;
 extern float TurnDegree;
 extern float TurnDistance;
 extern float CoustomTimeout;
@@ -41,7 +43,8 @@ extern float DriveY;
 extern float TurnX;
 extern float TurnY;
 extern bool Wait;
-extern float Speed_V;
+
+// Declare the drive balance variable: this variable is used to compensate for any discrepancy in drivetrain friction.
 extern float Drive_balance;
 
 #define SetDriveBrake(brake_mode)                     \
