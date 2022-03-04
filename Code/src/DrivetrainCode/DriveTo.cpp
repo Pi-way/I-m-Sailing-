@@ -9,7 +9,7 @@
 
 #include "vex.h"
 
-// Declare P, I, D  and RampUp values for this PID
+// Declare P, I, D, and RampUp values for this PID
 float DKp = 100;
 float DKi = 5;
 float DKd = 0.1;

@@ -9,69 +9,45 @@
 
 #include "vex.h"
 
+// Declare P, I, D, and RampUp values for this PID
 float TTKp = .5;
 float TTKi = .25;
 float TTKd = 0.01;
 
+// base function for TurnTo()
 int _TurnTo_() {
 
+  // Assign and declare local variables from global variables.
   float LocalTimeout = CoustomTimeout;
   float LocalTurnX = TurnX;
   float LocalTurnY = TurnY;
   float LocalMaxSpeed = Speed;
   float LocalTurnDegree = TurnDegree;
 
+  // Update PIDsRunning
   PIDsRunning ++;
 
+  // Wait until other PIDs have completed
   while(PIDsRunning > 1){
-      task::yield();
-  }
-
-  float StartTime = Brain.Timer.systemHighResolution();
-
-  float AverageX = 0;
-  float AverageY = 0;
-  float AverageH = 0;
-
-  int SampleSize = 0;
-
-  while(Brain.Timer.systemHighResolution() - StartTime < 1000000){
-    AverageX += GpsX;
-    AverageY += GpsY;
-    AverageH += GpsH + LocalTurnDegree;
-    SampleSize += 1;
     task::yield();
   }
 
-  float x1 = AverageX / SampleSize;
-  float y1 = AverageY / SampleSize;
-  float h1 = AverageH / SampleSize;
-
+  float x1 = GpsX;
+  float y1 = GpsY;
+  float h1 = GpsH;
   float x2 = x1 + cos(Rads(h1));
   float y2 = y1 + sin(Rads(h1));
-
   float DistA = 1.0;
   float DistB = sqrt(powf(x1-LocalTurnX,2)+powf(y1-LocalTurnY,2));
   float DistC = sqrt(powf(x2-LocalTurnX,2)+powf(y2-LocalTurnY,2));
-
   float LocalTurn = Degs(acosf((powf(DistC,2)-powf(DistA,2)-powf(DistB,2))/(-2*DistA*DistB)));
-
   float MTX = LocalTurnX - x1;
   float MTY = LocalTurnY - y1;
-
   float RotatedY = -MTX*sin(Rads(h1))+MTY*cos(Rads(h1));
-
   LocalTurn = LocalTurn * -((RotatedY)/std::abs(RotatedY));
 
-  Brain.Screen.print(LocalTurn);
-  Brain.Screen.setCursor(2,1);
-
   SetDriveBrake(brake);
-
   SetDrivePosition(0);
-
-  bool Condition = true;
-  bool ReachedTarget = false;
 
   float ReachedTargetTime = 0;
 
@@ -84,8 +60,11 @@ int _TurnTo_() {
   int Ramp = 0;
   float ActualVoltage = 0;
 
+  // This variable will determine wether or not the loop will continue to run
+  bool NotDone = true;
 
-  while (Condition) {
+  // Continue looping until done
+  while (NotDone) {
 
     x1 = GpsX;
     y1 = GpsY;
@@ -128,16 +107,23 @@ int _TurnTo_() {
     BRMotor.spin(reverse, ActualVoltage, voltageUnits::volt);
     BLMotor.spin(forward, ActualVoltage, voltageUnits::volt);
 
-    if (std::abs(LocalTurn)-.5 <= 0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > LocalTimeout) {
-      if(!(ReachedTarget)){
-        ReachedTargetTime = Brain.Timer.systemHighResolution();
-      }
+    // If the robot has run for longer than the LocalTimeout
+    if (Brain.Timer.value() > LocalTimeout) { 
+      NotDone = false;
+    }
+    
+    // If the robot has gone past the target position
+    if (std::abs(LocalTurn)-.5 <= 0) {
 
-      ReachedTarget = true;
-
-      if(Brain.Timer.systemHighResolution() - ReachedTargetTime >= 250000){
-        break;
+      // Record the moment when the robot first reaches the target position
+      if (ReachedTargetTime == 0){
+        ReachedTargetTime = ReachedTargetTime = Brain.Timer.systemHighResolution();
       }
+    }
+
+    // If the robot has been allowed to settle in for 1/4 of a second after the moment when the robot first reached the target
+    if (Brain.Timer.systemHighResolution() - ReachedTargetTime > (0.25 * 1000000) && ReachedTargetTime != 0.0){
+      NotDone = false;
     }
 
     task::yield();

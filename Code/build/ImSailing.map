@@ -206,7 +206,7 @@ Discarded input sections
  .llvm_addrsig  0x00000000        0x0 build/src/DrivetrainCode/TurnAndDrive.o
  .text          0x00000000        0x0 build/src/DrivetrainCode/Turn.o
  .text._Z6_Turn_v
-                0x00000000      0x3d8 build/src/DrivetrainCode/Turn.o
+                0x00000000      0x3e4 build/src/DrivetrainCode/Turn.o
  .ARM.exidx.text._Z6_Turn_v
                 0x00000000        0x8 build/src/DrivetrainCode/Turn.o
  .text._Z4Turnffbf
@@ -216,6 +216,8 @@ Discarded input sections
  .data.TKp      0x00000000        0x4 build/src/DrivetrainCode/Turn.o
  .data.TKi      0x00000000        0x4 build/src/DrivetrainCode/Turn.o
  .data.TKd      0x00000000        0x4 build/src/DrivetrainCode/Turn.o
+ .data.TRampUpAmount
+                0x00000000        0x4 build/src/DrivetrainCode/Turn.o
  .comment       0x00000000       0x2e build/src/DrivetrainCode/Turn.o
  .note.GNU-stack
                 0x00000000        0x0 build/src/DrivetrainCode/Turn.o
@@ -264,13 +266,8 @@ Discarded input sections
  .llvm_addrsig  0x00000000        0x7 build/src/DrivetrainCode/Drive.o
  .text          0x00000000        0x0 build/src/DrivetrainCode/TurnTo.o
  .text._Z8_TurnTo_v
-                0x00000000      0x7b8 build/src/DrivetrainCode/TurnTo.o
+                0x00000000      0x6a0 build/src/DrivetrainCode/TurnTo.o
  .ARM.exidx.text._Z8_TurnTo_v
-                0x00000000        0x8 build/src/DrivetrainCode/TurnTo.o
- .group         0x00000000        0xc build/src/DrivetrainCode/TurnTo.o
- .text._ZN3vex5brain3lcd5printIfEEvT_
-                0x00000000       0x3c build/src/DrivetrainCode/TurnTo.o
- .ARM.exidx.text._ZN3vex5brain3lcd5printIfEEvT_
                 0x00000000        0x8 build/src/DrivetrainCode/TurnTo.o
  .text._Z6TurnTofffbff
                 0x00000000       0xb4 build/src/DrivetrainCode/TurnTo.o
@@ -279,8 +276,6 @@ Discarded input sections
  .data.TTKp     0x00000000        0x4 build/src/DrivetrainCode/TurnTo.o
  .data.TTKi     0x00000000        0x4 build/src/DrivetrainCode/TurnTo.o
  .data.TTKd     0x00000000        0x4 build/src/DrivetrainCode/TurnTo.o
- .rodata.str1.1
-                0x00000000        0x8 build/src/DrivetrainCode/TurnTo.o
  .comment       0x00000000       0x2e build/src/DrivetrainCode/TurnTo.o
  .note.GNU-stack
                 0x00000000        0x0 build/src/DrivetrainCode/TurnTo.o
