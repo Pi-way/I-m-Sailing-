@@ -266,7 +266,7 @@ Discarded input sections
  .llvm_addrsig  0x00000000        0x7 build/src/DrivetrainCode/Drive.o
  .text          0x00000000        0x0 build/src/DrivetrainCode/TurnTo.o
  .text._Z8_TurnTo_v
-                0x00000000      0x6a0 build/src/DrivetrainCode/TurnTo.o
+                0x00000000      0x55c build/src/DrivetrainCode/TurnTo.o
  .ARM.exidx.text._Z8_TurnTo_v
                 0x00000000        0x8 build/src/DrivetrainCode/TurnTo.o
  .text._Z6TurnTofffbff
@@ -276,6 +276,8 @@ Discarded input sections
  .data.TTKp     0x00000000        0x4 build/src/DrivetrainCode/TurnTo.o
  .data.TTKi     0x00000000        0x4 build/src/DrivetrainCode/TurnTo.o
  .data.TTKd     0x00000000        0x4 build/src/DrivetrainCode/TurnTo.o
+ .data.TTRampUpAmount
+                0x00000000        0x4 build/src/DrivetrainCode/TurnTo.o
  .comment       0x00000000       0x2e build/src/DrivetrainCode/TurnTo.o
  .note.GNU-stack
                 0x00000000        0x0 build/src/DrivetrainCode/TurnTo.o

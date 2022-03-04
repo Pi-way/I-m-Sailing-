@@ -87,7 +87,7 @@ void StartTasks();
 void Turn(float amount, float speed = 100, bool wait_for_completion = true, float coustom_timeout = 2.0);
 
 // This function allows the robot to turn to a certain point using a PID in combination with our GPS sensors. (other features will be explained in notebook)
-void TurnTo(float x_cooridnate, float t_coordinate, float speed = 100, bool wait_for_completion = true, float turn_offset = 0, float coustom_timeout = 2.5);
+void TurnTo(float x_cooridnate, float y_coordinate, float speed = 100, bool wait_for_completion = true, float turn_offset = 0, float coustom_timeout = 2.5);
 
 // This function allows the robot to drive using a PID in combination with the rotation encoders found in our drivetrain motors. (other features will be explained in notebook)
 void Drive(float distance, float speed = 100, bool wait_for_completion = true, bool expect_front_button = false, bool expect_back_button = false, bool coast = false, float max_distance = 10000000);

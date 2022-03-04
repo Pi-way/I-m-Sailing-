@@ -181,15 +181,15 @@ int _Drive_() {
 }
 
 // Wrapper function that will accept arguments for the main function (_Drive_())
-void Drive(float distance, float Speed_, bool wait_for_completion, bool f_b, bool b_b, bool coast, float maxDistance) {
+void Drive(float distance, float speed, bool wait_for_completion, bool expect_front_button, bool expect_back_button, bool coast, float max_distance) {
 
   // Assign local variables to global variables
   Distance = distance;
-  Speed = (Speed_/100)*12;
-  ExpectFrontButton= f_b;
-  ExpectBackButton = b_b;
+  Speed = (speed/100)*12;
+  ExpectFrontButton= expect_front_button;
+  ExpectBackButton = expect_back_button;
   Coast = coast;
-  MaxDistance = maxDistance;
+  MaxDistance = max_distance;
 
   // Either wait for the function to complete, or run the function in a task
   if (wait_for_completion) {

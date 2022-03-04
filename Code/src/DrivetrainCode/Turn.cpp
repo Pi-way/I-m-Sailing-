@@ -132,12 +132,12 @@ int _Turn_() {
 }
 
 // Wrapper function that will accept arguments for the main function (_Turn_())
-void Turn(float Turn_, float speed, bool wait_for_completion, float CoustomTimeout_) {
+void Turn(float amount, float speed, bool wait_for_completion, float coustom_timeout) {
 
   // Assign local variables to global variables
   Speed = (speed/100)*12;
-  CoustomTimeout = CoustomTimeout_;
-  TurnDistance = Turn_;
+  CoustomTimeout = coustom_timeout;
+  TurnDistance = amount;
 
   // Either wait for the function to complete, or run the function in a task
   if (wait_for_completion) {
