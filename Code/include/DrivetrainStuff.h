@@ -7,6 +7,29 @@
 /*                                                                            */
 /*----------------------------------------------------------------------------*/
 
+#define SetDriveBrake(brake_mode)                     \
+  BRMotor.setStopping(brake_mode);                    \
+  BLMotor.setStopping(brake_mode);                    \
+  FRMotor.setStopping(brake_mode);                    \
+  FLMotor.setStopping(brake_mode);
+
+#define SetDrivePosition(DrivePosition)               \
+  BRMotor.setPosition((DrivePosition), degrees);      \
+  BLMotor.setPosition((DrivePosition), degrees);      \
+  FRMotor.setPosition((DrivePosition), degrees);      \
+  FLMotor.setPosition((DrivePosition), degrees);
+
+#define Drivetrain( MotorMember )                     \
+  BRMotor.MotorMember                                 \
+  BLMotor.MotorMember                                 \
+  FRMotor.MotorMember                                 \
+  FLMotor.MotorMember
+
+#define Rads(Degs) ((3.1415926535/180.0)*Degs)
+#define Degs(Rads) ((180.0/3.1415926535)*Rads)
+
+#define MinVoltage 1.5
+
 // Declare vex::task objects for GPS, and declare corrisponding global variables.
 extern vex::task Gps_X; extern float GpsX;
 extern vex::task Gps_Y; extern float GpsY;
@@ -33,8 +56,8 @@ extern float Speed;
 extern float TurnDegree;
 extern float TurnDistance;
 extern float CoustomTimeout;
-extern bool fb;
-extern bool bb;
+extern bool ExpectFrontButton;
+extern bool ExpectBackButton;
 extern bool Coast;
 extern float MaxDistance;
 extern float DriveRadius;
@@ -47,37 +70,15 @@ extern bool Wait;
 // Declare the drive balance variable: this variable is used to compensate for any discrepancy in drivetrain friction.
 extern float Drive_balance;
 
-#define SetDriveBrake(brake_mode)                     \
-  BRMotor.setStopping(brake_mode);                    \
-  BLMotor.setStopping(brake_mode);                    \
-  FRMotor.setStopping(brake_mode);                    \
-  FLMotor.setStopping(brake_mode);
-
-#define SetDrivePosition(DrivePosition)               \
-  BRMotor.setPosition((DrivePosition), degrees);      \
-  BLMotor.setPosition((DrivePosition), degrees);      \
-  FRMotor.setPosition((DrivePosition), degrees);      \
-  FLMotor.setPosition((DrivePosition), degrees);
-
-#define Drivetrain( MotorMember )                     \
-  BRMotor.MotorMember                                 \
-  BLMotor.MotorMember                                 \
-  FRMotor.MotorMember                                 \
-  FLMotor.MotorMember
-
-#define Rads(Degs) ((3.1415926535/180.0)*Degs)
-#define Degs(Rads) ((180.0/3.1415926535)*Rads)
-
-#define MinVoltage 1.5
-
+// This is a function prototype that returns the number closest to zero (even negative numbers)
 float GetClosestToZero(float First, float Second);
 
 void Calibrate();
 void StartTasks();
 
-void Turn(float Turn_, float speed = 100, bool Wait_ = true, float CoustomTimeout_ = 2.0);
-void TurnTo(float Turn_x, float Turn_y, float speed = 100, bool Wait_ = true, float Turn_Degree = 0, float Coustom_Timeout = 2.5);
-void Drive(float Distance_, float Speed_V_ = 100, bool Wait_ = true, bool f_b = false, bool b_b = false, bool coast = false, float maxDistance = 10000000);
-void DriveFast(float Distance_, float Speed_V_ = 100, bool Wait_ = true, bool f_b = false, bool b_b = false, bool coast = false, float maxDistance = 10000000);
-void DriveTo(float Drive_x, float Drive_y, float speed, float radius = 0, bool Wait_ = true, float Coustom_Timeout = 5);
-void TurnAndDrive(float x_point, float y_point, float driveSpeed = 80, float turnSpeed = 80, float radius = 0, bool faceDirection = true, bool driveWait = true, float TurnTimeout = 2.5, float DriveTimeout = 5);
+void Turn(float amount, float speed = 100, bool wait = true, float coustom_timeout = 2.0);
+void TurnTo(float x_cooridnate, float t_coordinate, float speed = 100, bool wait = true, float turn_offset = 0, float coustom_timeout = 2.5);
+void Drive(float distance, float speed = 100, bool wait = true, bool expect_front_button = false, bool expect_back_button = false, bool coast = false, float max_distance = 10000000);
+void DriveFast(float distance, float speed = 100, bool wait = true, bool expect_front_button = false, bool expect_back_button = false, bool coast = false, float max_distance = 10000000);
+void DriveTo(float drive_x, float drive_y, float speed, float drive_radius = 0, bool wait = true, float coustom_timeout = 5);
+void TurnAndDrive(float x_point, float y_point, float drive_speed = 80, float turn_speed = 80, float drive_radius = 0, bool face_direction = true, bool drive_wait = true, float turn_timeout = 2.5, float drive_timeout = 5);

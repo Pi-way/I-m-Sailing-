@@ -11,8 +11,8 @@ int _DriveFast_() {
   bool SessionCoast = Coast;
   float SessionMaxDistance = MaxDistance;
 
-  bool FrontButton = fb;
-  bool BackButton = bb;
+  bool FrontButton = ExpectFrontButton;
+  bool BackButton = ExpectBackButton;
 
   PIDsRunning ++;
 
@@ -24,10 +24,7 @@ int _DriveFast_() {
 
   SetDriveBrake(hold);
 
-  FLMotor.setPosition(0, degrees);
-  FRMotor.setPosition(0, degrees);
-  BLMotor.setPosition(0, degrees);
-  BRMotor.setPosition(0, degrees);
+  SetDrivePosition(0);
 
   bool Condition = true;
 
@@ -141,8 +138,8 @@ void DriveFast(float Distance_, float Speed_, bool Wait_, bool f_b, bool b_b, bo
   Distance = Distance_;
   Wait = Wait_;
   Speed = (Speed_/100)*12;
-  fb= f_b;
-  bb = b_b;
+  ExpectFrontButton= f_b;
+  ExpectBackButton = b_b;
   Coast = coast;
   MaxDistance = maxDistance;
 

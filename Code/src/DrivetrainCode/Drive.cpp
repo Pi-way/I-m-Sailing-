@@ -11,8 +11,8 @@ int _Drive_() {
   bool SessionCoast = Coast;
   float SessionMaxDistance = MaxDistance;
 
-  bool FrontButton = fb;
-  bool BackButton = bb;
+  bool FrontButton = ExpectFrontButton;
+  bool BackButton = ExpectBackButton;
 
   PIDsRunning ++;
 
@@ -24,10 +24,7 @@ int _Drive_() {
 
   SetDriveBrake(hold);
 
-  FLMotor.setPosition(0, degrees);
-  FRMotor.setPosition(0, degrees);
-  BLMotor.setPosition(0, degrees);
-  BRMotor.setPosition(0, degrees);
+  SetDrivePosition(0);
 
   bool Condition = true;
 
@@ -37,7 +34,7 @@ int _Drive_() {
   float Derivative;
   float Speed;
   float smartError;
-  int Ramp = 0;
+  int RampUp = 0;
   float avgm;
 
   float StartEndTime = 0.0;
@@ -60,10 +57,9 @@ int _Drive_() {
     Integral = Integral + Error;
     Derivative = Error - PreviousError;
     PreviousError = Error;
-    Ramp += 4;
+    RampUp += 4;
 
-    if (Error <= Ramp) { smartError = Error; }
-    else if (Ramp <= Error) { smartError = Ramp; }
+    smartError = GetClosestToZero(RampUp, Error);
     if (Error == 0) { Integral = 0; }
     if (std::abs(Error) > SessionSpeed ) { Integral = 0; }
 
@@ -121,13 +117,13 @@ int _Drive_() {
 
 }
 
-void Drive(float Distance_, float Speed_, bool Wait_, bool f_b, bool b_b, bool coast, float maxDistance) {
+void Drive(float distance, float Speed_, bool Wait_, bool f_b, bool b_b, bool coast, float maxDistance) {
 
-  Distance = Distance_;
+  Distance = distance;
   Wait = Wait_;
   Speed = (Speed_/100)*12;
-  fb= f_b;
-  bb = b_b;
+  ExpectFrontButton= f_b;
+  ExpectBackButton = b_b;
   Coast = coast;
   MaxDistance = maxDistance;
 

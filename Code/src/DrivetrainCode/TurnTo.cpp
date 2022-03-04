@@ -70,10 +70,7 @@ int _TurnTo_() {
 
   SetDriveBrake(brake);
 
-  FLMotor.setPosition(0, degrees);
-  FRMotor.setPosition(0, degrees);
-  BLMotor.setPosition(0, degrees);
-  BRMotor.setPosition(0, degrees);
+  SetDrivePosition(0);
 
   bool Condition = true;
   bool ReachedTarget = false;
@@ -156,10 +153,7 @@ int _TurnTo_() {
   }
   
 
-  FLMotor.stop();
-  FRMotor.stop();
-  BRMotor.stop();
-  BLMotor.stop();
+  Drivetrain(stop(coast);)
 
   PIDsRunning --;
 

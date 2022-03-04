@@ -4,10 +4,7 @@ bool Calibrated = false;
 
 void Calibrate(){
   
-  BRMotor.setVelocity(0,percent);
-  BLMotor.setVelocity(0,percent);
-  FRMotor.setVelocity(0,percent);
-  FLMotor.setVelocity(0,percent);
+  SetDrivePosition(0);
   BackLift.setVelocity(0, percent);
   FrontLift.setVelocity(0, percent);
 

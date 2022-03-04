@@ -388,20 +388,20 @@ void autonomous(void) {
 //betterLeftWinPoint();
 //advancedAdvancedSkills();
 //midStandRush();
-dopeRun();
+//dopeRun();
 //rightComplex();
-  // if (alliance==SKILLS && mode == SIMPLE) {dopeRun();}
-  // else if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
-  // else if (alliance == SKILLS && mode == COMPLEX) {midStandRush();}
-  // else if (true){
-  //   if (side==LEFT) {
-  //     if (mode==SIMPLE) {leftSimple();}
-  //     else if (mode==COMPLEX) {leftComplex();}
-  //     else if (mode==WINPOINT) {betterLeftWinPoint();}
-  //   } else if (side==RIGHT) {
-  //     if (mode==SIMPLE) {rightSimple();}
-  //     else if (mode==COMPLEX) {rightComplex();}
-  //     else if (mode==WINPOINT) {rightWinPoint();}
-  //   }
-  // }
+  if (alliance==SKILLS && mode == SIMPLE) {dopeRun();}
+  else if (alliance==SKILLS && mode == WINPOINT) {advancedAdvancedSkills();}
+  else if (alliance == SKILLS && mode == COMPLEX) {midStandRush();}
+  else if (true){
+    if (side==LEFT) {
+      if (mode==SIMPLE) {leftSimple();}
+      else if (mode==COMPLEX) {leftComplex();}
+      else if (mode==WINPOINT) {betterLeftWinPoint();}
+    } else if (side==RIGHT) {
+      if (mode==SIMPLE) {rightSimple();}
+      else if (mode==COMPLEX) {rightComplex();}
+      else if (mode==WINPOINT) {rightWinPoint();}
+    }
+  }
 }

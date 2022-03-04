@@ -33,10 +33,7 @@ int _Turn_() {
 
   SetDriveBrake(coast);
 
-  FLMotor.setPosition(0, degrees);
-  FRMotor.setPosition(0, degrees);
-  BLMotor.setPosition(0, degrees);
-  BRMotor.setPosition(0, degrees);
+  SetDrivePosition(0);
 
   bool Condition = true;
 
@@ -56,11 +53,7 @@ int _Turn_() {
     Error = std::abs(SessionTurn) - avgm;
     Integral = Integral + Error;
 
-    if (Error <= x) {
-      smartError = Error;
-    } else if (x <= Error) {
-       smartError = x;
-     }
+    smartError = GetClosestToZero(x, Error);
 
     if (Error == 0) {
       Integral = 0;
@@ -108,10 +101,7 @@ int _Turn_() {
   }
   
 
-  FLMotor.stop();
-  FRMotor.stop();
-  BRMotor.stop();
-  BLMotor.stop();
+  Drivetrain(stop(coast);)
 
   PIDsRunning --;
 
