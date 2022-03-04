@@ -1,6 +1,15 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       TurnAndDrive.cpp                                          */
+/*    Author:       Team 98548A                                               */
+/*    Created:      8/20/2021                                                 */
+/*    Description:  File that contains TurnAndDrive() function                */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 
-void TurnAndDrive(float x_point, float y_point, float driveSpeed, float turnSpeed, float radius, bool faceDirection, bool driveWait, float Turn_Timeout, float Drive_Timeout) {
+void TurnAndDrive(float x_point, float y_point, float driveSpeed, float turnSpeed, float radius, bool faceDirection, bool wait_for_completion, float Turn_Timeout, float Drive_Timeout) {
   
   float Direction;
   
@@ -11,5 +20,5 @@ void TurnAndDrive(float x_point, float y_point, float driveSpeed, float turnSpee
   }
 
   TurnTo(x_point, y_point, turnSpeed, true, Direction, Turn_Timeout);
-  DriveTo(x_point, y_point, driveSpeed, radius, driveWait, Drive_Timeout);
+  DriveTo(x_point, y_point, driveSpeed, radius, wait_for_completion, Drive_Timeout);
 }

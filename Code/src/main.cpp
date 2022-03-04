@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /*    Module:       vex.h                                                     */
-/*    Author:       Caleb Carlson, Team 98548A                                */
+/*    Author:       Team 98548A                                               */
 /*    Created:      8/20/2021                                                 */
 /*    Description:  Main source code file                                     */
 /*                                                                            */

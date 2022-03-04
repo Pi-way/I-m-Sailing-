@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       Drive.cpp                                                 */
+/*    Author:       Team 98548A                                               */
+/*    Created:      8/20/2021                                                 */
+/*    Description:  File that contains Drive() function                       */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 
 float Kp = 0.1;
@@ -5,11 +14,11 @@ float Ki = 0.1;
 float Kd = 0.05;
 
 int _Drive_() {
-  float SessionDistance = ((Distance/12.566))*360;
-  bool SessionWait = Wait;
-  float SessionSpeed = Speed;
-  bool SessionCoast = Coast;
-  float SessionMaxDistance = MaxDistance;
+
+  float LocalDistance = ((Distance/12.566))*360;
+  float LocalSpeed = Speed;
+  bool LocalCoast = Coast;
+  float LocalMaxDistance = MaxDistance;
 
   bool FrontButton = ExpectFrontButton;
   bool BackButton = ExpectBackButton;
@@ -44,10 +53,10 @@ int _Drive_() {
   while (Condition) {
 
     avgm = std::abs((FLMotor.position(degrees) + FRMotor.position(degrees) + BLMotor.position(degrees) + BRMotor.position(degrees)) / 4);
-    Error = std::abs(SessionDistance) - avgm;
+    Error = std::abs(LocalDistance) - avgm;
 
     if(Error < ((3/12.566))*360 && (FrontButton || BackButton)){ //If error is less than ~3 inch AND you are waiting for a goal to touch
-      if (std::abs(avgm) > std::abs(((SessionMaxDistance/12.566))*360)){ //If you have gone too far
+      if (std::abs(avgm) > std::abs(((LocalMaxDistance/12.566))*360)){ //If you have gone too far
         STAHP = true;
       }else{ //you haven't reached the goal and haven't gone too far.
         Error = ((3/12.566))*360; 
@@ -61,13 +70,13 @@ int _Drive_() {
 
     smartError = GetClosestToZero(RampUp, Error);
     if (Error == 0) { Integral = 0; }
-    if (std::abs(Error) > SessionSpeed ) { Integral = 0; }
+    if (std::abs(Error) > LocalSpeed ) { Integral = 0; }
 
     Speed = smartError * Kp + Integral * Ki + Derivative * Kd;
 
-    if (Speed > SessionSpeed) { Speed = SessionSpeed; }
+    if (Speed > LocalSpeed) { Speed = LocalSpeed; }
 
-    if (SessionDistance > 0) {
+    if (LocalDistance > 0) {
     FLMotor.spin(forward, Speed + Speed * Drive_balance, voltageUnits::volt);
     FRMotor.spin(forward, Speed - Speed * Drive_balance, voltageUnits::volt);
     BRMotor.spin(forward, Speed - Speed * Drive_balance, voltageUnits::volt);
@@ -79,7 +88,7 @@ int _Drive_() {
       BLMotor.spin(reverse, Speed + Speed * Drive_balance, voltageUnits::volt);
     }
 
-    if ((avgm > std::abs(SessionDistance) && !(FrontButton || BackButton)) || Brain.Timer.value() > 3 || ((FrontButton && FrontSensorsSenseATouch)||(BackButton && LimSwitchBack.pressing())) || STAHP) {    //Was: avgm > std::abs(SessionDistance) - 40 || Brain.Timer.value() > 4
+    if ((avgm > std::abs(LocalDistance) && !(FrontButton || BackButton)) || Brain.Timer.value() > 3 || ((FrontButton && FrontSensorsSenseATouch)||(BackButton && LimSwitchBack.pressing())) || STAHP) {    //Was: avgm > std::abs(LocalDistance) - 40 || Brain.Timer.value() > 4
 
       if (StartEndTime == 0.0){
         StartEndTime = Brain.Timer.systemHighResolution();
@@ -97,15 +106,11 @@ int _Drive_() {
       }
     }
 
-    if (SessionWait) {
-      wait(20, msec);
-    } else {
-      task::yield();
-    }
+    task::yield();
 
   }
 
-  if(SessionCoast){
+  if(LocalCoast){
     Drivetrain(stop(coast););
   }else{
     Drivetrain(stop(););
@@ -117,28 +122,19 @@ int _Drive_() {
 
 }
 
-void Drive(float distance, float Speed_, bool Wait_, bool f_b, bool b_b, bool coast, float maxDistance) {
+void Drive(float distance, float Speed_, bool wait_for_completion, bool f_b, bool b_b, bool coast, float maxDistance) {
 
   Distance = distance;
-  Wait = Wait_;
   Speed = (Speed_/100)*12;
   ExpectFrontButton= f_b;
   ExpectBackButton = b_b;
   Coast = coast;
   MaxDistance = maxDistance;
 
-  wait(20, msec);
-
-  if (Wait) {
-
+  if (wait_for_completion) {
     _Drive_();
-
   } else {
-
     PID = task(_Drive_);
-
   }
-
-  wait(20, msec);
 
 }

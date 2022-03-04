@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       robot-config.h                                            */
+/*    Author:       Team 98548A                                               */
+/*    Created:      8/20/2021                                                 */
+/*    Description:  Header file for robot-config.cpp                          */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 using namespace vex;
 
 extern brain Brain;

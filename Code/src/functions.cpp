@@ -19,26 +19,26 @@ int RingThingsRunning = 0;
 bool _StopRingThing_ = false;
 
 //function to move the front lift to a specific location
-void FrontLiftt(float target, bool wait, float speed){
+void FrontLiftt(float target, bool wait_for_completion, float speed){
 
 	float FrontLiftPos = FrontLift.position(degrees);
 	target = target/100.0 * 625.0;
 	float amount = target - FrontLiftPos;
 
 	FrontLift.setVelocity(speed,percent);
-	FrontLift.spinFor(forward, amount, degrees, wait);
+	FrontLift.spinFor(forward, amount, degrees, wait_for_completion);
 
 }
 
 //function to move the back lift to a specific location
-void BackLiftt(float target, bool wait, float speed){
+void BackLiftt(float target, bool wait_for_completion, float speed){
 
 	float BackLiftPos = BackLift.position(degrees);
 	target = target/100.0 * 590.0;
 	float amount = target - BackLiftPos;
 
 	BackLift.setVelocity(speed,percent);
-	BackLift.spinFor(forward, amount, degrees, wait);
+	BackLift.spinFor(forward, amount, degrees, wait_for_completion);
 
 }
 
@@ -95,14 +95,14 @@ int _StartRingThing_(){
 	return 0;
 }
  //main ring lift function
-void StartRingThing(float speed, float amount, bool wait){
+void StartRingThing(float speed, float amount, bool wait_for_completion){
 
 	//set global variables to desired values
 	RunSpeed = speed;
 	Amount = amount;
 
 	//determines if the ring lift function should run as a task Por a regular function
-	if(wait){
+	if(wait_for_completion){
 		_StartRingThing_();
 	}else{
 		RingLiftTask = task(_StartRingThing_);

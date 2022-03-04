@@ -70,7 +70,6 @@ extern float DriveX;
 extern float DriveY;
 extern float TurnX;
 extern float TurnY;
-extern bool Wait;
 
 // Declare the drive balance variable: this variable is used to compensate for any discrepancy in drivetrain friction.
 extern float Drive_balance;

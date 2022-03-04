@@ -1,54 +1,74 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       DriveFast.cpp                                             */
+/*    Author:       Team 98548A                                               */
+/*    Created:      8/20/2021                                                 */
+/*    Description:  File that contains DriveFast() function                   */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 
+// Declare P, I, and D values for this PID
 float fKp = 0.05;
 float fKi = 0.01;
 float fKd = 0.1;
+float fRampUp = 60;
 
+// base function for DriveFast()
 int _DriveFast_() {
-  float SessionDistance = ((Distance/12.566))*360;
-  bool SessionWait = Wait;
-  float SessionSpeed = Speed;
-  bool SessionCoast = Coast;
-  float SessionMaxDistance = MaxDistance;
 
-  bool FrontButton = ExpectFrontButton;
-  bool BackButton = ExpectBackButton;
+  // Assign and declare local variables from global variables.
+  float LocalDistance = ((Distance/12.566))*360;
+  float LocalSpeed = Speed;
+  bool LocalCoast = Coast;
+  float LocalMaxDistance = ((MaxDistance/12.566))*360;
+  bool LocalExpectFrontButton = ExpectFrontButton;
+  bool LocalExpectBackButton = ExpectBackButton;
 
+  // Update PIDsRunning
   PIDsRunning ++;
 
+  // Wait until other PIDs have completed
   while(PIDsRunning > 1){
     task::yield();
   }
 
+  // Reset the brain's timer, set the drivetrain's brake type, and position
   Brain.Timer.reset();
-
   SetDriveBrake(hold);
-
   SetDrivePosition(0);
 
-  bool Condition = true;
-
+  // Declare variables for PID
   float Error;
-  float Integral = 0;
   float PreviousError = 0;
-  float Derivative;
-  float Speed;
   float smartError;
-  int x = 0;
-  float avgm;
+  float Integral = 0;
+  float Derivative;
+  
+  // This variable allows the robot to smoothly accelerate to prevent slipping.
+  int RampUp = 0;
 
+  // This variable will contain the average position of each motor in degrees
+  float AverageMotorPosition;
+
+  // Output speed of our PID speed controller
+  float Speed;
+
+  // Variable that represents when
   float StartEndTime = 0.0;
 
   bool STAHP = false;
 
+  bool Condition = true;
   while (Condition) {
 
-    avgm = std::abs((FLMotor.position(degrees) + FRMotor.position(degrees) + BLMotor.position(degrees) + BRMotor.position(degrees)) / 4);
+    AverageMotorPosition = std::abs((FLMotor.position(degrees) + FRMotor.position(degrees) + BLMotor.position(degrees) + BRMotor.position(degrees)) / 4);
 
-    Error = std::abs(SessionDistance) - avgm;
+    Error = std::abs(LocalDistance) - AverageMotorPosition;
 
-    if(Error < ((5/12.566))*360 && (FrontButton || BackButton)){
-      if (avgm > ((SessionMaxDistance/12.566))*360){
+    if(Error < ((5/12.566))*360 && (LocalExpectFrontButton || LocalExpectBackButton)){
+      if (AverageMotorPosition > LocalMaxDistance){
         STAHP = true;
       }else{
         Error = ((5/12.566))*360;
@@ -57,18 +77,14 @@ int _DriveFast_() {
 
     Integral = Integral + Error;
 
-    if (Error <= x) {
-      smartError = Error;
-    } else if (x <= Error) {
-       smartError = x;
-    }
+    smartError = GetClosestToZero(Error, RampUp);
  
 
     if (Error == 0) {
       Integral = 0;
     }
 
-    if (std::abs(Error) > SessionSpeed ) {
+    if (std::abs(Error) > LocalSpeed ) {
       Integral = 0;
     }
 
@@ -77,13 +93,13 @@ int _DriveFast_() {
 
     Speed = smartError * fKp + Integral * fKi + Derivative * fKd;
 
-    x += 60;
+    RampUp += fRampUp;
 
-    if (Speed > SessionSpeed) {
-      Speed = SessionSpeed;
+    if (Speed > LocalSpeed) {
+      Speed = LocalSpeed;
     }
 
-    if (SessionDistance > 0) {
+    if (LocalDistance > 0) {
     FLMotor.spin(forward, Speed + Speed * Drive_balance, voltageUnits::volt);
     FRMotor.spin(forward, Speed - Speed * Drive_balance, voltageUnits::volt);
     BRMotor.spin(forward, Speed - Speed * Drive_balance, voltageUnits::volt);
@@ -95,13 +111,13 @@ int _DriveFast_() {
       BLMotor.spin(reverse, Speed + Speed * Drive_balance, voltageUnits::volt);
     }
 
-    if ((avgm > std::abs(SessionDistance) && !(FrontButton || BackButton)) || Brain.Timer.value() > 3 || ((FrontButton && FrontSensorsSenseATouch)||(BackButton && LimSwitchBack.pressing())) || STAHP) {    //Was: avgm > std::abs(SessionDistance) - 40 || Brain.Timer.value() > 4
+    if ((AverageMotorPosition > std::abs(LocalDistance) && !(LocalExpectFrontButton || LocalExpectBackButton)) || Brain.Timer.value() > 3 || ((LocalExpectFrontButton && FrontSensorsSenseATouch)||(LocalExpectBackButton && LimSwitchBack.pressing())) || STAHP) {    //Was: avgm > std::abs(LocalDistance) - 40 || Brain.Timer.value() > 4
 
       if (StartEndTime == 0.0){
         StartEndTime = Brain.Timer.systemHighResolution();
       }
 
-      if (FrontButton || BackButton || STAHP) {
+      if (LocalExpectFrontButton || LocalExpectBackButton || STAHP) {
         if(Brain.Timer.systemHighResolution() - StartEndTime > 250000 || Brain.Timer.value() > 3){
           Condition = false;
         }
@@ -113,15 +129,11 @@ int _DriveFast_() {
       }
     }
 
-    if (SessionWait) {
-      wait(20, msec);
-    } else {
-      task::yield();
-    }
+    task::yield();
 
   }
 
-  if(SessionCoast){
+  if(LocalCoast){
     Drivetrain(stop(hold););
   }else{
     Drivetrain(stop(hold););
@@ -133,28 +145,22 @@ int _DriveFast_() {
 
 }
 
-void DriveFast(float Distance_, float Speed_, bool Wait_, bool f_b, bool b_b, bool coast, float maxDistance) {
+// Wrapper function that will accept arguments for the main function (_DriveFast_())
+void DriveFast(float distance, float speed, bool wait_for_completion, bool expect_front_button, bool expect_back_button, bool coast, float max_distance) {
 
-  Distance = Distance_;
-  Wait = Wait_;
-  Speed = (Speed_/100)*12;
-  ExpectFrontButton= f_b;
-  ExpectBackButton = b_b;
+  // Assign local variables to global variables
+  Distance = distance;
+  Speed = (speed/100)*12; // convert percent to voltage
+  ExpectFrontButton = expect_front_button;
+  ExpectBackButton = expect_back_button;
   Coast = coast;
-  MaxDistance = maxDistance;
+  MaxDistance = max_distance;
 
-  wait(20, msec);
-
-  if (Wait) {
-
+  // Either wait for the function to complete, or run the function in a task
+  if (wait_for_completion) {
     _DriveFast_();
-
   } else {
-
     PID = task(_DriveFast_);
-
   }
-
-  wait(20, msec);
 
 }

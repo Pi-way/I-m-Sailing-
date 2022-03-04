@@ -44,7 +44,6 @@ float DriveX;
 float DriveY;
 float TurnX;
 float TurnY;
-bool Wait;
 
 // Declare the drive balance variable: this variable is used to compensate for any discrepancy in drivetrain friction.
 float Drive_balance = -0.04;

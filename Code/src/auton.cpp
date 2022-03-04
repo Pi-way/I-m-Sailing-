@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       auton.cpp                                                 */
+/*    Author:       Team 98548A                                               */
+/*    Created:      8/20/2021                                                 */
+/*    Description:  File that contains all atuonomous functions               */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 
 /* AUTON SELECTOR VALUES */

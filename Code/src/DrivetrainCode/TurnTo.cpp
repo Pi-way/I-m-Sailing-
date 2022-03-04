@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       TurnTo.cpp                                                */
+/*    Author:       Team 98548A                                               */
+/*    Created:      8/20/2021                                                 */
+/*    Description:  File that contains TurnTo() function                      */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 
 float TTKp = .5;
@@ -6,27 +15,16 @@ float TTKd = 0.01;
 
 int _TurnTo_() {
 
-  /*
-  turns the robot in degrees
-  */
-
-  float SessionTimeout = CoustomTimeout;
-  float SessionTurnX = TurnX;
-  float SessionTurnY = TurnY;
-  float SessionMaxSpeed = Speed;
-  float SessionTurnDegree = TurnDegree;
-
-  //float SessionTurn = ((( DriveCircumfrence * ( TurnDistance / 360 )) / ( WheelDiameter * 3.14 )) / DriveGearRatio ) *360;
-  bool SessionWait = Wait;
+  float LocalTimeout = CoustomTimeout;
+  float LocalTurnX = TurnX;
+  float LocalTurnY = TurnY;
+  float LocalMaxSpeed = Speed;
+  float LocalTurnDegree = TurnDegree;
 
   PIDsRunning ++;
 
   while(PIDsRunning > 1){
-    if (SessionWait) {
-      wait(20, msec);
-    } else {
       task::yield();
-    }
   }
 
   float StartTime = Brain.Timer.systemHighResolution();
@@ -40,7 +38,7 @@ int _TurnTo_() {
   while(Brain.Timer.systemHighResolution() - StartTime < 1000000){
     AverageX += GpsX;
     AverageY += GpsY;
-    AverageH += GpsH + SessionTurnDegree;
+    AverageH += GpsH + LocalTurnDegree;
     SampleSize += 1;
     task::yield();
   }
@@ -53,19 +51,19 @@ int _TurnTo_() {
   float y2 = y1 + sin(Rads(h1));
 
   float DistA = 1.0;
-  float DistB = sqrt(powf(x1-SessionTurnX,2)+powf(y1-SessionTurnY,2));
-  float DistC = sqrt(powf(x2-SessionTurnX,2)+powf(y2-SessionTurnY,2));
+  float DistB = sqrt(powf(x1-LocalTurnX,2)+powf(y1-LocalTurnY,2));
+  float DistC = sqrt(powf(x2-LocalTurnX,2)+powf(y2-LocalTurnY,2));
 
-  float SessionTurn = Degs(acosf((powf(DistC,2)-powf(DistA,2)-powf(DistB,2))/(-2*DistA*DistB)));
+  float LocalTurn = Degs(acosf((powf(DistC,2)-powf(DistA,2)-powf(DistB,2))/(-2*DistA*DistB)));
 
-  float MTX = SessionTurnX - x1;
-  float MTY = SessionTurnY - y1;
+  float MTX = LocalTurnX - x1;
+  float MTY = LocalTurnY - y1;
 
   float RotatedY = -MTX*sin(Rads(h1))+MTY*cos(Rads(h1));
 
-  SessionTurn = SessionTurn * -((RotatedY)/std::abs(RotatedY));
+  LocalTurn = LocalTurn * -((RotatedY)/std::abs(RotatedY));
 
-  Brain.Screen.print(SessionTurn);
+  Brain.Screen.print(LocalTurn);
   Brain.Screen.setCursor(2,1);
 
   SetDriveBrake(brake);
@@ -91,26 +89,26 @@ int _TurnTo_() {
 
     x1 = GpsX;
     y1 = GpsY;
-    h1 = GpsH + SessionTurnDegree;
+    h1 = GpsH + LocalTurnDegree;
     x2 = x1 + cos(Rads(h1));
     y2 = y1 + sin(Rads(h1));
-    DistB = sqrt(powf(x1-SessionTurnX,2)+powf(y1-SessionTurnY,2));
-    DistC = sqrt(powf(x2-SessionTurnX,2)+powf(y2-SessionTurnY,2));
-    SessionTurn = Degs(acosf((powf(DistC,2)-powf(DistA,2)-powf(DistB,2))/(-2*DistA*DistB)));
-    MTX = SessionTurnX - x1;
-    MTY = SessionTurnY - y1;
+    DistB = sqrt(powf(x1-LocalTurnX,2)+powf(y1-LocalTurnY,2));
+    DistC = sqrt(powf(x2-LocalTurnX,2)+powf(y2-LocalTurnY,2));
+    LocalTurn = Degs(acosf((powf(DistC,2)-powf(DistA,2)-powf(DistB,2))/(-2*DistA*DistB)));
+    MTX = LocalTurnX - x1;
+    MTY = LocalTurnY - y1;
     RotatedY = -MTX*sin(Rads(h1))+MTY*cos(Rads(h1));
-    SessionTurn = SessionTurn * -((RotatedY)/std::abs(RotatedY));
+    LocalTurn = LocalTurn * -((RotatedY)/std::abs(RotatedY));
 
-    Error = SessionTurn;
-    // Error = (1/(1+ powf(2.718, -(SessionTurn)/9.5))) * (SessionMaxSpeed*2) - SessionMaxSpeed;
+    Error = LocalTurn;
+    // Error = (1/(1+ powf(2.718, -(LocalTurn)/9.5))) * (LocalMaxSpeed*2) - LocalMaxSpeed;
 
     Integral = Integral + Error;
     if(Integral > 40)(Integral = Error);
     Derivative = Error - PreviousError;
     if (Error == 0) {Integral = 0;} //these are to prevent the integral from getting too large
     if (std::abs(Voltage) > 5) {Integral = 0;}
-    //if (std::abs(Error) > std::abs(SessionMaxSpeed/12)) {Integral = 0;}
+    //if (std::abs(Error) > std::abs(LocalMaxSpeed/12)) {Integral = 0;}
 
     Ramp += 1;
     PreviousError = Error;
@@ -118,7 +116,7 @@ int _TurnTo_() {
     SmartError = GetClosestToZero(Error, Ramp * (Error/std::abs(Error)));
 
     Voltage = SmartError * TTKp + Integral * TTKi + Derivative * TTKd;
-    Voltage = GetClosestToZero(Voltage, SessionMaxSpeed * (Error/std::abs(Error)));
+    Voltage = GetClosestToZero(Voltage, LocalMaxSpeed * (Error/std::abs(Error)));
 
     if(std::abs(Voltage)<MinVoltage){
       Voltage = MinVoltage * (std::abs(Voltage)/Voltage);
@@ -132,7 +130,7 @@ int _TurnTo_() {
     BRMotor.spin(reverse, ActualVoltage, voltageUnits::volt);
     BLMotor.spin(forward, ActualVoltage, voltageUnits::volt);
 
-    if (std::abs(SessionTurn)-.5 <= 0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout) {
+    if (std::abs(LocalTurn)-.5 <= 0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > LocalTimeout) {
       if(!(ReachedTarget)){
         ReachedTargetTime = Brain.Timer.systemHighResolution();
       }
@@ -144,12 +142,7 @@ int _TurnTo_() {
       }
     }
 
-    if (SessionWait) {
-      wait(20, msec);
-    } else {
-      task::yield();
-    }
-
+    task::yield();
   }
   
 
@@ -162,7 +155,7 @@ int _TurnTo_() {
 
 }
 
-void TurnTo(float Turn_x, float Turn_y, float speed, bool Wait_, float Turn_Degree, float Coustom_Timeout) {
+void TurnTo(float Turn_x, float Turn_y, float speed, bool wait_for_completion, float Turn_Degree, float Coustom_Timeout) {
 
   Speed = (speed/100)*12;
 
@@ -170,20 +163,11 @@ void TurnTo(float Turn_x, float Turn_y, float speed, bool Wait_, float Turn_Degr
   CoustomTimeout = Coustom_Timeout * 1000000;
   TurnX = Turn_x;
   TurnY = Turn_y;
-  Wait = Wait_;
 
-  wait(20, msec);
-
-  if (Wait) {
-
+  if (wait_for_completion) {
     _TurnTo_();
-
   } else {
-
     PID = task(_TurnTo_);
-
   }
-
-  wait(20, msec);
 
 }

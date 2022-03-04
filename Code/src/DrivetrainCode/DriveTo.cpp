@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       DriveTo.cpp                                               */
+/*    Author:       Team 98548A                                               */
+/*    Created:      8/20/2021                                                 */
+/*    Description:  File that contains DriveFast() function                   */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 
 float DKp = 100;
@@ -7,27 +16,27 @@ float DKd = 0.1;
 int _DriveTo_ (){
 
   //Pull global variables into Drive Function:
-  float SessionTimeout = CoustomTimeout;
-  float SessionDriveX = DriveX;
-  float SessionDriveY = DriveY;
-  float SessionMaxSpeed = Speed;
-  float SessionDriveRadius;
+  float LocalTimeout = CoustomTimeout;
+  float LocalDriveX = DriveX;
+  float LocalDriveY = DriveY;
+  float LocalMaxSpeed = Speed;
+  float LocalDriveRadius;
   bool LimitSwitchFront;
   bool LimitSwitchBack;
 
   if (DriveRadius == -1.0){
-    SessionDriveRadius = 0;
+    LocalDriveRadius = 0;
     LimitSwitchFront = true;
   }else{
-    SessionDriveRadius = DriveRadius;
+    LocalDriveRadius = DriveRadius;
     LimitSwitchFront = false;
   }
 
   if (DriveRadius == -2.0){
-    SessionDriveRadius = 0;
+    LocalDriveRadius = 0;
     LimitSwitchBack = true;
   }else{
-    SessionDriveRadius = DriveRadius;
+    LocalDriveRadius = DriveRadius;
     LimitSwitchBack = false;
   }
 
@@ -45,7 +54,7 @@ int _DriveTo_ (){
   float DistA = 1.0; float DistB;float DistC;
   float MTX; float MTY; 
   float RotatedY; //      Variables for rotated plane
-  float SessionTurn;
+  float LocalTurn;
 
   float PositiveDiagonalVoltage;
   float NegativeDiagonalVoltage;
@@ -66,7 +75,7 @@ int _DriveTo_ (){
   x1 = GpsX;
   y1 = GpsY;
 
-  PreviousError = sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2)) - SessionDriveRadius;
+  PreviousError = sqrtf(powf(x1-LocalDriveX, 2) + powf(y1-LocalDriveY, 2)) - LocalDriveRadius;
 
   while (Condition) {
 
@@ -75,17 +84,17 @@ int _DriveTo_ (){
     h1 = GpsH;
     x2 = x1 + cos(Rads(h1));
     y2 = y1 + sin(Rads(h1));
-    DistB = sqrt(powf(x1-SessionDriveX,2)+powf(y1-SessionDriveY,2));                          //get Distance B for arccos function
-    DistC = sqrt(powf(x2-SessionDriveX,2)+powf(y2-SessionDriveY,2));                          //get Distance C for arccos function
-    SessionTurn = Degs(acosf((powf(DistC,2)-powf(DistA,2)-powf(DistB,2))/(-2*DistA*DistB)));  //get positive angle (from robot - to target)
-    MTX = SessionDriveX - x1;                                                                 //move x1 to origin (kinda)
-    MTY = SessionDriveY - y1;                                                                 //move y1 to origin
+    DistB = sqrt(powf(x1-LocalDriveX,2)+powf(y1-LocalDriveY,2));                          //get Distance B for arccos function
+    DistC = sqrt(powf(x2-LocalDriveX,2)+powf(y2-LocalDriveY,2));                          //get Distance C for arccos function
+    LocalTurn = Degs(acosf((powf(DistC,2)-powf(DistA,2)-powf(DistB,2))/(-2*DistA*DistB)));  //get positive angle (from robot - to target)
+    MTX = LocalDriveX - x1;                                                                 //move x1 to origin (kinda)
+    MTY = LocalDriveY - y1;                                                                 //move y1 to origin
     RotatedY = -MTX*sin(Rads(h1))+MTY*cos(Rads(h1));                                          //get rotated Y value
-    //SessionTurn = SessionTurn * -((RotatedY)/std::abs(RotatedY));                             //make SessionTurn the proper value
+    //LocalTurn = LocalTurn * -((RotatedY)/std::abs(RotatedY));                             //make LocalTurn the proper value
 
-    SessionTurn = SessionTurn * ((RotatedY)/std::abs(RotatedY));                             //make SessionTurn the proper value
+    LocalTurn = LocalTurn * ((RotatedY)/std::abs(RotatedY));                             //make LocalTurn the proper value
 
-    Error = sqrtf(powf(x1-SessionDriveX, 2) + powf(y1-SessionDriveY, 2)) - SessionDriveRadius;
+    Error = sqrtf(powf(x1-LocalDriveX, 2) + powf(y1-LocalDriveY, 2)) - LocalDriveRadius;
 
     if(LimitSwitchFront || LimitSwitchBack){
       if(Error < 5){
@@ -98,12 +107,12 @@ int _DriveTo_ (){
     Derivative = Error - PreviousError;
     if (Error == 0) {Integral = 0;} //these are to prevent the integral from getting too large
     if (Error > 1) {Integral = 0;}
-    if (std::abs(Error) > std::abs(SessionMaxSpeed/12)) {Integral = 0;}
+    if (std::abs(Error) > std::abs(LocalMaxSpeed/12)) {Integral = 0;}
 
     Ramp += 0.125;
 
     Voltage = SmartVoltage * DKp + Integral * DKi + Derivative * DKd;                                                                   //* TKp + Integral * TKi + Derivative * TKd;
-    Voltage = GetClosestToZero(Voltage, SessionMaxSpeed * (Error/std::abs(Error)));
+    Voltage = GetClosestToZero(Voltage, LocalMaxSpeed * (Error/std::abs(Error)));
 
     if(std::abs(Voltage)<MinVoltage){
       Voltage = MinVoltage * (std::abs(Voltage)/Voltage);
@@ -111,8 +120,8 @@ int _DriveTo_ (){
 
     PreviousError = Error;
 
-    PositiveDiagonalVoltage = sin(Rads(SessionTurn+45))*std::abs(Voltage);
-    NegativeDiagonalVoltage = -sin(Rads(SessionTurn-45))*std::abs(Voltage);
+    PositiveDiagonalVoltage = sin(Rads(LocalTurn+45))*std::abs(Voltage);
+    NegativeDiagonalVoltage = -sin(Rads(LocalTurn-45))*std::abs(Voltage);
 
     FLMotor.spin(forward, NegativeDiagonalVoltage, voltageUnits::volt);
     FRMotor.spin(forward, PositiveDiagonalVoltage, voltageUnits::volt);
@@ -128,14 +137,14 @@ int _DriveTo_ (){
     }
 
 
-    if (std::abs(Error)-4 <= 0.0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout || ((LimitSwitchFront && FrontSensorsSenseATouch) || (LimitSwitchBack && LimSwitchBack.pressing()))) {
+    if (std::abs(Error)-4 <= 0.0 || ReachedTarget || Brain.Timer.systemHighResolution() - StartTime > LocalTimeout || ((LimitSwitchFront && FrontSensorsSenseATouch) || (LimitSwitchBack && LimSwitchBack.pressing()))) {
       if(!(ReachedTarget)){
         ReachedTargetTime = Brain.Timer.systemHighResolution();
       }
 
       ReachedTarget = true;
 
-      if(Brain.Timer.systemHighResolution() - ReachedTargetTime >= 250000 || Brain.Timer.systemHighResolution() - StartTime > SessionTimeout){
+      if(Brain.Timer.systemHighResolution() - ReachedTargetTime >= 250000 || Brain.Timer.systemHighResolution() - StartTime > LocalTimeout){
         break;
       }
     }
@@ -153,7 +162,7 @@ int _DriveTo_ (){
 
 }
 
-void DriveTo(float Drive_x, float Drive_y, float speed, float radius, bool Wait_, float Coustom_Timeout){
+void DriveTo(float Drive_x, float Drive_y, float speed, float radius, bool wait_for_completion, float Coustom_Timeout){
 
   Speed = (speed/100)*12;
 
@@ -163,20 +172,10 @@ void DriveTo(float Drive_x, float Drive_y, float speed, float radius, bool Wait_
 
   DriveRadius = radius;
 
-  Wait = Wait_;
-
-  wait(20, msec);
-
-  if (Wait) {
-
+  if (wait_for_completion) {
     _DriveTo_();
-
   } else {
-
     PID = task(_DriveTo_);
-
   }
-
-  wait(20, msec);
 
 }

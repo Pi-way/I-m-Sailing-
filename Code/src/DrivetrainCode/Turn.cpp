@@ -1,3 +1,12 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       Turn.cpp                                                  */
+/*    Author:       Team 98548A                                               */
+/*    Created:      8/20/2021                                                 */
+/*    Description:  File that contains Turn() function                        */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 
 float TKp = .5;
@@ -6,25 +15,14 @@ float TKd = 0.01;
 
 int _Turn_() {
 
-
-  /*
-  turns the robot in degrees
-  */
-  float SessionTimeout = CoustomTimeout;
-  float SessionTurn = TurnDistance;
-  float SessionSpeed = Speed;
-
-  //float SessionTurn = ((( DriveCircumfrence * ( TurnDistance / 360 )) / ( WheelDiameter * 3.14 )) / DriveGearRatio ) *360;
-  bool SessionWait = Wait;
+  float LocalTimeout = CoustomTimeout;
+  float LocalTurn = TurnDistance;
+  float LocalSpeed = Speed;
 
   PIDsRunning ++;
 
   while(PIDsRunning > 1){
-    if (SessionWait) {
-      wait(20, msec);
-    } else {
-      task::yield();
-    }
+    task::yield();
   }
 
   Inertial.setRotation(0, deg);
@@ -50,7 +48,7 @@ int _Turn_() {
     //avgm = std::abs((FrontLeftDrive.position(degrees) - FrontRightDrive.position(degrees) + BackLeftDrive.position(degrees) -     BackRightDrive.position(degrees)) / 4);
     avgm = std::abs(Inertial.rotation(degrees));
 
-    Error = std::abs(SessionTurn) - avgm;
+    Error = std::abs(LocalTurn) - avgm;
     Integral = Integral + Error;
 
     smartError = GetClosestToZero(x, Error);
@@ -59,7 +57,7 @@ int _Turn_() {
       Integral = 0;
     }
 
-    if (std::abs(Error) > SessionSpeed/12 ) {
+    if (std::abs(Error) > LocalSpeed/12 ) {
       Integral = 0;
     }
 
@@ -70,11 +68,11 @@ int _Turn_() {
 
     x += 2;
 
-    if (Speed > SessionSpeed) {
-      Speed = SessionSpeed;
+    if (Speed > LocalSpeed) {
+      Speed = LocalSpeed;
     }
 
-    if (SessionTurn > 0) {
+    if (LocalTurn > 0) {
     FLMotor.spin(forward, Speed, voltageUnits::volt);
     FRMotor.spin(reverse, Speed, voltageUnits::volt);
     BRMotor.spin(reverse, Speed, voltageUnits::volt);
@@ -86,50 +84,35 @@ int _Turn_() {
       BLMotor.spin(reverse, Speed, voltageUnits::volt);
     }
 
-    if (std::abs(avgm) > std::abs(SessionTurn) + 3.5 || Brain.Timer.value() > SessionTimeout) { //was 40
+    if (std::abs(avgm) > std::abs(LocalTurn) + 3.5 || Brain.Timer.value() > LocalTimeout) { //was 40
 
       Condition = false;
 
     }
 
-    if (SessionWait) {
-      wait(20, msec);
-    } else {
       task::yield();
-    }
 
   }
   
-
   Drivetrain(stop(coast);)
 
   PIDsRunning --;
-
 
   return 0;
 
 }
 
-void Turn(float Turn_, float speed, bool Wait_, float CoustomTimeout_) {
+void Turn(float Turn_, float speed, bool wait_for_completion, float CoustomTimeout_) {
 
   Speed = (speed/100)*12;
 
   CoustomTimeout = CoustomTimeout_;
   TurnDistance = Turn_;
-  Wait = Wait_;
 
-  wait(20, msec);
-
-  if (Wait) {
-
+  if (wait_for_completion) {
     _Turn_();
-
   } else {
-
     PID = task(_Turn_);
-
   }
-
-  wait(20, msec);
 
 }
