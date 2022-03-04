@@ -9,16 +9,16 @@
 
 #include "vex.h"
 
-void TurnAndDrive(float x_point, float y_point, float driveSpeed, float turnSpeed, float radius, bool faceDirection, bool wait_for_completion, float Turn_Timeout, float Drive_Timeout) {
+void TurnAndDrive(float x_point, float y_point, float drive_speed, float turn_speed, float drive_radius, bool expect_front_button, bool expect_back_button, bool face_direction, bool wait_for_completion, float turn_timeout, float drive_timeout){
   
   float Direction;
   
-  if(faceDirection == true){
+  if(face_direction == true){
     Direction = 0;
   } else {
     Direction = 180;
   }
 
-  TurnTo(x_point, y_point, turnSpeed, true, Direction, Turn_Timeout);
-  DriveTo(x_point, y_point, driveSpeed, radius, wait_for_completion, Drive_Timeout);
+  TurnTo(x_point, y_point, turn_speed, true, Direction, turn_timeout);
+  DriveTo(x_point, y_point, drive_speed, drive_radius, expect_front_button, expect_back_button, wait_for_completion, drive_timeout);
 }

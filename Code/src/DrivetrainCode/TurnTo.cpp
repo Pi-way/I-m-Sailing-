@@ -101,15 +101,13 @@ int _TurnTo_() {
     LocalTurn = LocalTurn * -((RotatedY)/std::abs(RotatedY));
 
     Error = LocalTurn;
-    // Error = (1/(1+ powf(2.718, -(LocalTurn)/9.5))) * (LocalMaxSpeed*2) - LocalMaxSpeed;
-
+   
     Integral = Integral + Error;
     if(Integral > 40)(Integral = Error);
     Derivative = Error - PreviousError;
     if (Error == 0) {Integral = 0;} //these are to prevent the integral from getting too large
     if (std::abs(Voltage) > 5) {Integral = 0;}
-    //if (std::abs(Error) > std::abs(LocalMaxSpeed/12)) {Integral = 0;}
-
+    
     Ramp += 1;
     PreviousError = Error;
 

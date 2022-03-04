@@ -84,19 +84,19 @@ void Calibrate();
 void StartTasks();
 
 // This function allows the robot to turn using a PID and our inertial sensor. (other features will be explained in notebook)
-void Turn(float amount, float speed = 100, bool wait = true, float coustom_timeout = 2.0);
+void Turn(float amount, float speed = 100, bool wait_for_completion = true, float coustom_timeout = 2.0);
 
 // This function allows the robot to turn to a certain point using a PID in combination with our GPS sensors. (other features will be explained in notebook)
-void TurnTo(float x_cooridnate, float t_coordinate, float speed = 100, bool wait = true, float turn_offset = 0, float coustom_timeout = 2.5);
+void TurnTo(float x_cooridnate, float t_coordinate, float speed = 100, bool wait_for_completion = true, float turn_offset = 0, float coustom_timeout = 2.5);
 
 // This function allows the robot to drive using a PID in combination with the rotation encoders found in our drivetrain motors. (other features will be explained in notebook)
-void Drive(float distance, float speed = 100, bool wait = true, bool expect_front_button = false, bool expect_back_button = false, bool coast = false, float max_distance = 10000000);
+void Drive(float distance, float speed = 100, bool wait_for_completion = true, bool expect_front_button = false, bool expect_back_button = false, bool coast = false, float max_distance = 10000000);
 
 // This function does essentially the same thing as Drive, only faster and with less precision. (other features will be explained in notebook)
-void DriveFast(float distance, float speed = 100, bool wait = true, bool expect_front_button = false, bool expect_back_button = false, bool coast = false, float max_distance = 10000000);
+void DriveFast(float distance, float speed = 100, bool wait_for_completion = true, bool expect_front_button = false, bool expect_back_button = false, bool coast = false, float max_distance = 10000000);
 
 // This function allows the robot to drive to a point using a PID in combination with our GPS sensors. (other features will be explained in notebook)
-void DriveTo(float drive_x, float drive_y, float speed, float drive_radius = 0, bool wait = true, float coustom_timeout = 5);
+void DriveTo(float drive_x, float drive_y, float speed, float drive_radius = 0, bool expect_front_button = false, bool expect_back_button = false, bool wait_for_completion = true, float coustom_timeout = 5);
 
 // This function combines the functionality of TurnTo() and DriveTo(). (other features will be explained in notebook)
-void TurnAndDrive(float x_point, float y_point, float drive_speed = 80, float turn_speed = 80, float drive_radius = 0, bool face_direction = true, bool drive_wait = true, float turn_timeout = 2.5, float drive_timeout = 5);
+void TurnAndDrive(float x_point, float y_point, float drive_speed = 80, float turn_speed = 80, float drive_radius = 0, bool expect_front_button = false, bool expect_back_button = false, bool face_direction = true, bool wait_for_completion = true, float turn_timeout = 2.5, float drive_timeout = 5);

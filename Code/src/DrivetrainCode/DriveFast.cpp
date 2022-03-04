@@ -9,20 +9,20 @@
 
 #include "vex.h"
 
-// Declare P, I, and D values for this PID
+// Declare P, I, D  and RampUp values for this PID
 float fKp = 0.05;
 float fKi = 0.01;
 float fKd = 0.1;
-float fRampUp = 60;
+float fRampUpAmount = 60;
 
 // base function for DriveFast()
 int _DriveFast_() {
 
   // Assign and declare local variables from global variables.
   float LocalDistance = ((Distance/12.566))*360;
+  float LocalMaxDistance = ((MaxDistance/12.566))*360;
   float LocalSpeed = Speed;
   bool LocalCoast = Coast;
-  float LocalMaxDistance = ((MaxDistance/12.566))*360;
   bool LocalExpectFrontButton = ExpectFrontButton;
   bool LocalExpectBackButton = ExpectBackButton;
 
@@ -42,7 +42,7 @@ int _DriveFast_() {
   // Declare variables for PID
   float Error;
   float PreviousError = 0;
-  float smartError;
+  float SmartError;
   float Integral = 0;
   float Derivative;
   
@@ -55,94 +55,129 @@ int _DriveFast_() {
   // Output speed of our PID speed controller
   float Speed;
 
-  // Variable that represents when
-  float StartEndTime = 0.0;
+  // Variable that represents when the robot has first reached its destination
+  float ReachedTargetTime = 0.0;
 
-  bool STAHP = false;
+  // Variable that represents wether or not
+  bool ReachedMaximumDistance = false;
 
-  bool Condition = true;
-  while (Condition) {
+  // This variable will determine wether or not the loop will continue to run
+  bool NotDone = true;
 
+  // Continue looping until done
+  while (NotDone) {
+
+    // Calculate how far the robot has gone
     AverageMotorPosition = std::abs((FLMotor.position(degrees) + FRMotor.position(degrees) + BLMotor.position(degrees) + BRMotor.position(degrees)) / 4);
 
+    // If the robot has gone past the maximum allowed distance
+    if (AverageMotorPosition > LocalMaxDistance) {
+      ReachedMaximumDistance = true;
+    }
+
+    // Calculate how much farther the robot needs to go to reach its target
     Error = std::abs(LocalDistance) - AverageMotorPosition;
 
-    if(Error < ((5/12.566))*360 && (LocalExpectFrontButton || LocalExpectBackButton)){
-      if (AverageMotorPosition > LocalMaxDistance){
-        STAHP = true;
-      }else{
+    // If the robot is expecting a button to be pressed
+    if(LocalExpectFrontButton || LocalExpectBackButton){
+      
+      // Make sure the robot doesn't go slower than the speed of our PID at 5 inches away from our target
+      // This essentially is setting a lower speed limit for our PID
+      if (Error < ((5/12.566))*360){
         Error = ((5/12.566))*360;
       }
     }
 
+    // Calculate the Integral for our PID
     Integral = Integral + Error;
 
-    smartError = GetClosestToZero(Error, RampUp);
+    // Increase the ramp-up speed
+    RampUp += fRampUpAmount;
+
+    // Set a 'smart error' variable to the smallest of either RampUp or Error 
+    SmartError = GetClosestToZero(Error, RampUp);
  
-
-    if (Error == 0) {
+    // Prevent the integral from building up until the robot is close to its destination
+    if (std::abs(Error) > 12) {
       Integral = 0;
     }
 
-    if (std::abs(Error) > LocalSpeed ) {
-      Integral = 0;
-    }
-
+    // Calculate the derivative for our PID
     Derivative = Error - PreviousError;
+
+    // Set PreviousError to Error
     PreviousError = Error;
 
-    Speed = smartError * fKp + Integral * fKi + Derivative * fKd;
+    // Calculate the result of our PID
+    Speed = SmartError * fKp + Integral * fKi + Derivative * fKd;
 
-    RampUp += fRampUp;
-
+    // Make sure the speed result of the PID does not exeed our maximum speed
     if (Speed > LocalSpeed) {
       Speed = LocalSpeed;
     }
 
+    // Apply the speed from our PID to the motors. 
     if (LocalDistance > 0) {
-    FLMotor.spin(forward, Speed + Speed * Drive_balance, voltageUnits::volt);
-    FRMotor.spin(forward, Speed - Speed * Drive_balance, voltageUnits::volt);
-    BRMotor.spin(forward, Speed - Speed * Drive_balance, voltageUnits::volt);
-    BLMotor.spin(forward, Speed + Speed * Drive_balance, voltageUnits::volt);
+
+      // Apply the speed forwards if the distance we specified was positive
+      FLMotor.spin(forward, Speed + Speed * Drive_balance, voltageUnits::volt);
+      FRMotor.spin(forward, Speed - Speed * Drive_balance, voltageUnits::volt);
+      BRMotor.spin(forward, Speed - Speed * Drive_balance, voltageUnits::volt);
+      BLMotor.spin(forward, Speed + Speed * Drive_balance, voltageUnits::volt);
     } else {
+
+      //Apply the speed backwards if the distance we specified was negative
       FLMotor.spin(reverse, Speed + Speed * Drive_balance, voltageUnits::volt);
       FRMotor.spin(reverse, Speed - Speed * Drive_balance, voltageUnits::volt);
       BRMotor.spin(reverse, Speed - Speed * Drive_balance, voltageUnits::volt);
       BLMotor.spin(reverse, Speed + Speed * Drive_balance, voltageUnits::volt);
     }
 
-    if ((AverageMotorPosition > std::abs(LocalDistance) && !(LocalExpectFrontButton || LocalExpectBackButton)) || Brain.Timer.value() > 3 || ((LocalExpectFrontButton && FrontSensorsSenseATouch)||(LocalExpectBackButton && LimSwitchBack.pressing())) || STAHP) {    //Was: avgm > std::abs(LocalDistance) - 40 || Brain.Timer.value() > 4
+    // If the robot has gone too far
+    if(ReachedMaximumDistance){ 
+      NotDone = false;
+    } 
+    
+    // If the robot has run for longer than 4 seconds
+    if (Brain.Timer.value() > 4) { 
+      NotDone = false;
+    }
 
-      if (StartEndTime == 0.0){
-        StartEndTime = Brain.Timer.systemHighResolution();
-      }
+    // If the robot is expecting a button to be pressed and a button is being pressed
+    if ((LocalExpectFrontButton && FrontSensorsSenseATouch)||(LocalExpectBackButton && LimSwitchBack.pressing())) { 
+      NotDone = false;
+    }
+    
+    // If the robot has gone past the target position and the robot is not waiting for a button to be pressed
+    if (AverageMotorPosition > std::abs(LocalDistance) && !(LocalExpectBackButton || LocalExpectFrontButton)) {
 
-      if (LocalExpectFrontButton || LocalExpectBackButton || STAHP) {
-        if(Brain.Timer.systemHighResolution() - StartEndTime > 250000 || Brain.Timer.value() > 3){
-          Condition = false;
-        }
-        if (STAHP){
-          Condition = false;
-        }
-      } else {
-        Condition = false;
+      // Record the moment when the robot first reaches the target position
+      if (ReachedTargetTime == 0){
+        ReachedTargetTime = ReachedTargetTime = Brain.Timer.systemHighResolution();
       }
     }
 
-    task::yield();
+    // If the robot has been allowed to settle in for 1/4 of a second after the moment when the robot first reached the target
+    if (Brain.Timer.systemHighResolution() - ReachedTargetTime > (0.25 * 1000000) && ReachedTargetTime != 0.0){
+      NotDone = false;
+    }
 
+    // Yield to allow other tasks/threads to run
+    task::yield();
   }
 
+  // Stop the robot with a specified brake type (coast or hold)
   if(LocalCoast){
-    Drivetrain(stop(hold););
+    Drivetrain(stop(coast););
   }else{
     Drivetrain(stop(hold););
   }
 
+  // Update PIDsRunning
   PIDsRunning --;
 
+  // Exit the function
   return 0;
-
 }
 
 // Wrapper function that will accept arguments for the main function (_DriveFast_())
@@ -162,5 +197,4 @@ void DriveFast(float distance, float speed, bool wait_for_completion, bool expec
   } else {
     PID = task(_DriveFast_);
   }
-
 }
