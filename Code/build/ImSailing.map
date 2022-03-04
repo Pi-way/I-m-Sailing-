@@ -4275,11 +4275,11 @@ Linker script and memory map
                 0x0380a46c                Gps_H
  .bss.GpsH      0x0380a474        0x4 build/src/DrivetrainStuff.o
                 0x0380a474                GpsH
- .bss.PID       0x0380a478        0x8 build/src/DrivetrainStuff.o
-                0x0380a478                PID
  .bss.ControllerGPS
-                0x0380a480        0x8 build/src/DrivetrainStuff.o
-                0x0380a480                ControllerGPS
+                0x0380a478        0x8 build/src/DrivetrainStuff.o
+                0x0380a478                ControllerGPS
+ .bss.PID       0x0380a480        0x8 build/src/DrivetrainStuff.o
+                0x0380a480                PID
  .bss.FrontLiftSensorsTask
                 0x0380a488        0x8 build/src/DrivetrainStuff.o
                 0x0380a488                FrontLiftSensorsTask
@@ -4292,43 +4292,43 @@ Linker script and memory map
                 0x0380a494                PIDsRunning
  .bss.Distance  0x0380a498        0x4 build/src/DrivetrainStuff.o
                 0x0380a498                Distance
+ .bss.Speed     0x0380a49c        0x4 build/src/DrivetrainStuff.o
+                0x0380a49c                Speed
  .bss.TurnDegree
-                0x0380a49c        0x4 build/src/DrivetrainStuff.o
-                0x0380a49c                TurnDegree
- .bss.TurnDistance
                 0x0380a4a0        0x4 build/src/DrivetrainStuff.o
-                0x0380a4a0                TurnDistance
- .bss.CoustomTimeout
+                0x0380a4a0                TurnDegree
+ .bss.TurnDistance
                 0x0380a4a4        0x4 build/src/DrivetrainStuff.o
-                0x0380a4a4                CoustomTimeout
+                0x0380a4a4                TurnDistance
+ .bss.CoustomTimeout
+                0x0380a4a8        0x4 build/src/DrivetrainStuff.o
+                0x0380a4a8                CoustomTimeout
  .bss.ExpectFrontButton
-                0x0380a4a8        0x1 build/src/DrivetrainStuff.o
-                0x0380a4a8                ExpectFrontButton
+                0x0380a4ac        0x1 build/src/DrivetrainStuff.o
+                0x0380a4ac                ExpectFrontButton
  .bss.ExpectBackButton
-                0x0380a4a9        0x1 build/src/DrivetrainStuff.o
-                0x0380a4a9                ExpectBackButton
- .bss.Coast     0x0380a4aa        0x1 build/src/DrivetrainStuff.o
-                0x0380a4aa                Coast
- *fill*         0x0380a4ab        0x1 
+                0x0380a4ad        0x1 build/src/DrivetrainStuff.o
+                0x0380a4ad                ExpectBackButton
+ .bss.Coast     0x0380a4ae        0x1 build/src/DrivetrainStuff.o
+                0x0380a4ae                Coast
+ *fill*         0x0380a4af        0x1 
  .bss.MaxDistance
-                0x0380a4ac        0x4 build/src/DrivetrainStuff.o
-                0x0380a4ac                MaxDistance
- .bss.DriveRadius
                 0x0380a4b0        0x4 build/src/DrivetrainStuff.o
-                0x0380a4b0                DriveRadius
- .bss.DriveX    0x0380a4b4        0x4 build/src/DrivetrainStuff.o
-                0x0380a4b4                DriveX
- .bss.DriveY    0x0380a4b8        0x4 build/src/DrivetrainStuff.o
-                0x0380a4b8                DriveY
- .bss.TurnX     0x0380a4bc        0x4 build/src/DrivetrainStuff.o
-                0x0380a4bc                TurnX
- .bss.TurnY     0x0380a4c0        0x4 build/src/DrivetrainStuff.o
-                0x0380a4c0                TurnY
- .bss.Wait      0x0380a4c4        0x1 build/src/DrivetrainStuff.o
-                0x0380a4c4                Wait
- *fill*         0x0380a4c5        0x3 
- .bss.Speed     0x0380a4c8        0x4 build/src/DrivetrainStuff.o
-                0x0380a4c8                Speed
+                0x0380a4b0                MaxDistance
+ .bss.DriveRadius
+                0x0380a4b4        0x4 build/src/DrivetrainStuff.o
+                0x0380a4b4                DriveRadius
+ .bss.DriveX    0x0380a4b8        0x4 build/src/DrivetrainStuff.o
+                0x0380a4b8                DriveX
+ .bss.DriveY    0x0380a4bc        0x4 build/src/DrivetrainStuff.o
+                0x0380a4bc                DriveY
+ .bss.TurnX     0x0380a4c0        0x4 build/src/DrivetrainStuff.o
+                0x0380a4c0                TurnX
+ .bss.TurnY     0x0380a4c4        0x4 build/src/DrivetrainStuff.o
+                0x0380a4c4                TurnY
+ .bss.Wait      0x0380a4c8        0x1 build/src/DrivetrainStuff.o
+                0x0380a4c8                Wait
+ *fill*         0x0380a4c9        0x3 
  .bss.Brain     0x0380a4cc      0x2bc build/src/robot-config.o
                 0x0380a4cc                Brain
  .bss.FRMotor   0x0380a788       0x24 build/src/robot-config.o
