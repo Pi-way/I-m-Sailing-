@@ -1,8 +1,25 @@
+/*----------------------------------------------------------------------------*/
+/*                                                                            */
+/*    Module:       Tasks.cpp                                                 */
+/*    Author:       Team 98548A                                               */
+/*    Created:      8/20/2021                                                 */
+/*    Description:  File that contains Tasks for GPS and our lift sensors     */
+/*                                                                            */
+/*----------------------------------------------------------------------------*/
+
 #include "vex.h"
 
+// This variable represents which GPS sensor should be used
+bool GPSQuality = true; // true: Right has higher quality, false: Left has higher quality
+
+// These preprocessor macros allow us to print to the contller screen more easily
+#define C1Print(Variable) (Controller1.Screen.print(Variable))
+#define C2Print(Variable) (Controller2.Screen.print(Variable))
+
+// This function will be run in a task, continuously updating a global variable that contains the X coordinate of the robot
 int GPS_X(){
   while(true){
-    if(GPSRight.quality() > 90){
+    if(GPSQuality){
       GpsX = GPSRight.xPosition(inches);
     } else {
       GpsX = GPSLeft.xPosition(inches);
@@ -12,9 +29,10 @@ int GPS_X(){
   return 0;
 }
 
+// This function will be run in a task, continuously updating a global variable that contains the Y coordinate of the robot
 int GPS_Y(){
   while(true){
-    if(GPSRight.quality() > 90){
+    if(GPSQuality){
       GpsY = GPSRight.yPosition(inches);
     } else {
       GpsY = GPSLeft.yPosition(inches);
@@ -24,9 +42,10 @@ int GPS_Y(){
   return 0;
 }
 
+// This function will be run in a task, continuously updating a global variable that contains the heading / rotation of the robot
 int GPS_H(){
   while(true){
-    if(GPSRight.quality() > 90){
+    if(GPSQuality){
       GpsH = -GPSRight.heading();
     } else {
       GpsH = -GPSLeft.heading();    
@@ -36,50 +55,52 @@ int GPS_H(){
   return 0;
 }
 
+// This function constantly prints the location of the robot to the controller as well as deciding which GPS sensor has a higher quality
 int ControllerGps(){
   while(true){
-    if(GPSRight.quality() > 90){
-      Controller1.Screen.setCursor(3,1);
-      Controller1.Screen.print("(");
-      Controller1.Screen.print(GpsX);
-      Controller1.Screen.print(", ");
-      Controller1.Screen.print(GpsY);
-      Controller1.Screen.print(", ");
-      Controller1.Screen.print(std::round(GpsH));
-      Controller1.Screen.print(")  ");
+
+    Controller1.Screen.setCursor(3,1);
+
+    if(GPSRight.quality() > GPSLeft.quality()){
+      GPSQuality = true;
+      C1Print("R ");
     } else {
-      Controller1.Screen.setCursor(3,1);
-      Controller1.Screen.print("(");
-      Controller1.Screen.print(GpsX);
-      Controller1.Screen.print(", ");
-      Controller1.Screen.print(GpsY);
-      Controller1.Screen.print(", ");
-      Controller1.Screen.print(std::round(GpsH));
-      Controller1.Screen.print(")  ");
+      GPSQuality = false;
+      C1Print("L ");
     }
+
+    C1Print("(");
+    C1Print(GpsX);
+    C1Print(", ");
+    C1Print(GpsY);
+    C1Print(", ");
+    C1Print(std::round(GpsH));
+    C1Print(")             ");
+
     task::yield();
   }
   return 0;
 }
 
+// This function constantly takes input from our distance sensors and decides if a goal is within clamping distance of the robot
 int FrontLiftSensors(){
 
-  float RSD; // Right Sensor Distance
-  float LSD; // Left Sensor Distance
+  float RightSensorDistance;
+  float LeftSensorDistance;
   const int SAMPLESIZE = 1;
 
   while(true){
 
-    RSD = 0;
-    LSD = 0;
+    RightSensorDistance = 0;
+    LeftSensorDistance = 0;
 
     repeat(SAMPLESIZE){
-      RSD += DistanceRight.objectDistance(inches)/SAMPLESIZE;
-      LSD += DistanceLeft.objectDistance(inches)/SAMPLESIZE;
+      RightSensorDistance += DistanceRight.objectDistance(inches)/SAMPLESIZE;
+      LeftSensorDistance += DistanceLeft.objectDistance(inches)/SAMPLESIZE;
       task::yield();
     } 
     
-    if(RSD < 1.6 && LSD < 1.6){
+    if(RightSensorDistance < 1.6 && LeftSensorDistance < 1.6){
       FrontSensorsSenseATouch = true;
     }else{
       FrontSensorsSenseATouch = false;
@@ -89,10 +110,13 @@ int FrontLiftSensors(){
   }
 }
 
+// This function takes all the other functions we declared above and starts them in tasks
 void StartTasks(){
+
   Gps_X = task(GPS_X);
   Gps_Y = task(GPS_Y);
   Gps_H = task(GPS_H);
   ControllerGPS = task(ControllerGps);
   FrontLiftSensorsTask = task(FrontLiftSensors);
+
 }
